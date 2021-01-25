@@ -2,8 +2,6 @@ import { Box, makeStyles, Paper, Typography } from '@material-ui/core'
 import * as React from 'react'
 import Layout from '../components/Layout'
 import SignupSigninPanel from '../components/SignupSigninPanel'
-import { graphql } from 'gatsby'
-import Img from 'gatsby-image'
 
 // import './index.scss'
 
@@ -11,6 +9,7 @@ const useStyles = makeStyles({
    page: {
       position: `relative`,
       height: `100vh`,
+      padding: `20vmin`,
    },
    formHolder: {
       maxWidth: '300px',
@@ -20,43 +19,18 @@ const useStyles = makeStyles({
       top: `50%`,
       transform: `translateY(-50%)`,
    },
-   logoHolder: {
-      textAlign: 'center',
-      paddingTop: `2em`,
-   },
 })
 
-export default function IndexPage({ data }) {
+export default function IndexPage() {
    const classes = useStyles()
    return (
       <Layout>
          <section className={classes.page}>
-            <Typography>
-               <h1>Elide</h1>
-               <p>
-                  An opensource url and QR code service so you can be sure your
-                  users' convienince is not traded for their privacy.
-               </p>
+            <Typography variant="h1" component="h2">
+               Make URLs Great Again!
             </Typography>
-            <Paper elevation={3} className={classes.formHolder}>
-               <div className={classes.logoHolder}>
-                  <Img fixed={data.file.childImageSharp.fixed} alt="" />
-               </div>
-               <SignupSigninPanel />
-            </Paper>
+            <SignupSigninPanel styl={classes.formHolder} />
          </section>
       </Layout>
    )
 }
-
-export const query = graphql`
-   query {
-      file(relativePath: { eq: "elide-logo.png" }) {
-         childImageSharp {
-            fixed(height: 64) {
-               ...GatsbyImageSharpFixed
-            }
-         }
-      }
-   }
-`

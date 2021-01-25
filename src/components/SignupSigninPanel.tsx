@@ -2,7 +2,19 @@ import * as React from 'react'
 import SigninForm from './SigninForm'
 import SwipeableViews from 'react-swipeable-views'
 import SignupForm from './SignupForm'
-import { Tabs, Tab, Box, Typography, useTheme } from '@material-ui/core'
+import {
+   Paper,
+   Tabs,
+   Tab,
+   Box,
+   Typography,
+   useTheme,
+   makeStyles,
+} from '@material-ui/core'
+import { graphql, StaticQuery } from 'gatsby'
+
+import Img from 'gatsby-image'
+
 interface TabPanelProps {
    children?: React.ReactNode
    dir?: string
@@ -37,8 +49,20 @@ function a11yProps(index: any) {
    }
 }
 
-export default function SignupSigninPanel() {
-   // const classes = useStyles();
+const useStyles = makeStyles({
+   tabs: {
+      '&>div>span': {
+         top: 0,
+      },
+   },
+   logoHolder: {
+      textAlign: 'center',
+      paddingTop: `2em`,
+   },
+})
+
+export default function SignupSigninPanel({ styl }) {
+   const classes = useStyles()
    const theme = useTheme()
    const [value, setValue] = React.useState(0)
 
@@ -49,8 +73,11 @@ export default function SignupSigninPanel() {
    const handleChangeIndex = (index: number) => {
       setValue(index)
    }
-   return (
-      <div>
+   const component = (data) => (
+      <Paper elevation={2} className={styl}>
+         <div className={classes.logoHolder}>
+            <Img fixed={data.file.childImageSharp.fixed} alt="" />
+         </div>
          <SwipeableViews
             axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
             index={value}
@@ -68,11 +95,28 @@ export default function SignupSigninPanel() {
             indicatorColor="primary"
             textColor="primary"
             onChange={handleChange}
-            aria-label="disabled tabs example"
+            className={classes.tabs}
          >
             <Tab label="sign in" />
             <Tab label="sign up" />
          </Tabs>
-      </div>
+      </Paper>
+   )
+
+   return (
+      <StaticQuery
+         query={graphql`
+            query {
+               file(relativePath: { eq: "elide-logo.png" }) {
+                  childImageSharp {
+                     fixed(height: 64) {
+                        ...GatsbyImageSharpFixed
+                     }
+                  }
+               }
+            }
+         `}
+         render={component}
+      />
    )
 }

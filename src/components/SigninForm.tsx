@@ -1,24 +1,25 @@
 import { useFormik } from 'formik'
 import * as React from 'react'
 import * as Yup from 'yup'
-import { Button, makeStyles, TextField } from '@material-ui/core'
+import { Button, makeStyles } from '@material-ui/core'
+import { CustomTextField } from './CustomTextField'
 
 const SigninSchema = Yup.object({
-   email: Yup.string().email('Invalid email').required('Required'),
+   username: Yup.string().required('Required'),
    password: Yup.string().required('Required'),
 })
 
 const useStyles = makeStyles({
    form: {
       '& > *:not(:last-child)': {
-      marginBottom: `1em`,
-      }
+         marginBottom: `1em`,
+      },
    },
 })
 export default function SigninForm() {
    const formik = useFormik({
       initialValues: {
-         email: '',
+         username: '',
          password: '',
       },
       validationSchema: SigninSchema,
@@ -28,34 +29,38 @@ export default function SigninForm() {
       validateOnChange: true,
    })
 
-   const classes = useStyles();
+   const classes = useStyles()
 
    return (
       <form className={classes.form} onSubmit={formik.handleSubmit}>
-         <TextField
+         <CustomTextField
             fullWidth
-            id="email"
-            name="email"
-            label="Email"
-            variant="outlined"
-            value={formik.values.email}
+            id="username"
+            name="username"
+            label="Username"
+            value={formik.values.username}
             onChange={formik.handleChange}
-            error={formik.touched.email && Boolean(formik.errors.email)}
-            helperText={formik.touched.email && formik.errors.email}
+            error={formik.touched.username && Boolean(formik.errors.username)}
+            helperText={formik.touched.username && formik.errors.username}
          />
-         <TextField
+         <CustomTextField
             fullWidth
             id="password"
             name="password"
             label="Password"
-            variant="outlined"
             type="password"
             value={formik.values.password}
             onChange={formik.handleChange}
             error={formik.touched.password && Boolean(formik.errors.password)}
             helperText={formik.touched.password && formik.errors.password}
          />
-         <Button color="primary" variant="contained" fullWidth type="submit" disableElevation>
+         <Button
+            color="primary"
+            variant="contained"
+            fullWidth
+            type="submit"
+            disableElevation
+         >
             Sign in
          </Button>
       </form>
