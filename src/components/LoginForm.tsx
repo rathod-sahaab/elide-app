@@ -10,7 +10,9 @@ import {
    Input,
    Button,
    FormErrorMessage,
+   Link,
 } from '@chakra-ui/core'
+import { Link as GatsbyLink } from 'gatsby'
 
 const LoginSchema = Yup.object({
    username: Yup.string().max(20).required('Required'),
@@ -102,12 +104,16 @@ export default function LoginForm() {
                            width="full"
                            mt={4}
                         >
-                           Sign In
+                           Login
                         </Button>
                      </Form>
                   )}
                </Formik>
             </Box>
+            Don't have an account?{' '}
+            <GatsbyLink to="/register">
+               <Link color="teal.500">Register</Link>
+            </GatsbyLink>
          </Box>
       </Flex>
    )
