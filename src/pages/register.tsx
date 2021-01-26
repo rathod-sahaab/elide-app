@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
+import FormWrapper from '../components/FormWrapper'
 import Layout from '../components/Layout'
 import RegisterForm from '../components/RegisterForm'
 
@@ -8,9 +9,12 @@ export default function Register() {
       <Layout>
          <Helmet>
             <meta charSet="utf-8" />
-            <title>Login - Elide: Simplify URLs</title>
+            <title>Register - Elide: Simplify URLs</title>
          </Helmet>
-         <RegisterForm />
+         <FormWrapper>
+            <RegisterForm />
+         </FormWrapper>
       </Layout>
    )
 }
+

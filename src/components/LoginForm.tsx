@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
 import {
-   Flex,
    Box,
    FormControl,
    FormLabel,
@@ -15,7 +14,6 @@ import {
 import { Link as GatsbyLink } from 'gatsby'
 import UserLoginSchema from '../models/validations/UserLoginSchema'
 import UserLoginData from '../models/data/UserLoginData'
-import StaticLogo from './StaticLogo'
 
 const onSubmit = async (
    values: UserLoginData,
@@ -45,112 +43,87 @@ export default function LoginForm() {
    const [showPassword, setShowPassword] = React.useState(false)
    const handlePasswordVisibility = () => setShowPassword(!showPassword)
    return (
-      <Flex width="full" align="center" justifyContent="center">
-         <Box
-            p={8}
-            maxWidth="500px"
-            borderWidth={1}
-            borderRadius={8}
-            boxShadow="lg"
-         >
-            <Box textAlign="center">
-               <StaticLogo />
-            </Box>
-            <Box my={4} textAlign="left">
-               <Formik
-                  initialValues={{
-                     name: '',
-                     email: '',
-                     username: '',
-                     password: '',
-                  }}
-                  validationSchema={UserLoginSchema}
-                  onSubmit={(
-                     values: UserLoginData,
-                     actions: FormikHelpers<UserLoginData>
-                  ) => {
-                     setShowPassword(false)
-                     onSubmit(values, actions)
-                  }}
-               >
-                  <Form>
-                     <Field name="username">
-                        {({ field, form }) => (
-                           <FormControl
-                              isInvalid={
-                                 form.errors.username && form.touched.username
-                              }
-                              isRequired
-                              my={4}
+      <Formik
+         initialValues={{
+            name: '',
+            email: '',
+            username: '',
+            password: '',
+         }}
+         validationSchema={UserLoginSchema}
+         onSubmit={(
+            values: UserLoginData,
+            actions: FormikHelpers<UserLoginData>
+         ) => {
+            setShowPassword(false)
+            onSubmit(values, actions)
+         }}
+      >
+         <Form>
+            <Field name="username">
+               {({ field, form }) => (
+                  <FormControl
+                     isInvalid={form.errors.username && form.touched.username}
+                     isRequired
+                     my={4}
+                  >
+                     <FormLabel htmlFor="username">Username</FormLabel>
+                     <Input {...field} id="username" placeholder="username" />
+                     <FormErrorMessage>{form.errors.username}</FormErrorMessage>
+                  </FormControl>
+               )}
+            </Field>
+            <Field name="password">
+               {({ field, form }) => (
+                  <FormControl
+                     isInvalid={form.errors.password && form.touched.password}
+                     isRequired
+                     my={4}
+                  >
+                     <FormLabel htmlFor="password">Password</FormLabel>
+                     <InputGroup>
+                        <Input
+                           {...field}
+                           type={showPassword ? 'text' : 'password'}
+                           placeholder="*******"
+                           size="lg"
+                        />
+                        <InputRightElement width="3rem">
+                           <Button
+                              h="1.5rem"
+                              size="sm"
+                              onClick={handlePasswordVisibility}
                            >
-                              <FormLabel htmlFor="username">Username</FormLabel>
-                              <Input
-                                 {...field}
-                                 id="username"
-                                 placeholder="username"
-                              />
-                              <FormErrorMessage>
-                                 {form.errors.username}
-                              </FormErrorMessage>
-                           </FormControl>
-                        )}
-                     </Field>
-                     <Field name="password">
-                        {({ field, form }) => (
-                           <FormControl
-                              isInvalid={
-                                 form.errors.password && form.touched.password
-                              }
-                              isRequired
-                              my={4}
-                           >
-                              <FormLabel htmlFor="password">Password</FormLabel>
-                              <InputGroup>
-                                 <Input
-                                    {...field}
-                                    type={showPassword ? 'text' : 'password'}
-                                    placeholder="*******"
-                                    size="lg"
-                                 />
-                                 <InputRightElement width="3rem">
-                                    <Button
-                                       h="1.5rem"
-                                       size="sm"
-                                       onClick={handlePasswordVisibility}
-                                    >
-                                       {showPassword ? (
-                                          <Icon name="view-off" />
-                                       ) : (
-                                          <Icon name="view" />
-                                       )}
-                                    </Button>
-                                 </InputRightElement>
-                              </InputGroup>
-                              <FormErrorMessage>
-                                 {form.errors.password}
-                              </FormErrorMessage>
-                           </FormControl>
-                        )}
-                     </Field>
-                     <Button
-                        type="submit"
-                        variantColor="teal"
-                        variant="solid"
-                        width="full"
-                        mt={4}
-                     >
-                        Login
-                     </Button>
-                  </Form>
-               </Formik>
+                              {showPassword ? (
+                                 <Icon name="view-off" />
+                              ) : (
+                                 <Icon name="view" />
+                              )}
+                           </Button>
+                        </InputRightElement>
+                     </InputGroup>
+                     <FormErrorMessage>{form.errors.password}</FormErrorMessage>
+                  </FormControl>
+               )}
+            </Field>
+            <Button
+               type="submit"
+               variantColor="teal"
+               variant="solid"
+               width="full"
+               my={4}
+            >
+               Login
+            </Button>
+            <Box>
+               Don't have an account?{' '}
+               <GatsbyLink to="/register">
+                  <Button variant="link" variantColor="teal">
+                     Register
+                  </Button>
+               </GatsbyLink>
             </Box>
-            Don't have an account?{' '}
-            <GatsbyLink to="/register">
-               <Button variant="link" variantColor="teal">
-                  Register
-               </Button>
-            </GatsbyLink>
-         </Box>
-      </Flex>
+         </Form>
+      </Formik>
    )
 }
