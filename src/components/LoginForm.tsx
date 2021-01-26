@@ -1,9 +1,8 @@
-import { Field, Form, Formik, FormikHelpers } from 'formik'
 import * as React from 'react'
+import { Field, Form, Formik, FormikHelpers } from 'formik'
 import {
    Flex,
    Box,
-   Heading,
    FormControl,
    FormLabel,
    Input,
@@ -16,6 +15,7 @@ import {
 import { Link as GatsbyLink } from 'gatsby'
 import UserLoginSchema from '../models/validations/UserLoginSchema'
 import UserLoginData from '../models/data/UserLoginData'
+import StaticLogo from './StaticLogo'
 
 const onSubmit = async (
    values: UserLoginData,
@@ -54,7 +54,7 @@ export default function LoginForm() {
             boxShadow="lg"
          >
             <Box textAlign="center">
-               <Heading>Login</Heading>
+               <StaticLogo />
             </Box>
             <Box my={4} textAlign="left">
                <Formik

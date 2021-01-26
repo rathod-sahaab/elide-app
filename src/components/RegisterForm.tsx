@@ -19,6 +19,7 @@ import { Link as GatsbyLink } from 'gatsby'
 
 import UserRegistrationData from '../models/data/UserRegistrationData'
 import UserRegisterSchema from '../models/validations/UserRegisterSchema'
+import StaticLogo from './StaticLogo'
 
 const onSubmit = async (
    values: UserRegistrationData,
@@ -57,7 +58,7 @@ export default function RegisterForm() {
             boxShadow="lg"
          >
             <Box textAlign="center">
-               <Heading>Register</Heading>
+               <StaticLogo />
             </Box>
             <Box my={4} textAlign="left">
                <Formik
