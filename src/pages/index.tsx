@@ -3,7 +3,6 @@ import { Box, Button } from '@chakra-ui/core'
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
 import Layout from '../components/Layout'
-import RegisterForm from '../components/RegisterForm'
 
 export default function IndexPage() {
    return (
@@ -13,13 +12,13 @@ export default function IndexPage() {
             <title>Elide: Make your URLs simpler</title>
          </Helmet>
          <GatsbyLink to="/register">
-            <Button variantColor="teal" variant="solid">
+            <Button variantColor="cyan" variant="solid">
                Register
             </Button>
          </GatsbyLink>
          {'  '}
          <GatsbyLink to="/login">
-            <Button variantColor="teal" variant="solid">
+            <Button variantColor="cyan" variant="solid">
                Login
             </Button>
          </GatsbyLink>
