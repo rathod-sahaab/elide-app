@@ -1,6 +1,6 @@
 module.exports = {
    siteMetadata: {
-      title: 'Elide',
+      title: 'Elide: Make URLs simpler!',
    },
    plugins: [
       'gatsby-plugin-sass',
@@ -16,6 +16,10 @@ module.exports = {
             path: './src/images/',
          },
          __key: 'images',
+      },
+      {
+         resolve: `gatsby-plugin-create-client-paths`,
+         options: { prefixes: [`/app/*`] }, // client only routes
       },
    ],
    proxy: {

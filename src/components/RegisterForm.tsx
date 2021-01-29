@@ -146,7 +146,7 @@ export default function RegisterForm() {
             </Button>
             <Box>
                Already a user?{' '}
-               <GatsbyLink to="/login">
+               <GatsbyLink to="/app/login">
                   <Button variant="link" variantColor="teal">
                      Login
                   </Button>

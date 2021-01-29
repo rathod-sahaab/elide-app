@@ -14,29 +14,16 @@ import {
 import { Link as GatsbyLink } from 'gatsby'
 import UserLoginSchema from '../models/validations/UserLoginSchema'
 import UserLoginData from '../models/data/UserLoginData'
+import { getUser, handleLogin } from '../services/auth'
 
 const onSubmit = async (
    values: UserLoginData,
    actions: FormikHelpers<UserLoginData>
 ) => {
-   fetch('/api/users/login', {
-      method: 'POST', // or 'PUT'
-      headers: {
-         'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(values),
-   })
-      .then((response) => {
-         console.log(response)
-         return response.json()
-      })
-      .then((data) => {
-         console.log('Success:', data)
-         actions.setSubmitting(false)
-      })
-      .catch((error) => {
-         console.error('Error:', error)
-      })
+   actions.setSubmitting(true)
+   let success = await handleLogin(values)
+   console.log(getUser())
+   console.log(success)
 }
 
 export default function LoginForm() {
@@ -117,7 +104,7 @@ export default function LoginForm() {
             </Button>
             <Box>
                Don't have an account?{' '}
-               <GatsbyLink to="/register">
+               <GatsbyLink to="/app/register">
                   <Button variant="link" variantColor="teal">
                      Register
                   </Button>
