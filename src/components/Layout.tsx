@@ -7,14 +7,14 @@ import {
    CSSReset,
    theme,
 } from '@chakra-ui/core'
-import ThemeToggler from './ThemeToggler'
+import Header from './Header'
 
 export default function Layout({ children }) {
    return (
       <ThemeProvider theme={theme}>
          <ColorModeProvider>
             <CSSReset />
-            <ThemeToggler />
+            <Header theme={theme} />
             <main>{children}</main>
          </ColorModeProvider>
       </ThemeProvider>
