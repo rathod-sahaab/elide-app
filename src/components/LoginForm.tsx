@@ -11,10 +11,10 @@ import {
    Icon,
    InputGroup,
 } from '@chakra-ui/core'
-import { Link as GatsbyLink } from 'gatsby'
+import { Link as GatsbyLink, navigate } from 'gatsby'
 import UserLoginSchema from '../models/validations/UserLoginSchema'
 import UserLoginData from '../models/data/UserLoginData'
-import { getUser, handleLogin } from '../services/auth'
+import { handleLogin } from '../services/auth'
 
 const onSubmit = async (
    values: UserLoginData,
@@ -22,8 +22,11 @@ const onSubmit = async (
 ) => {
    actions.setSubmitting(true)
    let success = await handleLogin(values)
-   console.log(getUser())
-   console.log(success)
+   if (success) {
+      navigate('/app/dashboard')
+   } else {
+      alert('error logging in')
+   }
 }
 
 export default function LoginForm() {

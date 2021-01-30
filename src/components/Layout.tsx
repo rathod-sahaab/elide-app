@@ -14,7 +14,7 @@ export default function Layout({ children }) {
       <ThemeProvider theme={theme}>
          <ColorModeProvider>
             <CSSReset />
-            <Header theme={theme} />
+            <Header />
             <main>{children}</main>
          </ColorModeProvider>
       </ThemeProvider>

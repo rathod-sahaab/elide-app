@@ -1,4 +1,4 @@
-import User from '../models/data/User'
+// import User from '../models/data/User'
 
 export const isBrowser = () => typeof window !== 'undefined'
 export const getUser = () =>
@@ -39,7 +39,18 @@ export const isLoggedIn = () => {
    return !!user.username
 }
 
-export const logout = (callback) => {
-   setUser({})
-   callback()
+export const logout = async () => {
+   return await fetch('/api/users/logout', {
+      method: 'GET', // or 'PUT'
+   })
+      .then(async (response) => {
+         if (response.status === 200) {
+            setUser({})
+            return true
+         }
+      })
+      .catch((error) => {
+         console.error('Error:', error)
+         return false
+      })
 }

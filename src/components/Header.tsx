@@ -1,14 +1,13 @@
 import * as React from 'react'
-import { isLoggedIn } from '../services/auth'
+import { isLoggedIn, logout } from '../services/auth'
 import { StaticQuery, graphql } from 'gatsby'
-import { Link as GatsbyLink } from 'gatsby'
 import { Heading, Box, Button, Flex } from '@chakra-ui/core'
 import ThemeToggler from './ThemeToggler'
 import Img from 'gatsby-image'
 import { Spacer } from '@chakra-ui/react'
-import { navigate } from '@reach/router'
+import { navigate } from 'gatsby'
 
-export default function Header({ theme }) {
+export default function Header() {
    const logo = (
       <StaticQuery
          query={graphql`
@@ -43,7 +42,12 @@ export default function Header({ theme }) {
                   <Button
                      variantColor="green"
                      variant="solid"
-                     onClick={() => navigate('/app/logout')}
+                     onClick={async () => {
+                        let success = await logout()
+                        if (success) {
+                           navigate('/')
+                        }
+                     }}
                      ml={4}
                   >
                      Logout
@@ -62,7 +66,7 @@ export default function Header({ theme }) {
                      <Button
                         variantColor="green"
                         variant="solid"
-                        onClick={() => navigate('/app/Login')}
+                        onClick={() => navigate('/app/login')}
                      >
                         Login
                      </Button>
