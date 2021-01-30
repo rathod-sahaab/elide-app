@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading } from '@chakra-ui/core'
+import { Badge, Box, Button, Flex, Heading, Text } from '@chakra-ui/core'
 import React from 'react'
 import { getUser } from '../services/auth'
 import User from '../models/data/User'
@@ -15,21 +15,17 @@ const Profile = () => {
             borderRadius={8}
             position="relative"
          >
-            <Heading>Hi! {user.name.split(' ')[0]}</Heading>
+            <Heading>Hi! {user.name}</Heading>
             <ActivityIndicator
                position="absolute"
-               top="4"
+               bottom="4"
                right="4"
                isActive={user.active}
                pointerEvents="none"
             />
-            <Box p={8} maxWidth="500px" borderRadius={8}>
-               <Heading size="md">Name</Heading>
-               <p>{user.name}</p>
-               <Heading size="md">Email</Heading>
-               <p>{user.email}</p>
-               <Heading size="md">Username</Heading>
-               <p>{user.username}</p>
+            <Box p={4} maxWidth="500px" borderRadius={8}>
+               <Text>{user.username}</Text>
+               <Text>{user.email}</Text>
                <Button
                   size="xs"
                   textTransform="uppercase"
