@@ -7,7 +7,7 @@ export default function ActivityIndicator({ isActive, ...props }) {
          {...props}
          size="xs"
          textTransform="uppercase"
-         variantColor={isActive ? 'green' : 'red'}
+         variantColor={isActive ? 'green' : 'yellow'}
       >
          {isActive ? 'active' : 'inactive'}
       </Button>
