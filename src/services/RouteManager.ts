@@ -18,12 +18,12 @@ export const createRoute = async ({
             let route: Route = await response.json()
             return route
          } else {
-            return false
+            return null
          }
       })
       .catch((error) => {
          console.error('Error:', error)
-         return false
+         return null
       })
 }
 

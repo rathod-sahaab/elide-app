@@ -11,11 +11,21 @@ import {
    Text,
 } from '@chakra-ui/core'
 import { AddIcon } from '@chakra-ui/icons'
-import React from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
+import { Route } from '../models/data/Route'
 import CreateRouteForm from './CreateRouteForm'
 
-export default function CreateRouteModal() {
+export default function CreateRouteModal({
+   appendRoute,
+}: {
+   appendRoute: (route: Route) => void
+}) {
    const { isOpen, onOpen, onClose } = useDisclosure()
+
+   const onSuccess = (route: Route) => {
+      appendRoute(route)
+      onClose()
+   }
 
    return (
       <>
@@ -35,7 +45,7 @@ export default function CreateRouteModal() {
                <ModalHeader>Create new link</ModalHeader>
                <ModalCloseButton />
                <ModalBody>
-                  <CreateRouteForm callOnSuccess={onClose} />
+                  <CreateRouteForm callOnSuccess={onSuccess} />
                </ModalBody>
             </ModalContent>
          </Modal>

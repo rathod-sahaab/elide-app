@@ -4,8 +4,26 @@ import { Box, Button, Flex, Heading } from '@chakra-ui/core'
 import { AddIcon } from '@chakra-ui/icons'
 import RouteList from './RouteList'
 import CreateRouteModal from './CreateRouteModal'
+import { Route } from '../models/data/Route'
+import { myRoutes } from '../services/RouteManager'
 
 export default function Dashboard() {
+   const [routesData, setRoutesData] = React.useState<Route[]>([])
+   const loadData = async () => {
+      const result = await myRoutes()
+      if (result) {
+         setRoutesData(result)
+      }
+   }
+
+   const appendRoute = (route: Route) => {
+      setRoutesData((prev: Route[]) => [route, ...prev])
+   }
+
+   React.useEffect(() => {
+      loadData()
+      console.log('Use effect called')
+   }, [])
    return (
       <>
          <Helmet>
@@ -14,8 +32,8 @@ export default function Dashboard() {
          </Helmet>
          <Flex width="full" align="center" justifyContent="center">
             <Box p={8} maxWidth="1000px" width="full" textAlign="center">
-               <CreateRouteModal />
-               <RouteList />
+               <CreateRouteModal appendRoute={appendRoute} />
+               <RouteList routesData={routesData} />
             </Box>
          </Flex>
       </>

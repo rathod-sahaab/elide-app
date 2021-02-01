@@ -15,20 +15,7 @@ import { Route } from '../models/data/Route'
 import { myRoutes } from '../services/RouteManager'
 import RouteTile from './RouteTile'
 
-export default function RouteList() {
-   const [routesData, setRoutesData] = React.useState<Route[]>([])
-   const loadData = async () => {
-      const result = await myRoutes()
-      if (result) {
-         setRoutesData(result)
-      }
-   }
-
-   React.useEffect(() => {
-      loadData();
-      console.log('Use effect called')
-   }, [])
-
+export default function RouteList({ routesData }: { routesData: Route[] }) {
    return (
       <>
          {routesData.length == 0 ? (

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
-import { CreateRouteData, CreateRouteSchema } from '../models/data/Route'
+import { CreateRouteData, CreateRouteSchema, Route } from '../models/data/Route'
 import {
    Button,
    FormControl,
@@ -24,7 +24,11 @@ const onSubmit = async (
    return success
 }
 
-export default function CreateRouteForm({ callOnSuccess }) {
+export default function CreateRouteForm({
+   callOnSuccess,
+}: {
+   callOnSuccess: (route: Route) => void
+}) {
    return (
       <Formik
          initialValues={{
@@ -37,8 +41,9 @@ export default function CreateRouteForm({ callOnSuccess }) {
             values: CreateRouteData,
             actions: FormikHelpers<CreateRouteData>
          ) => {
-            if (await onSubmit(values, actions)) {
-               callOnSuccess()
+            let route = await onSubmit(values, actions)
+            if (route) {
+               callOnSuccess(route)
             } else {
                alert('Error creating route!')
             }
