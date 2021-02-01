@@ -9,11 +9,13 @@ import { myRoutes } from '../services/RouteManager'
 
 export default function Dashboard() {
    const [routesData, setRoutesData] = React.useState<Route[]>([])
+   const [loading, setLoading] = React.useState<boolean>(true)
    const loadData = async () => {
       const result = await myRoutes()
       if (result) {
          setRoutesData(result)
       }
+      setLoading(false)
    }
 
    const appendRoute = (route: Route) => {
@@ -33,7 +35,7 @@ export default function Dashboard() {
          <Flex width="full" align="center" justifyContent="center">
             <Box p={8} maxWidth="1000px" width="full" textAlign="center">
                <CreateRouteModal appendRoute={appendRoute} />
-               <RouteList routesData={routesData} />
+               <RouteList routesData={routesData} loading={loading} />
             </Box>
          </Flex>
       </>

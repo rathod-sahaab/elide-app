@@ -1,4 +1,4 @@
-import { Box, Heading } from '@chakra-ui/core'
+import { Box, Heading, Spinner } from '@chakra-ui/core'
 import {
    Table,
    Thead,
@@ -15,11 +15,23 @@ import { Route } from '../models/data/Route'
 import { myRoutes } from '../services/RouteManager'
 import RouteTile from './RouteTile'
 
-export default function RouteList({ routesData }: { routesData: Route[] }) {
+export default function RouteList({
+   routesData,
+   loading,
+}: {
+   routesData: Route[]
+   loading: boolean
+}) {
    return (
       <>
          {routesData.length == 0 ? (
-            <Heading>You don't have any links</Heading>
+            loading ? (
+               <Box>
+                  <Spinner size="lg" />
+               </Box>
+            ) : (
+               <Heading>You don't have any links</Heading>
+            )
          ) : (
             <Box
                maxWidth="1000px"
@@ -43,7 +55,9 @@ export default function RouteList({ routesData }: { routesData: Route[] }) {
                   </Thead>
                   <Tbody>
                      {routesData.map((route, index) => {
-                        return <RouteTile key={route.id} route={route}></RouteTile>
+                        return (
+                           <RouteTile key={route.id} route={route}></RouteTile>
+                        )
                      })}
                   </Tbody>
                </Table>
