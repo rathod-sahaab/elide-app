@@ -35,8 +35,6 @@ export default function LoginForm() {
    return (
       <Formik
          initialValues={{
-            name: '',
-            email: '',
             username: '',
             password: '',
          }}

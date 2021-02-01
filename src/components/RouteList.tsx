@@ -11,114 +11,58 @@ import {
    useColorModeValue,
 } from '@chakra-ui/react'
 import * as React from 'react'
+import { Route } from '../models/data/Route'
+import { myRoutes } from '../services/RouteManager'
 import RouteTile from './RouteTile'
 
 export default function RouteList() {
-   const [routesData, setRoutesData] = React.useState([
-      {
-         id: '1',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: false,
-      },
-      {
-         id: '2',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: false,
-      },
-      {
-         id: '1',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: true,
-      },
-      {
-         id: '2',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: false,
-      },
-      {
-         id: '1',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: true,
-      },
-      {
-         id: '2',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: true,
-      },
-      {
-         id: '1',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: false,
-      },
-      {
-         id: '2',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: false,
-      },
-      {
-         id: '1',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: true,
-      },
-      {
-         id: '2',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: false,
-      },
-      {
-         id: '1',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: true,
-      },
-      {
-         id: '2',
-         slug: 'iste-room',
-         target: 'istenith.com',
-         active: true,
-      },
-   ])
+   const [routesData, setRoutesData] = React.useState<Route[]>([])
+   const loadData = async () => {
+      const result = await myRoutes()
+      if (result) {
+         setRoutesData(result)
+      }
+   }
+
+   React.useEffect(() => {
+      loadData();
+      console.log('Use effect called')
+   }, [])
+
    return (
-      <Box maxWidth="1000px" width="full" borderRadius={8} borderWidth={1}>
+      <>
          {routesData.length == 0 ? (
             <Heading>You don't have any links</Heading>
          ) : (
-            <Table
-               textAlign="left"
+            <Box
+               maxWidth="1000px"
                width="full"
-               variant="simple"
-               size="lg"
+               borderRadius={8}
+               borderWidth={1}
             >
-               <Thead
-                  fontWeight="semibold"
-                  fontSize="sm"
-                  textTransform="uppercase"
-               >
-                  <Tr>
-                     <Th p={4}>slug</Th>
-                     <Th p={4}>link</Th>
-                     <Th p={4} textAlign="right">
-                        activity
-                     </Th>
-                  </Tr>
-               </Thead>
-               <Tbody>
-                  {routesData.map((route) => {
-                     return <RouteTile route={route}></RouteTile>
-                  })}
-               </Tbody>
-            </Table>
+               <Table textAlign="left" width="full" variant="simple" size="lg">
+                  <Thead
+                     fontWeight="semibold"
+                     fontSize="sm"
+                     textTransform="uppercase"
+                  >
+                     <Tr>
+                        <Th p={4}>slug</Th>
+                        <Th p={4}>link</Th>
+                        <Th p={4} textAlign="right">
+                           activity
+                        </Th>
+                     </Tr>
+                  </Thead>
+                  <Tbody>
+                     {routesData.map((route, index) => {
+                        // FIXME: Use route.id
+                        return <RouteTile key={index} route={route}></RouteTile>
+                     })}
+                  </Tbody>
+               </Table>
+            </Box>
          )}
-      </Box>
+      </>
    )
 }
