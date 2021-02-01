@@ -43,8 +43,7 @@ export default function RouteList({ routesData }: { routesData: Route[] }) {
                   </Thead>
                   <Tbody>
                      {routesData.map((route, index) => {
-                        // FIXME: Use route.id
-                        return <RouteTile key={index} route={route}></RouteTile>
+                        return <RouteTile key={route.id} route={route}></RouteTile>
                      })}
                   </Tbody>
                </Table>
