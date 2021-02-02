@@ -1,6 +1,11 @@
 import * as React from 'react'
 import { Field, Form, Formik, FormikHelpers } from 'formik'
-import { CreateRouteData, RouteSchema, Route } from '../models/data/Route'
+import {
+   CreateRouteData,
+   RouteSchema,
+   Route,
+   UpdateRouteData,
+} from '../models/data/Route'
 import {
    Button,
    FormControl,
@@ -12,38 +17,68 @@ import {
    Switch,
 } from '@chakra-ui/core'
 import { VStack } from '@chakra-ui/react'
-import { createRoute } from '../services/RouteManager'
+import { updateRoute } from '../services/RouteManager'
 
-const onSubmit = async (
-   values: CreateRouteData,
+const onSubmit = async ({
+   newValues,
+   actions,
+   id,
+}: {
+   newValues: CreateRouteData
    actions: FormikHelpers<CreateRouteData>
-) => {
+   id: string
+}) => {
    actions.setSubmitting(true)
-   let success = await createRoute(values)
+
+   // prepare payload to send in request
+   let payloadJson: UpdateRouteData = { id, ...newValues }
+   /*
+    * Server accepts full and not just the changes, it's easiser this way
+    *
+   // Send only the keys that have changed
+   // FIXME: iterate over with keys
+   if (newValues.slug !== oldValues.slug) {
+      payloadJson.slug = newValues.slug
+   }
+   if (newValues.target !== oldValues.target) {
+      payloadJson.target = newValues.target
+   }
+   if (newValues.active !== oldValues.active) {
+      payloadJson.active = newValues.active
+   }
+   */
+
+   let success = await updateRoute(payloadJson)
    actions.setSubmitting(false)
    return success
 }
 
-export default function CreateRouteForm({
+export default function UpdateRouteForm({
    callOnSuccess,
+   route,
 }: {
    callOnSuccess: (route: Route) => void
+   route: Route
 }) {
    return (
       <Formik
          initialValues={{
-            slug: '',
-            target: '',
-            active: true,
+            slug: route.slug,
+            target: route.target,
+            active: route.active,
          }}
          validationSchema={RouteSchema}
          onSubmit={async (
             values: CreateRouteData,
             actions: FormikHelpers<CreateRouteData>
          ) => {
-            let route = await onSubmit(values, actions)
-            if (route) {
-               callOnSuccess(route)
+            let result = await onSubmit({
+               newValues: values,
+               actions,
+               id: route.id,
+            })
+            if (result) {
+               callOnSuccess(result)
             } else {
                alert('Error creating route!')
             }

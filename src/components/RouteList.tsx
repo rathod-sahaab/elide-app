@@ -1,23 +1,38 @@
-import { Box, Heading, Spinner } from '@chakra-ui/core'
 import {
-   Table,
-   Thead,
-   Tbody,
-   Tr,
-   Th,
-} from '@chakra-ui/react'
+   Box,
+   Heading,
+   Modal,
+   ModalBody,
+   ModalCloseButton,
+   ModalContent,
+   ModalHeader,
+   ModalOverlay,
+   Spinner,
+   useDisclosure,
+} from '@chakra-ui/core'
+import { Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react'
 import * as React from 'react'
 import { Route } from '../models/data/Route'
-import { myRoutes } from '../services/RouteManager'
 import RouteTile from './RouteTile'
+import UpdateRouteForm from './UpdateRouteForm'
 
 export default function RouteList({
    routesData,
    loading,
+   updateRoute,
 }: {
    routesData: Route[]
    loading: boolean
+   updateRoute: (route: Route) => void
 }) {
+   const { isOpen, onOpen, onClose } = useDisclosure() // For Modal
+   const [routeToEdit, setRouteToEdit] = React.useState<Route>(null)
+
+   const onSuccess = (route: Route) => {
+      updateRoute(route)
+      onClose()
+   }
+
    return (
       <>
          {routesData.length == 0 ? (
@@ -26,7 +41,7 @@ export default function RouteList({
                   <Spinner size="lg" />
                </Box>
             ) : (
-               <Heading>You don't have any links</Heading>
+               <Heading>You donot have any links yet</Heading>
             )
          ) : (
             <Box
@@ -50,13 +65,31 @@ export default function RouteList({
                      </Tr>
                   </Thead>
                   <Tbody>
-                     {routesData.map((route, index) => {
+                     {routesData.map((route) => {
                         return (
-                           <RouteTile key={route.id} route={route}></RouteTile>
+                           <RouteTile
+                              key={route.id}
+                              route={route}
+                              openEditDialog={onOpen}
+                              setRouteToEdit={setRouteToEdit}
+                           ></RouteTile>
                         )
                      })}
                   </Tbody>
                </Table>
+               <Modal isOpen={isOpen} onClose={onClose}>
+                  <ModalOverlay />
+                  <ModalContent pb={4} borderRadius={8}>
+                     <ModalHeader>Edit existing link</ModalHeader>
+                     <ModalCloseButton />
+                     <ModalBody>
+                        <UpdateRouteForm
+                           route={routeToEdit}
+                           callOnSuccess={onSuccess}
+                        />
+                     </ModalBody>
+                  </ModalContent>
+               </Modal>
             </Box>
          )}
       </>

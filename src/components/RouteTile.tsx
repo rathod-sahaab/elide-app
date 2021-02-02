@@ -1,11 +1,19 @@
 import { IconButton } from '@chakra-ui/core'
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
+import { EditIcon } from '@chakra-ui/icons'
 import { Td, Tr } from '@chakra-ui/react'
 import * as React from 'react'
 import { Route } from '../models/data/Route'
 import ActivityIndicator from './ActivityIndicator'
 
-export default function RouteList({ route }: { route: Route }) {
+export default function RouteList({
+   route,
+   openEditDialog,
+   setRouteToEdit,
+}: {
+   route: Route
+   openEditDialog: any
+   setRouteToEdit: any
+}) {
    return (
       <Tr
          p={2}
@@ -26,7 +34,8 @@ export default function RouteList({ route }: { route: Route }) {
                aria-label="edit link"
                icon={EditIcon}
                onClick={() => {
-                  console.log('edit clicked: NOT IMPLEMENTED')
+                  openEditDialog()
+                  setRouteToEdit(route)
                }}
                ml={4}
                variant="ghost"

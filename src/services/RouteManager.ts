@@ -1,4 +1,4 @@
-import { CreateRouteData, Route } from '../models/data/Route'
+import { CreateRouteData, Route, UpdateRouteData } from '../models/data/Route'
 
 export const createRoute = async ({
    slug,
@@ -11,6 +11,28 @@ export const createRoute = async ({
          'Content-Type': 'application/json',
       },
       body: JSON.stringify({ slug, target, active }),
+   })
+      .then(async (response) => {
+         console.log(response)
+         if (response.status == 200) {
+            let route: Route = await response.json()
+            return route
+         } else {
+            return null
+         }
+      })
+      .catch((error) => {
+         console.error('Error:', error)
+         return null
+      })
+}
+export const updateRoute = async (updates: UpdateRouteData) => {
+   return fetch('/api/routes/update', {
+      method: 'PUT',
+      headers: {
+         'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updates),
    })
       .then(async (response) => {
          console.log(response)

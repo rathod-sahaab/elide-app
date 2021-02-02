@@ -1,4 +1,3 @@
-import { string } from 'prop-types'
 import * as Yup from 'yup'
 
 export interface Route {
@@ -14,7 +13,14 @@ export interface CreateRouteData {
    active: boolean
 }
 
-export const CreateRouteSchema = Yup.object({
+export interface UpdateRouteData {
+   id: string
+   slug?: string
+   target?: string
+   active?: boolean
+}
+
+export const RouteSchema = Yup.object({
    slug: Yup.string()
       .matches(
          /^([a-zA-Z0-9-_]+)$/,
