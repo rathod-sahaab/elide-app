@@ -7,11 +7,9 @@ import {
    ModalHeader,
    ModalCloseButton,
    ModalBody,
-   ModalFooter,
-   Text,
 } from '@chakra-ui/core'
 import { AddIcon } from '@chakra-ui/icons'
-import React, { Dispatch, SetStateAction } from 'react'
+import React from 'react'
 import { Route } from '../models/data/Route'
 import CreateRouteForm from './CreateRouteForm'
 

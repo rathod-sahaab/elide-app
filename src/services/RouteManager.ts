@@ -43,3 +43,25 @@ export const myRoutes = async () => {
          return null
       })
 }
+
+export const deleteRoute = async (id: string) => {
+   return fetch(`/api/routes/delete/${id}`, {
+      method: 'DELETE',
+      headers: {
+         'Content-Type': 'application/json',
+      },
+   })
+      .then(async (response) => {
+         console.log(response)
+         if (response.status == 200) {
+            let route: Route = await response.json()
+            return route
+         } else {
+            return null
+         }
+      })
+      .catch((error) => {
+         console.error('Error:', error)
+         return null
+      })
+}

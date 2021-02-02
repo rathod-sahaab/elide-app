@@ -3,12 +3,8 @@ import {
    Table,
    Thead,
    Tbody,
-   Tfoot,
    Tr,
    Th,
-   Td,
-   TableCaption,
-   useColorModeValue,
 } from '@chakra-ui/react'
 import * as React from 'react'
 import { Route } from '../models/data/Route'
