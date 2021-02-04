@@ -1,37 +1,31 @@
-import {
-   Box,
-   Heading,
-   Modal,
-   ModalBody,
-   ModalCloseButton,
-   ModalContent,
-   ModalHeader,
-   ModalOverlay,
-   Spinner,
-   useDisclosure,
-} from '@chakra-ui/core'
+import { Box, Heading, Spinner, useDisclosure } from '@chakra-ui/react'
 import { Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react'
 import * as React from 'react'
 import { Route } from '../models/data/Route'
+import DeleteRouteAlert from './DeleteRouteAlert'
 import RouteTile from './RouteTile'
-import UpdateRouteForm from './UpdateRouteForm'
+import UpdateRouteModal from './UpdateRouteModal'
 
 export default function RouteList({
    routesData,
    loading,
    updateRoute,
+   removeRoute,
 }: {
    routesData: Route[]
    loading: boolean
    updateRoute: (route: Route) => void
+   removeRoute: (route: Route) => void
 }) {
-   const { isOpen, onOpen, onClose } = useDisclosure() // For Modal
+   const { isOpen, onOpen, onClose } = useDisclosure() // For UpdateRouteModal
+   const {
+      isOpen: isDeleteOpen,
+      onOpen: onDeleteOpen,
+      onClose: onDeleteClose,
+   } = useDisclosure() // For Delete Dialog
+   // When
    const [routeToEdit, setRouteToEdit] = React.useState<Route>(null)
-
-   const onSuccess = (route: Route) => {
-      updateRoute(route)
-      onClose()
-   }
+   const [routeToDelete, setRouteToDelete] = React.useState<Route>(null)
 
    return (
       <>
@@ -71,25 +65,29 @@ export default function RouteList({
                               key={route.id}
                               route={route}
                               openEditDialog={onOpen}
+                              openDeleteDialog={onDeleteOpen}
                               setRouteToEdit={setRouteToEdit}
+                              setRouteToDelete={setRouteToDelete}
                            ></RouteTile>
                         )
                      })}
                   </Tbody>
                </Table>
-               <Modal isOpen={isOpen} onClose={onClose}>
-                  <ModalOverlay />
-                  <ModalContent pb={4} borderRadius={8}>
-                     <ModalHeader>Edit existing link</ModalHeader>
-                     <ModalCloseButton />
-                     <ModalBody>
-                        <UpdateRouteForm
-                           route={routeToEdit}
-                           callOnSuccess={onSuccess}
-                        />
-                     </ModalBody>
-                  </ModalContent>
-               </Modal>
+               {/*
+		This is required because we want to have one dialog for all edit route buttons.
+		 */}
+               <UpdateRouteModal
+                  routeToEdit={routeToEdit}
+                  isOpen={isOpen}
+                  onClose={onClose}
+                  updateRoute={updateRoute}
+               />
+               <DeleteRouteAlert
+                  route={routeToDelete}
+                  isOpen={isDeleteOpen}
+                  onClose={onDeleteClose}
+                  removeRoute={removeRoute}
+               />
             </Box>
          )}
       </>

@@ -11,7 +11,7 @@ import {
    InputRightElement,
    Icon,
    // Link,
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import { useState } from 'react'
 import { Link as GatsbyLink } from 'gatsby'
 
@@ -137,7 +137,7 @@ export default function RegisterForm() {
             </Field>
             <Button
                type="submit"
-               variantColor="teal"
+               colorScheme="teal"
                variant="solid"
                width="full"
                my={4}
@@ -147,7 +147,7 @@ export default function RegisterForm() {
             <Box>
                Already a user?{' '}
                <GatsbyLink to="/app/login">
-                  <Button variant="link" variantColor="teal">
+                  <Button variant="link" colorScheme="teal">
                      Login
                   </Button>
                </GatsbyLink>

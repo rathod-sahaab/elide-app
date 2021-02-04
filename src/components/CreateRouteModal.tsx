@@ -7,7 +7,7 @@ import {
    ModalHeader,
    ModalCloseButton,
    ModalBody,
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
 import React from 'react'
 import { Route } from '../models/data/Route'
@@ -28,7 +28,7 @@ export default function CreateRouteModal({
    return (
       <>
          <Button
-            leftIcon={AddIcon}
+            leftIcon={<AddIcon />}
             variant="solid"
             size="lg"
             borderRadius={8}

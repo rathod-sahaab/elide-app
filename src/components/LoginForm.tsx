@@ -10,7 +10,7 @@ import {
    InputRightElement,
    Icon,
    InputGroup,
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import { Link as GatsbyLink, navigate } from 'gatsby'
 import UserLoginSchema from '../models/validations/UserLoginSchema'
 import UserLoginData from '../models/data/UserLoginData'
@@ -96,7 +96,7 @@ export default function LoginForm() {
             </Field>
             <Button
                type="submit"
-               variantColor="teal"
+               colorScheme="teal"
                variant="solid"
                width="full"
                my={4}
@@ -106,7 +106,7 @@ export default function LoginForm() {
             <Box>
                Don't have an account?{' '}
                <GatsbyLink to="/app/register">
-                  <Button variant="link" variantColor="teal">
+                  <Button variant="link" colorScheme="teal">
                      Register
                   </Button>
                </GatsbyLink>

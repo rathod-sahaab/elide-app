@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/core'
+import { Button } from '@chakra-ui/react'
 import * as React from 'react'
 
 export default function ActivityIndicator({ isActive, ...props }) {
@@ -7,7 +7,7 @@ export default function ActivityIndicator({ isActive, ...props }) {
          {...props}
          size="xs"
          textTransform="uppercase"
-         variantColor={isActive ? 'green' : 'yellow'}
+         colorScheme={isActive ? 'green' : 'yellow'}
       >
          {isActive ? 'active' : 'inactive'}
       </Button>

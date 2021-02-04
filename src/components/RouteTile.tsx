@@ -1,18 +1,22 @@
-import { IconButton } from '@chakra-ui/core'
-import { EditIcon } from '@chakra-ui/icons'
+import { IconButton } from '@chakra-ui/react'
+import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
 import { Td, Tr } from '@chakra-ui/react'
 import * as React from 'react'
 import { Route } from '../models/data/Route'
 import ActivityIndicator from './ActivityIndicator'
 
-export default function RouteList({
+export default function RouteTile({
    route,
    openEditDialog,
+   openDeleteDialog,
    setRouteToEdit,
+   setRouteToDelete,
 }: {
    route: Route
    openEditDialog: any
+   openDeleteDialog: any
    setRouteToEdit: any
+   setRouteToDelete: any
 }) {
    return (
       <Tr
@@ -32,10 +36,20 @@ export default function RouteList({
             <ActivityIndicator minWidth="unset" isActive={route.active} />
             <IconButton
                aria-label="edit link"
-               icon={EditIcon}
+               icon={<EditIcon />}
                onClick={() => {
-                  openEditDialog()
                   setRouteToEdit(route)
+                  openEditDialog()
+               }}
+               ml={4}
+               variant="ghost"
+            />
+            <IconButton
+               aria-label="delete link"
+               icon={<DeleteIcon />}
+               onClick={() => {
+                  setRouteToDelete(route)
+                  openDeleteDialog()
                }}
                ml={4}
                variant="ghost"

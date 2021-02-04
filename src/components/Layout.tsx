@@ -2,21 +2,20 @@ import * as React from 'react'
 
 import './Layout.scss'
 import {
-   ThemeProvider,
-   ColorModeProvider,
+   ChakraProvider,
+   ColorModeScript,
    CSSReset,
    theme,
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import Header from './Header'
 
 export default function Layout({ children }) {
    return (
-      <ThemeProvider theme={theme}>
-         <ColorModeProvider>
-            <CSSReset />
-            <Header />
-            <main>{children}</main>
-         </ColorModeProvider>
-      </ThemeProvider>
+      <ChakraProvider theme={theme}>
+         <ColorModeScript />
+         <CSSReset />
+         <Header />
+         <main>{children}</main>
+      </ChakraProvider>
    )
 }

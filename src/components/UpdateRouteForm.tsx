@@ -15,7 +15,7 @@ import {
    InputGroup,
    InputLeftAddon,
    Switch,
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import { VStack } from '@chakra-ui/react'
 import { updateRoute } from '../services/RouteManager'
 
@@ -147,7 +147,7 @@ export default function UpdateRouteForm({
                            {...field}
                            id="active"
                            name="active"
-                           defaultIsChecked
+                           size="md"
                         />
                         <FormErrorMessage>
                            {form.errors.active}
@@ -157,13 +157,13 @@ export default function UpdateRouteForm({
                </Field>
                <Button
                   type="submit"
-                  variantColor="teal"
+                  colorScheme="teal"
                   variant="solid"
                   size="md"
                   borderRadius={8}
                   alignSelf="flex-end"
                >
-                  Create
+                  Update
                </Button>
             </VStack>
          </Form>

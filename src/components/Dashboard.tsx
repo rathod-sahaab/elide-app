@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
-import { Box, Flex } from '@chakra-ui/core'
+import { Box, Flex } from '@chakra-ui/react'
 import RouteList from './RouteList'
 import CreateRouteModal from './CreateRouteModal'
 import { Route } from '../models/data/Route'
@@ -35,6 +35,19 @@ export default function Dashboard() {
       })
    }
 
+   const removeRoute = (route: Route) => {
+      setRoutesData((prev: Route[]) => {
+         // Update value
+         const index = prev.findIndex((elem) => {
+            return elem.id === route.id
+         })
+         if (index !== -1) {
+            prev.splice(index, 1)
+         }
+         return prev
+      })
+   }
+
    React.useEffect(() => {
       loadData()
       console.log('Use effect called')
@@ -52,6 +65,7 @@ export default function Dashboard() {
                   routesData={routesData}
                   loading={loading}
                   updateRoute={updateRoute}
+                  removeRoute={removeRoute}
                />
             </Box>
          </Flex>

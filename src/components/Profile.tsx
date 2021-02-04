@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Flex, Heading, Text } from '@chakra-ui/core'
+import { Box, Button, Flex, Heading, Text } from '@chakra-ui/react'
 import React from 'react'
 import { getUser } from '../services/auth'
 import User from '../models/data/User'
@@ -29,7 +29,7 @@ const Profile = () => {
                <Button
                   size="xs"
                   textTransform="uppercase"
-                  variantColor={user.email_verified ? 'green' : 'red'}
+                  colorScheme={user.email_verified ? 'green' : 'red'}
                >
                   {user.email_verified ? 'email verified' : 'email unverified'}
                </Button>

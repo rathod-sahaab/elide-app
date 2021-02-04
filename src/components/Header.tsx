@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { isLoggedIn, logout } from '../services/auth'
 import { StaticQuery, graphql } from 'gatsby'
-import { Heading, Box, Button, Flex } from '@chakra-ui/core'
+import { Heading, Box, Button, Flex } from '@chakra-ui/react'
 import ThemeToggler from './ThemeToggler'
 import Img from 'gatsby-image'
 import { Spacer } from '@chakra-ui/react'
@@ -40,7 +40,7 @@ export default function Header() {
                <ThemeToggler />
                {isLoggedIn() ? (
                   <Button
-                     variantColor="green"
+                     colorScheme="green"
                      variant="solid"
                      onClick={async () => {
                         let success = await logout()
@@ -55,7 +55,7 @@ export default function Header() {
                ) : (
                   <>
                      <Button
-                        variantColor="green"
+                        colorScheme="green"
                         variant="solid"
                         onClick={() => navigate('/app/register')}
                         mx={4}
@@ -64,7 +64,7 @@ export default function Header() {
                      </Button>
                      {'  '}
                      <Button
-                        variantColor="green"
+                        colorScheme="green"
                         variant="solid"
                         onClick={() => navigate('/app/login')}
                      >

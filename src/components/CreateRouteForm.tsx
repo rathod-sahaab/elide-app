@@ -10,7 +10,7 @@ import {
    InputGroup,
    InputLeftAddon,
    Switch,
-} from '@chakra-ui/core'
+} from '@chakra-ui/react'
 import { VStack } from '@chakra-ui/react'
 import { createRoute } from '../services/RouteManager'
 
@@ -122,7 +122,7 @@ export default function CreateRouteForm({
                </Field>
                <Button
                   type="submit"
-                  variantColor="teal"
+                  colorScheme="teal"
                   variant="solid"
                   size="md"
                   borderRadius={8}
