@@ -74,8 +74,7 @@ export default function LoginForm() {
                         <Input
                            {...field}
                            type={showPassword ? 'text' : 'password'}
-                           placeholder="*******"
-                           size="lg"
+                           placeholder="password"
                         />
                         <InputRightElement width="3rem">
                            <IconButton
