@@ -5,14 +5,12 @@ import RegisterForm from '../components/RegisterForm'
 
 export default function Register() {
    return (
-      <>
+      <FormWrapper>
          <Helmet>
             <meta charSet="utf-8" />
             <title>Register - Elide: Simplify URLs</title>
          </Helmet>
-         <FormWrapper>
-            <RegisterForm />
-         </FormWrapper>
-      </>
+         <RegisterForm />
+      </FormWrapper>
    )
 }

@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { isLoggedIn, logout } from '../services/auth'
 import { StaticQuery, graphql } from 'gatsby'
-import { Heading, Box, Button, Flex } from '@chakra-ui/react'
+import { Heading, Box, Button, Flex, HStack } from '@chakra-ui/react'
 import ThemeToggler from './ThemeToggler'
 import Img from 'gatsby-image'
 import { Spacer } from '@chakra-ui/react'
-import { navigate } from 'gatsby'
+import { navigate, Link } from 'gatsby'
 
 export default function Header() {
    const logo = (
@@ -14,7 +14,7 @@ export default function Header() {
             query elideLogoHeaderQuery {
                file(relativePath: { eq: "elide-logo.png" }) {
                   childImageSharp {
-                     fixed(height: 30) {
+                     fixed(height: 36) {
                         ...GatsbyImageSharpFixed
                      }
                   }
@@ -32,28 +32,54 @@ export default function Header() {
       >
          <Box px={6} py={4}>
             <Flex width="full" align="center">
-               {logo}
-               <Box px={2}>
-                  <Heading fontSize={30}>elide</Heading>
-               </Box>
+               <Link to="/">
+                  <HStack spacing={2}>
+                     {logo}
+                     <Heading fontFamily="Poppins" fontSize={30}>
+                        elide
+                     </Heading>
+                  </HStack>
+               </Link>
                <Spacer />
                <ThemeToggler />
                {isLoggedIn() ? (
-                  <Button
-                     colorScheme="green"
-                     variant="solid"
-                     onClick={async () => {
-                        let success = await logout()
-                        if (success) {
-                           navigate('/')
-                        }
-                     }}
-                     ml={4}
-                  >
-                     Logout
-                  </Button>
+                  <nav>
+                     <Button
+                        colorScheme="green"
+                        variant="link"
+                        onClick={async () => {
+                           navigate('/app/dashboard')
+                        }}
+                        ml={6}
+                     >
+                        Dashboard
+                     </Button>
+                     <Button
+                        colorScheme="green"
+                        variant="link"
+                        onClick={async () => {
+                           navigate('/app/profile')
+                        }}
+                        ml={4}
+                     >
+                        Profile
+                     </Button>
+                     <Button
+                        colorScheme="green"
+                        variant="solid"
+                        onClick={async () => {
+                           let success = await logout()
+                           if (success) {
+                              navigate('/')
+                           }
+                        }}
+                        ml={6}
+                     >
+                        Logout
+                     </Button>
+                  </nav>
                ) : (
-                  <>
+                  <nav>
                      <Button
                         colorScheme="green"
                         variant="solid"
@@ -70,7 +96,7 @@ export default function Header() {
                      >
                         Login
                      </Button>
-                  </>
+                  </nav>
                )}
             </Flex>
          </Box>

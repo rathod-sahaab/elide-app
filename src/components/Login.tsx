@@ -12,14 +12,12 @@ export default function Login() {
       return null
    }
    return (
-      <>
+      <FormWrapper>
          <Helmet>
             <meta charSet="utf-8" />
             <title>Login - Elide: Simplify URLs</title>
          </Helmet>
-         <FormWrapper>
-            <LoginForm />
-         </FormWrapper>
-      </>
+         <LoginForm />
+      </FormWrapper>
    )
 }

@@ -1,6 +1,5 @@
 import * as React from 'react'
 
-import './Layout.scss'
 import {
    ChakraProvider,
    ColorModeScript,
@@ -8,14 +7,20 @@ import {
    theme,
 } from '@chakra-ui/react'
 import Header from './Header'
+import Footer from './Footer'
+
+import './Layout.scss'
 
 export default function Layout({ children }) {
    return (
       <ChakraProvider theme={theme}>
          <ColorModeScript />
          <CSSReset />
-         <Header />
-         <main>{children}</main>
+         <div id="app">
+            <Header />
+            <main>{children}</main>
+            <Footer />
+         </div>
       </ChakraProvider>
    )
 }

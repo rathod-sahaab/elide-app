@@ -10,11 +10,13 @@ import {
    InputRightElement,
    Icon,
    InputGroup,
+   IconButton,
 } from '@chakra-ui/react'
 import { Link as GatsbyLink, navigate } from 'gatsby'
 import UserLoginSchema from '../models/validations/UserLoginSchema'
 import UserLoginData from '../models/data/UserLoginData'
 import { handleLogin } from '../services/auth'
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 const onSubmit = async (
    values: UserLoginData,
@@ -77,17 +79,15 @@ export default function LoginForm() {
                            size="lg"
                         />
                         <InputRightElement width="3rem">
-                           <Button
+                           <IconButton
+                              aria-label="toggle password visibility"
+                              icon={
+                                 showPassword ? <ViewOffIcon /> : <ViewIcon />
+                              }
                               h="1.5rem"
                               size="sm"
                               onClick={handlePasswordVisibility}
-                           >
-                              {showPassword ? (
-                                 <Icon name="view-off" />
-                              ) : (
-                                 <Icon name="view" />
-                              )}
-                           </Button>
+                           />
                         </InputRightElement>
                      </InputGroup>
                      <FormErrorMessage>{form.errors.password}</FormErrorMessage>

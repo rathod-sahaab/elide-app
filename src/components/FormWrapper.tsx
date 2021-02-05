@@ -4,7 +4,7 @@ import StaticLogo from './StaticLogo'
 
 export default function FormWrapper({ children }) {
    return (
-      <Flex width="full" align="center" justifyContent="center">
+      <Flex width="full" align="center" justifyContent="center" height="100%">
          <Box
             p={8}
             maxWidth="500px"
