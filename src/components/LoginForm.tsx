@@ -95,7 +95,7 @@ export default function LoginForm() {
             </Field>
             <Button
                type="submit"
-               colorScheme="teal"
+               colorScheme="green"
                variant="solid"
                width="full"
                my={4}
@@ -105,7 +105,7 @@ export default function LoginForm() {
             <Box>
                Don't have an account?{' '}
                <GatsbyLink to="/app/register">
-                  <Button variant="link" colorScheme="teal">
+                  <Button variant="link" colorScheme="green">
                      Register
                   </Button>
                </GatsbyLink>

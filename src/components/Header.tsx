@@ -1,18 +1,34 @@
 import * as React from 'react'
 import { isLoggedIn, logout } from '../services/auth'
 import { StaticQuery, graphql } from 'gatsby'
-import { Heading, Box, Button, Flex, HStack } from '@chakra-ui/react'
+import {
+   Heading,
+   Box,
+   Button,
+   Flex,
+   HStack,
+   useColorMode,
+} from '@chakra-ui/react'
 import ThemeToggler from './ThemeToggler'
 import Img from 'gatsby-image'
 import { Spacer } from '@chakra-ui/react'
 import { navigate, Link } from 'gatsby'
 
 export default function Header() {
+   const { colorMode } = useColorMode()
+   const isLightMode = colorMode == 'light'
    const logo = (
       <StaticQuery
          query={graphql`
             query elideLogoHeaderQuery {
-               file(relativePath: { eq: "elide-logo.png" }) {
+               light: file(relativePath: { eq: "elide-logo.png" }) {
+                  childImageSharp {
+                     fixed(height: 36) {
+                        ...GatsbyImageSharpFixed
+                     }
+                  }
+               }
+               dark: file(relativePath: { eq: "elide-logo-dark.png" }) {
                   childImageSharp {
                      fixed(height: 36) {
                         ...GatsbyImageSharpFixed
@@ -21,9 +37,18 @@ export default function Header() {
                }
             }
          `}
-         render={(data) => <Img fixed={data.file.childImageSharp.fixed} />}
+         render={(data) => (
+            <Img
+               fixed={
+                  isLightMode
+                     ? data.light.childImageSharp.fixed
+                     : data.dark.childImageSharp.fixed
+               }
+            />
+         )}
       />
    )
+
    return (
       <header
          style={{

@@ -136,7 +136,7 @@ export default function RegisterForm() {
             </Field>
             <Button
                type="submit"
-               colorScheme="teal"
+               colorScheme="green"
                variant="solid"
                width="full"
                my={4}
@@ -146,7 +146,7 @@ export default function RegisterForm() {
             <Box>
                Already a user?{' '}
                <GatsbyLink to="/app/login">
-                  <Button variant="link" colorScheme="teal">
+                  <Button variant="link" colorScheme="green">
                      Login
                   </Button>
                </GatsbyLink>
