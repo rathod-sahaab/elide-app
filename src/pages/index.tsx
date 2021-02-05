@@ -1,7 +1,8 @@
-import { Button, Flex, Heading, Text, VStack } from '@chakra-ui/react'
+import { Button, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/react'
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
 import Layout from '../components/Layout'
+import { FaGithub } from 'react-icons/fa'
 
 export default function IndexPage() {
    return (
@@ -22,9 +23,16 @@ export default function IndexPage() {
                   intent. <br /> Above all <b>elide</b> is opensource so you can
                   be sure your users are safe with us.
                </Text>
-               <Button size="lg" colorScheme="green">
-                  Know more
-               </Button>
+               <HStack spacing={2}>
+                  <Button size="lg" colorScheme="green">
+                     Know more
+                  </Button>
+                  // TODO: Add GitHub link
+                  <Button size="lg" colorScheme="gray">
+                     <FaGithub style={{ marginRight: `0.6em` }} />
+                     GitHub
+                  </Button>
+               </HStack>
             </VStack>
          </Flex>
          <Flex align="center" direction="column" width="full">
