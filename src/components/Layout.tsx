@@ -18,7 +18,7 @@ export default function Layout({ children }) {
          <CSSReset />
          <div id="app">
             <Header />
-            <main>{children}</main>
+            <main style={{ overflow: 'auto' }}>{children}</main>
             <Footer />
          </div>
       </ChakraProvider>
