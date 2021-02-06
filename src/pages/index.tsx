@@ -18,18 +18,18 @@ export default function IndexPage() {
                </Heading>
                <Text textAlign="center">
                   We transform your ugly, generic, lengthy and uncomprehensible
-                  URLs in <b>works of art ;)</b> <br /> We make them easy to
+                  URLs in <b>works of art ;)</b> <br /> URLs become easy to
                   remember, beautiful, personalized, and clearly convey their
                   intent. <br /> Above all <b>elide</b> is opensource so you can
                   be sure your users are safe with us.
                </Text>
-               <HStack spacing={2}>
+               <HStack spacing={3}>
                   <Button size="lg" colorScheme="green">
-                     Know more
+                     Get started
                   </Button>
                   // TODO: Add GitHub link
                   <Button size="lg" colorScheme="gray">
-                     <FaGithub style={{ marginRight: `0.6em` }} />
+                     <FaGithub style={{ marginRight: `0.5em` }} />
                      GitHub
                   </Button>
                </HStack>
