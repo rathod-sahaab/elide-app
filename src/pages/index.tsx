@@ -1,10 +1,19 @@
-import { Button, Flex, Heading, HStack, Text, VStack } from '@chakra-ui/react'
+import {
+   Button,
+   Flex,
+   Heading,
+   HStack,
+   Text,
+   VStack,
+   StatGroup,
+} from '@chakra-ui/react'
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
 import Layout from '../components/Layout'
 import { FaGithub } from 'react-icons/fa'
 import CycleTextsButton from '../components/TextTransition'
-import { ArrowForwardIcon, ArrowRightIcon } from '@chakra-ui/icons'
+import VisitStats from '../components/VisitStats'
+import { ImLink } from 'react-icons/im'
 
 export default function IndexPage() {
    return (
@@ -87,7 +96,7 @@ export default function IndexPage() {
                   >
                      elide.me/elide-survey
                   </Button>
-                  <ArrowRightIcon />
+                  <ImLink />
                   <CycleTextsButton
                      texts={[
                         'https://forms.gle/RJbd5ZGeAB85xTF68',
@@ -109,6 +118,31 @@ export default function IndexPage() {
                <Heading fontFamily="poppins" size="2xl">
                   Smart URLs
                </Heading>
+               <Text textAlign="center">
+                  We provide you necessary statistics to help you assess your
+                  reach and demographics.
+                  <br />
+                  So that you can cater to your users the content they like.
+               </Text>
+               <StatGroup>
+                  <HStack spacing={6}>
+                     <VisitStats
+                        visitCount="21,000"
+                        visitHeading="Unique visits"
+                        helperText="This week"
+                     />
+                     <VisitStats
+                        visitCount="50,000"
+                        visitHeading="Total visits"
+                        helperText="This week"
+                     />
+                     <VisitStats
+                        visitCount="50%"
+                        visitHeading="Retention"
+                        helperText="This week"
+                     />
+                  </HStack>
+               </StatGroup>
             </VStack>
          </Flex>
       </Layout>
