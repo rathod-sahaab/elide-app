@@ -127,13 +127,13 @@ export default function IndexPage() {
                <StatGroup>
                   <HStack spacing={6}>
                      <VisitStats
-                        visitCount="21,000"
-                        visitHeading="Unique visits"
+                        quant="21,000"
+                        heading="Unique visits"
                         helperText="This week"
                      />
                      <VisitStats
-                        visitCount="50,000"
-                        visitHeading="Total visits"
+                        quant="50,000"
+                        heading="Total visits"
                         helperText="This week"
                      />
                      <VisitStats
