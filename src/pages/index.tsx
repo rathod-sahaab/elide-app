@@ -137,8 +137,8 @@ export default function IndexPage() {
                         helperText="This week"
                      />
                      <VisitStats
-                        visitCount="50%"
-                        visitHeading="Retention"
+                        quant="50%"
+                        heading="Retention"
                         helperText="This week"
                      />
                   </HStack>
