@@ -6,6 +6,10 @@ import {
    Text,
    VStack,
    StatGroup,
+   Alert,
+   AlertIcon,
+   AlertTitle,
+   AlertDescription,
 } from '@chakra-ui/react'
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
@@ -14,6 +18,7 @@ import { FaGithub } from 'react-icons/fa'
 import CycleTextsButton from '../components/TextTransition'
 import VisitStats from '../components/VisitStats'
 import { ImLink } from 'react-icons/im'
+import { redirectTo } from '@reach/router'
 
 export default function IndexPage() {
    return (
@@ -39,11 +44,37 @@ export default function IndexPage() {
                      Get started
                   </Button>
                   // TODO: Add GitHub link
-                  <Button size="lg" colorScheme="gray">
+                  <Button
+                     size="lg"
+                     colorScheme="gray"
+                     onClick={() =>
+                        window.location.assign(
+                           'https://github.com/rathod-sahaab/elide-app'
+                        )
+                     }
+                  >
                      <FaGithub style={{ marginRight: `0.5em` }} />
                      GitHub
                   </Button>
                </HStack>
+
+               <Alert
+                  status="warning"
+                  maxWidth="lg"
+                  flexDirection="column"
+                  borderRadius={12}
+               >
+                  <AlertIcon boxSize="36px" />
+                  <AlertTitle mt={4} mb={1} fontSize="lg">
+                     Coming soon...
+                  </AlertTitle>
+                  <AlertDescription>
+                     We are working on getting the backend server up and
+                     running, most features like login and registering won't
+                     work. You can expect service from <b>February 15, 2021</b>.
+                     Thanks for your patience.
+                  </AlertDescription>
+               </Alert>
             </VStack>
          </Flex>
          <Flex
