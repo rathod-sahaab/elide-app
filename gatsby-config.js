@@ -2,6 +2,7 @@ module.exports = {
    siteMetadata: {
       title: 'Elide: Make URLs simpler!',
    },
+   pathPrefix: '/elide-app',
    plugins: [
       'gatsby-plugin-sass',
       'gatsby-plugin-sharp',
@@ -23,6 +24,7 @@ module.exports = {
       },
    ],
    proxy: {
+      // for testing
       prefix: '/api',
       url: 'http://localhost:9600',
    },
