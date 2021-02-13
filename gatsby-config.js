@@ -1,6 +1,8 @@
 module.exports = {
    siteMetadata: {
       title: 'Elide: Make URLs simpler!',
+      siteUrl: `https://www.gatsbyjs.com`,
+      description: `Make your URLs do more, easily`,
    },
    pathPrefix: '/elide-app',
    plugins: [
