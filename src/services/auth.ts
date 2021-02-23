@@ -1,5 +1,3 @@
-// import User from '../models/data/User'
-
 export const isBrowser = () => typeof window !== 'undefined'
 export const getUser = () =>
    isBrowser() && window.localStorage.getItem('gatsbyUser')
