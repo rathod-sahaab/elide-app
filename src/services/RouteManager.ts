@@ -5,7 +5,7 @@ export const createRoute = async ({
    target,
    active,
 }: CreateRouteData) => {
-   return fetch('/api/routes/create', {
+   return fetch(`${process.env.API_URL}/api/routes/create`, {
       method: 'POST',
       headers: {
          'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export const createRoute = async ({
       })
 }
 export const updateRoute = async (updates: UpdateRouteData) => {
-   return fetch('/api/routes/update', {
+   return fetch(`${process.env.API_URL}/api/routes/update`, {
       method: 'PUT',
       headers: {
          'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ export const updateRoute = async (updates: UpdateRouteData) => {
 }
 
 export const myRoutes = async () => {
-   return fetch('/api/routes/my')
+   return fetch(`${process.env.API_URL}/api/routes/my`)
       .then(async (response) => {
          console.log(response)
          if (response.status == 200) {
@@ -67,7 +67,7 @@ export const myRoutes = async () => {
 }
 
 export const deleteRoute = async (id: string) => {
-   return fetch(`/api/routes/delete/${id}`, {
+   return fetch(`${process.env.API_URL}/api/routes/delete/${id}`, {
       method: 'DELETE',
       headers: {
          'Content-Type': 'application/json',

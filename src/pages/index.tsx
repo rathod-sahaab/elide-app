@@ -66,13 +66,10 @@ export default function IndexPage() {
                >
                   <AlertIcon boxSize="36px" />
                   <AlertTitle mt={4} mb={1} fontSize="lg">
-                     Coming soon...
+                     Beta release
                   </AlertTitle>
                   <AlertDescription>
-                     We are working on getting the backend server up and
-                     running, most features like login and registering won't
-                     work. You can expect service from <b>February 15, 2021</b>.
-                     Thanks for your patience.
+                     We are testing things out and data might get lost.
                   </AlertDescription>
                </Alert>
             </VStack>
