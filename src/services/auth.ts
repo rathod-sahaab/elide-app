@@ -10,7 +10,7 @@ const setUser = (user) =>
    window.localStorage.setItem('gatsbyUser', JSON.stringify(user))
 
 export const handleLogin = async ({ username, password }): Promise<boolean> => {
-   return fetch('/api/users/login', {
+   return fetch(`${process.env.API_URL}/api/users/login`, {
       method: 'POST', // or 'PUT'
       headers: {
          'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const isLoggedIn = () => {
 }
 
 export const logout = async () => {
-   return await fetch('/api/users/logout', {
+   return await fetch(`${process.env.API_URL}/api/users/logout`, {
       method: 'GET', // or 'PUT'
    })
       .then(async (response) => {
