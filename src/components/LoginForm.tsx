@@ -28,6 +28,7 @@ const onSubmit = async (
    } else {
       alert('error logging in')
    }
+   actions.setSubmitting(false)
 }
 
 export default function LoginForm() {
@@ -48,68 +49,87 @@ export default function LoginForm() {
             onSubmit(values, actions)
          }}
       >
-         <Form>
-            <Field name="username">
-               {({ field, form }) => (
-                  <FormControl
-                     isInvalid={form.errors.username && form.touched.username}
-                     isRequired
-                     my={4}
-                  >
-                     <FormLabel htmlFor="username">Username</FormLabel>
-                     <Input {...field} id="username" placeholder="username" />
-                     <FormErrorMessage>{form.errors.username}</FormErrorMessage>
-                  </FormControl>
-               )}
-            </Field>
-            <Field name="password">
-               {({ field, form }) => (
-                  <FormControl
-                     isInvalid={form.errors.password && form.touched.password}
-                     isRequired
-                     my={4}
-                  >
-                     <FormLabel htmlFor="password">Password</FormLabel>
-                     <InputGroup>
+         {(props) => (
+            <Form>
+               <Field name="username">
+                  {({ field, form }) => (
+                     <FormControl
+                        isInvalid={
+                           form.errors.username && form.touched.username
+                        }
+                        isRequired
+                        my={4}
+                     >
+                        <FormLabel htmlFor="username">Username</FormLabel>
                         <Input
                            {...field}
-                           type={showPassword ? 'text' : 'password'}
-                           placeholder="password"
+                           id="username"
+                           placeholder="username"
                         />
-                        <InputRightElement width="3rem">
-                           <IconButton
-                              aria-label="toggle password visibility"
-                              icon={
-                                 showPassword ? <ViewOffIcon /> : <ViewIcon />
-                              }
-                              h="1.5rem"
-                              size="sm"
-                              onClick={handlePasswordVisibility}
+                        <FormErrorMessage>
+                           {form.errors.username}
+                        </FormErrorMessage>
+                     </FormControl>
+                  )}
+               </Field>
+               <Field name="password">
+                  {({ field, form }) => (
+                     <FormControl
+                        isInvalid={
+                           form.errors.password && form.touched.password
+                        }
+                        isRequired
+                        my={4}
+                     >
+                        <FormLabel htmlFor="password">Password</FormLabel>
+                        <InputGroup>
+                           <Input
+                              {...field}
+                              type={showPassword ? 'text' : 'password'}
+                              placeholder="password"
                            />
-                        </InputRightElement>
-                     </InputGroup>
-                     <FormErrorMessage>{form.errors.password}</FormErrorMessage>
-                  </FormControl>
-               )}
-            </Field>
-            <Button
-               type="submit"
-               colorScheme="green"
-               variant="solid"
-               width="full"
-               my={4}
-            >
-               Login
-            </Button>
-            <Box>
-               Don't have an account?{' '}
-               <GatsbyLink to="/app/register">
-                  <Button variant="link" colorScheme="green">
-                     Register
-                  </Button>
-               </GatsbyLink>
-            </Box>
-         </Form>
+                           <InputRightElement width="3rem">
+                              <IconButton
+                                 aria-label="toggle password visibility"
+                                 icon={
+                                    showPassword ? (
+                                       <ViewOffIcon />
+                                    ) : (
+                                       <ViewIcon />
+                                    )
+                                 }
+                                 h="1.5rem"
+                                 size="sm"
+                                 onClick={handlePasswordVisibility}
+                              />
+                           </InputRightElement>
+                        </InputGroup>
+                        <FormErrorMessage>
+                           {form.errors.password}
+                        </FormErrorMessage>
+                     </FormControl>
+                  )}
+               </Field>
+               <Button
+                  type="submit"
+                  colorScheme="green"
+                  variant="solid"
+                  width="full"
+                  isLoading={props.isSubmitting}
+                  my={4}
+               >
+                  Login
+               </Button>
+               <Box>
+                  Don't have an account?{' '}
+                  <GatsbyLink to="/app/register">
+                     <Button variant="link" colorScheme="green">
+                        Register
+                     </Button>
+                  </GatsbyLink>
+               </Box>
+            </Form>
+         )}
       </Formik>
    )
 }
