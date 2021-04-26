@@ -1,0 +1,1 @@
+@import url(https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap);*,:after,:before{margin:0;padding:0;box-sizing:border-box}#app{height:100vh;overflow:hidden;display:grid;grid-template-columns:1fr;grid-template-rows:auto 1fr auto;grid-template-areas:"header" "main" "footer"}#app>header{grid-area:header}#app>main{grid-area:main}#app>footer{grid-area:footer}
