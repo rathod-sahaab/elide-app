@@ -10,6 +10,7 @@ export default function ThemeToggler() {
          onClick={toggleColorMode}
          variant="ghost"
          aria-label="theme toggle"
+         mr={6}
       />
    )
 }
