@@ -1,22 +1,38 @@
 import * as React from 'react'
-import { isLoggedIn, logout } from '../services/auth'
 import { StaticQuery, graphql } from 'gatsby'
 import {
    Heading,
    Box,
-   Button,
    Flex,
    HStack,
    useColorMode,
+   IconButton,
+   useMediaQuery,
+   useDisclosure,
+} from '@chakra-ui/react'
+import {
+   Drawer,
+   DrawerBody,
+   DrawerFooter,
+   DrawerHeader,
+   DrawerOverlay,
+   DrawerContent,
+   DrawerCloseButton,
 } from '@chakra-ui/react'
 import ThemeToggler from './ThemeToggler'
 import Img from 'gatsby-image'
 import { Spacer } from '@chakra-ui/react'
-import { navigate, Link } from 'gatsby'
+import { Link } from 'gatsby'
+import Nav from './Nav'
+import { HamburgerIcon } from '@chakra-ui/icons'
 
 export default function Header() {
+   const { isOpen, onOpen, onClose } = useDisclosure()
+
    const { colorMode } = useColorMode()
+   let [isMobile] = useMediaQuery('(max-width: 767px)')
    const isLightMode = colorMode == 'light'
+
    const logo = (
       <StaticQuery
          query={graphql`
@@ -67,61 +83,35 @@ export default function Header() {
                </Link>
                <Spacer />
                <ThemeToggler />
-               {isLoggedIn() ? (
-                  <nav>
-                     <Button
-                        colorScheme="green"
-                        variant="link"
-                        onClick={async () => {
-                           navigate('/app/dashboard')
-                        }}
-                        ml={6}
+
+               {isMobile ? (
+                  <>
+                     <IconButton
+                        aria-label="open menu"
+                        icon={<HamburgerIcon />}
+                        onClick={onOpen}
+                     />
+                     <Drawer
+                        isOpen={isOpen}
+                        placement="right"
+                        onClose={onClose}
                      >
-                        Dashboard
-                     </Button>
-                     <Button
-                        colorScheme="green"
-                        variant="link"
-                        onClick={async () => {
-                           navigate('/app/profile')
-                        }}
-                        ml={4}
-                     >
-                        Profile
-                     </Button>
-                     <Button
-                        colorScheme="green"
-                        variant="solid"
-                        onClick={async () => {
-                           let success = await logout()
-                           if (success) {
-                              navigate('/')
-                           }
-                        }}
-                        ml={6}
-                     >
-                        Logout
-                     </Button>
-                  </nav>
+                        <DrawerOverlay>
+                           <DrawerContent>
+                              <DrawerCloseButton />
+                              <DrawerHeader borderBottomWidth="1px">
+                                 Navigation
+                              </DrawerHeader>
+
+                              <DrawerBody>
+                                 <Nav vertical={true} />
+                              </DrawerBody>
+                           </DrawerContent>
+                        </DrawerOverlay>
+                     </Drawer>
+                  </>
                ) : (
-                  <nav>
-                     <Button
-                        colorScheme="green"
-                        variant="solid"
-                        onClick={() => navigate('/app/register')}
-                        mx={4}
-                     >
-                        Register
-                     </Button>
-                     {'  '}
-                     <Button
-                        colorScheme="green"
-                        variant="solid"
-                        onClick={() => navigate('/app/login')}
-                     >
-                        Login
-                     </Button>
-                  </nav>
+                  <Nav vertical={false} />
                )}
             </Flex>
          </Box>

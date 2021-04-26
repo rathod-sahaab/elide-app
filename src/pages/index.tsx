@@ -10,6 +10,8 @@ import {
    AlertIcon,
    AlertTitle,
    AlertDescription,
+   Stack,
+   useMediaQuery,
 } from '@chakra-ui/react'
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
@@ -18,18 +20,20 @@ import { FaGithub } from 'react-icons/fa'
 import CycleTextsButton from '../components/TextTransition'
 import VisitStats from '../components/VisitStats'
 import { ImLink } from 'react-icons/im'
-import { redirectTo } from '@reach/router'
+import { navigate } from 'gatsby-link'
 
 export default function IndexPage() {
+   const [isMobile] = useMediaQuery('(max-width: 767px)')
+   const [lessThan900] = useMediaQuery('(max-width: 900px)')
    return (
       <Layout>
          <Helmet>
             <meta charSet="utf-8" />
             <title>Elide: Make your URLs simpler</title>
          </Helmet>
-         <Flex align="center" width="full" height="100%">
+         <Flex align="center" width="full" padding={3} height="100%">
             <VStack spacing={10} align="center" width="full">
-               <Heading fontFamily="poppins" size="3xl">
+               <Heading fontFamily="poppins" size="3xl" textAlign="center">
                   Make your URLs simpler!
                </Heading>
                <Text textAlign="center">
@@ -40,10 +44,13 @@ export default function IndexPage() {
                   be sure your users are safe with us.
                </Text>
                <HStack spacing={3}>
-                  <Button size="lg" colorScheme="green">
+                  <Button
+                     size="lg"
+                     colorScheme="green"
+                     onClick={() => navigate('/app/register')}
+                  >
                      Get started
                   </Button>
-                  // TODO: Add GitHub link
                   <Button
                      size="lg"
                      colorScheme="gray"
@@ -60,7 +67,7 @@ export default function IndexPage() {
 
                <Alert
                   status="warning"
-                  maxWidth="lg"
+                  width={isMobile ? 'full' : 'lg'}
                   flexDirection="column"
                   borderRadius={12}
                >
@@ -82,7 +89,7 @@ export default function IndexPage() {
             minHeight="50%"
          >
             <VStack spacing={10} align="center" width="full">
-               <Heading fontFamily="poppins" size="2xl">
+               <Heading fontFamily="Poppins" size="2xl" textAlign="center">
                   Gibberish to English
                </Heading>
                <Text textAlign="center">
@@ -113,7 +120,11 @@ export default function IndexPage() {
                   Worry not we got you covered, just point the elide route to
                   another link.
                </Text>
-               <HStack spacing={3}>
+               <Stack
+                  alignItems="center"
+                  direction={lessThan900 ? 'column' : 'row'}
+                  spacing={3}
+               >
                   <Button
                      p={4}
                      borderRadius={8}
@@ -132,7 +143,7 @@ export default function IndexPage() {
                         'https://definitelyfakeurl.en/RJbd5ZGeAB85xTF68',
                      ]}
                   />
-               </HStack>
+               </Stack>
             </VStack>
          </Flex>
          <Flex
@@ -153,7 +164,7 @@ export default function IndexPage() {
                   So that you can cater to your users the content they like.
                </Text>
                <StatGroup>
-                  <HStack spacing={6}>
+                  <Stack direction={lessThan900 ? 'column' : 'row'} spacing={6}>
                      <VisitStats
                         quant="21,000"
                         heading="Unique visits"
@@ -169,7 +180,7 @@ export default function IndexPage() {
                         heading="Retention"
                         helperText="This week"
                      />
-                  </HStack>
+                  </Stack>
                </StatGroup>
             </VStack>
          </Flex>

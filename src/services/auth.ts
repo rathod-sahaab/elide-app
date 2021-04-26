@@ -17,6 +17,7 @@ export const handleRegister = async (
       headers: {
          'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify(values),
    })
       .then(async (response) => {
@@ -41,6 +42,7 @@ export const handleLogin = async ({ username, password }): Promise<boolean> => {
       headers: {
          'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify({ username, password }),
    })
       .then(async (response) => {
@@ -68,7 +70,8 @@ export const isLoggedIn = () => {
 export const logout = async () => {
    setUser({})
    return await fetch(`${process.env.API_URL}/api/users/logout`, {
-      method: 'GET', // or 'PUT'
+      method: 'GET',
+      credentials: 'include',
    })
       .then(async (response) => {
          if (response.status === 200) {

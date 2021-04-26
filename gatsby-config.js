@@ -34,9 +34,4 @@ module.exports = {
          options: { prefixes: [`/app/*`] }, // client only routes
       },
    ],
-   proxy: {
-      // for testing
-      prefix: '/api',
-      url: 'http://localhost:9600',
-   },
 }
