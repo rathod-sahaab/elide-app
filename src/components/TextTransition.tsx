@@ -2,7 +2,6 @@ import { Box, useColorModeValue, useMediaQuery } from '@chakra-ui/react'
 import * as React from 'react'
 
 export default function CycleTextsButton({ texts }: { texts: string[] }) {
-   console.log(texts)
    if (texts.length < 2) {
       console.error('Text arrays should be longer than 1 elements')
    }
