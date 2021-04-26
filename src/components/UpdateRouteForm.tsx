@@ -148,6 +148,7 @@ export default function UpdateRouteForm({
                            id="active"
                            name="active"
                            size="md"
+                           defaultChecked={field.value}
                         />
                         <FormErrorMessage>
                            {form.errors.active}

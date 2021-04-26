@@ -112,7 +112,7 @@ export default function CreateRouteForm({
                            {...field}
                            id="active"
                            name="active"
-                           defaultIsChecked
+                           defaultChecked={true}
                         />
                         <FormErrorMessage>
                            {form.errors.active}
