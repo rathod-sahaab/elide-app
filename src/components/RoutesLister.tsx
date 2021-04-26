@@ -1,12 +1,11 @@
 import { Box, Heading, Spinner, useDisclosure } from '@chakra-ui/react'
-import { Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react'
 import * as React from 'react'
 import { Route } from '../models/data/Route'
 import DeleteRouteAlert from './DeleteRouteAlert'
-import RouteTile from './RouteTile'
+import RoutesTable from './RoutesTable'
 import UpdateRouteModal from './UpdateRouteModal'
 
-export default function RouteList({
+export default function RoutesLister({
    routesData,
    loading,
    updateRoute,
@@ -17,7 +16,11 @@ export default function RouteList({
    updateRoute: (route: Route) => void
    removeRoute: (route: Route) => void
 }) {
-   const { isOpen, onOpen, onClose } = useDisclosure() // For UpdateRouteModal
+   const {
+      isOpen: isUpdateOpen,
+      onOpen: onUpdateOpen,
+      onClose: onUpdateClose,
+   } = useDisclosure() // For UpdateRouteModal
    const {
       isOpen: isDeleteOpen,
       onOpen: onDeleteOpen,
@@ -44,42 +47,20 @@ export default function RouteList({
                borderRadius={8}
                borderWidth={1}
             >
-               <Table textAlign="left" width="full" variant="simple" size="lg">
-                  <Thead
-                     fontWeight="semibold"
-                     fontSize="sm"
-                     textTransform="uppercase"
-                  >
-                     <Tr>
-                        <Th p={4}>slug</Th>
-                        <Th p={4}>link</Th>
-                        <Th p={4} textAlign="right">
-                           activity
-                        </Th>
-                     </Tr>
-                  </Thead>
-                  <Tbody>
-                     {routesData.map((route) => {
-                        return (
-                           <RouteTile
-                              key={route.id}
-                              route={route}
-                              openEditDialog={onOpen}
-                              openDeleteDialog={onDeleteOpen}
-                              setRouteToEdit={setRouteToEdit}
-                              setRouteToDelete={setRouteToDelete}
-                           ></RouteTile>
-                        )
-                     })}
-                  </Tbody>
-               </Table>
+               <RoutesTable
+                  routesData={routesData}
+                  onUpdateOpen={onUpdateOpen}
+                  onDeleteOpen={onDeleteOpen}
+                  setRouteToEdit={setRouteToEdit}
+                  setRouteToDelete={setRouteToDelete}
+               />
                {/*
 		This is required because we want to have one dialog for all edit route buttons.
 		 */}
                <UpdateRouteModal
                   routeToEdit={routeToEdit}
-                  isOpen={isOpen}
-                  onClose={onClose}
+                  isOpen={isUpdateOpen}
+                  onClose={onUpdateClose}
                   updateRoute={updateRoute}
                />
                <DeleteRouteAlert

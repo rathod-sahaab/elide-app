@@ -5,7 +5,7 @@ import * as React from 'react'
 import { Route } from '../models/data/Route'
 import ActivityIndicator from './ActivityIndicator'
 
-export default function RouteTile({
+export default function RouteTableTile({
    route,
    openEditDialog,
    openDeleteDialog,

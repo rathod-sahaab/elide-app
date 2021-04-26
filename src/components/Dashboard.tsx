@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Helmet } from 'react-helmet'
 import { Box, Flex } from '@chakra-ui/react'
-import RouteList from './RouteList'
+import RoutesLister from './RoutesLister'
 import CreateRouteModal from './CreateRouteModal'
 import { Route } from '../models/data/Route'
 import { myRoutes } from '../services/RouteManager'
@@ -61,7 +61,7 @@ export default function Dashboard() {
          <Flex width="full" align="center" justifyContent="center">
             <Box p={8} maxWidth="1000px" width="full" textAlign="center">
                <CreateRouteModal appendRoute={appendRoute} />
-               <RouteList
+               <RoutesLister
                   routesData={routesData}
                   loading={loading}
                   updateRoute={updateRoute}
