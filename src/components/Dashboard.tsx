@@ -59,7 +59,7 @@ export default function Dashboard() {
             <title> Dashboard - Elide: Make your URLs simpler</title>
          </Helmet>
          <Flex width="full" align="center" justifyContent="center">
-            <Box p={8} maxWidth="1000px" width="full" textAlign="center">
+            <Box p={4} maxWidth="1000px" width="full" textAlign="center">
                <CreateRouteModal appendRoute={appendRoute} />
                <RoutesLister
                   routesData={routesData}

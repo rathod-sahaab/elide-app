@@ -104,14 +104,14 @@ export default function Header() {
                               </DrawerHeader>
 
                               <DrawerBody>
-                                 <Nav vertical={true} />
+                                 <Nav closeDrawer={onClose} vertical={true} />
                               </DrawerBody>
                            </DrawerContent>
                         </DrawerOverlay>
                      </Drawer>
                   </>
                ) : (
-                  <Nav vertical={false} />
+                  <Nav closeDrawer={() => {}} vertical={false} />
                )}
             </Flex>
          </Box>

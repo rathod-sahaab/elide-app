@@ -3,7 +3,13 @@ import { navigate } from 'gatsby'
 
 import { isLoggedIn, logout } from '../services/auth'
 import { Button, HStack, VStack } from '@chakra-ui/react'
-const Nav = ({ vertical = false }: { vertical: boolean }) => {
+const Nav = ({
+   vertical = false,
+   closeDrawer,
+}: {
+   vertical: boolean
+   closeDrawer: () => void
+}) => {
    const Arrangement = vertical ? VStack : HStack
    return (
       <nav>
@@ -14,6 +20,7 @@ const Nav = ({ vertical = false }: { vertical: boolean }) => {
                   variant="link"
                   onClick={async () => {
                      navigate('/app/dashboard')
+                     closeDrawer()
                   }}
                >
                   Dashboard
@@ -23,6 +30,7 @@ const Nav = ({ vertical = false }: { vertical: boolean }) => {
                   variant="link"
                   onClick={async () => {
                      navigate('/app/profile')
+                     closeDrawer()
                   }}
                >
                   Profile
@@ -34,6 +42,7 @@ const Nav = ({ vertical = false }: { vertical: boolean }) => {
                      let success = await logout()
                      if (success) {
                         navigate('/')
+                        closeDrawer()
                      }
                   }}
                >
@@ -46,7 +55,10 @@ const Nav = ({ vertical = false }: { vertical: boolean }) => {
                   colorScheme="green"
                   width="full"
                   variant="solid"
-                  onClick={() => navigate('/app/register')}
+                  onClick={() => {
+                     navigate('/app/register')
+                     closeDrawer()
+                  }}
                >
                   Register
                </Button>
@@ -55,7 +67,10 @@ const Nav = ({ vertical = false }: { vertical: boolean }) => {
                   colorScheme="green"
                   variant="solid"
                   width="full"
-                  onClick={() => navigate('/app/login')}
+                  onClick={() => {
+                     navigate('/app/login')
+                     closeDrawer()
+                  }}
                >
                   Login
                </Button>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Thead, Tbody, Tr, Th } from '@chakra-ui/react'
+import { Table, Thead, Tbody, Tr, Th, Box } from '@chakra-ui/react'
 import { Dispatch, SetStateAction } from 'react'
 import { Route } from '../models/data/Route'
 import RouteTableTile from './RouteTableTile'
@@ -18,31 +18,37 @@ const RoutesTable: React.FC<Props> = ({
    setRouteToDelete,
 }) => {
    return (
-      <Table textAlign="left" width="full" variant="simple" size="lg">
-         <Thead fontWeight="semibold" fontSize="sm" textTransform="uppercase">
-            <Tr>
-               <Th p={4}>slug</Th>
-               <Th p={4}>link</Th>
-               <Th p={4} textAlign="right">
-                  activity
-               </Th>
-            </Tr>
-         </Thead>
-         <Tbody>
-            {routesData.map((route) => {
-               return (
-                  <RouteTableTile
-                     key={route.id}
-                     route={route}
-                     openEditDialog={onUpdateOpen}
-                     openDeleteDialog={onDeleteOpen}
-                     setRouteToEdit={setRouteToEdit}
-                     setRouteToDelete={setRouteToDelete}
-                  ></RouteTableTile>
-               )
-            })}
-         </Tbody>
-      </Table>
+      <Box borderWidth={1} borderRadius={8}>
+         <Table textAlign="left" width="full" variant="simple" size="lg">
+            <Thead
+               fontWeight="semibold"
+               fontSize="sm"
+               textTransform="uppercase"
+            >
+               <Tr>
+                  <Th p={4}>slug</Th>
+                  <Th p={4}>link</Th>
+                  <Th p={4} textAlign="right">
+                     activity
+                  </Th>
+               </Tr>
+            </Thead>
+            <Tbody>
+               {routesData.map((route) => {
+                  return (
+                     <RouteTableTile
+                        key={route.id}
+                        route={route}
+                        openEditDialog={onUpdateOpen}
+                        openDeleteDialog={onDeleteOpen}
+                        setRouteToEdit={setRouteToEdit}
+                        setRouteToDelete={setRouteToDelete}
+                     ></RouteTableTile>
+                  )
+               })}
+            </Tbody>
+         </Table>
+      </Box>
    )
 }
 export default RoutesTable

@@ -7,11 +7,11 @@ import {
    theme,
 } from '@chakra-ui/react'
 import Header from './Header'
-import Footer from './Footer'
 
 import './Layout.scss'
 
 export default function Layout({ children }) {
+
    return (
       <ChakraProvider theme={theme}>
          <ColorModeScript />
@@ -19,7 +19,6 @@ export default function Layout({ children }) {
          <div id="app">
             <Header />
             <main style={{ overflow: 'auto' }}>{children}</main>
-            <Footer />
          </div>
       </ChakraProvider>
    )
