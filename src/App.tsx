@@ -1,8 +1,16 @@
+import { Route, Routes } from 'react-router-dom'
+import Layout from './components/Layout'
+import { Dashboard } from './pages/dashboard'
+import { Profile } from './pages/profile'
+
 function App() {
 	return (
-		<div>
-			<h1 className="font-bold text-center text-2xl text-blue-900">React and Tailwind with Vitejs!</h1>
-		</div>
+		<Layout>
+			<Routes>
+				<Route path="/dashboard" element={<Dashboard />}></Route>
+				<Route path="/profile" element={<Profile />}></Route>
+			</Routes>
+		</Layout>
 	)
 }
 
