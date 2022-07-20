@@ -18,7 +18,12 @@ const login = ({ email, password }: { email: string; password: string }) => {
 	})
 }
 
+const logout = () => {
+	return axios.delete(AUTH_API_BASE_URL + '/logout')
+}
+
 export const AuthService = {
 	register,
 	login,
+	logout,
 }
