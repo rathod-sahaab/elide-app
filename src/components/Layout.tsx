@@ -1,3 +1,4 @@
+import { Outlet } from 'react-router-dom'
 import ThemeProvider, { useTheme } from '../hooks/use-theme'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
@@ -13,6 +14,10 @@ const ThemedLayout = ({ children }: React.PropsWithChildren) => {
 			</Sidebar>
 		</div>
 	)
+}
+
+export const OutletLayout = () => {
+	return <Outlet />
 }
 
 const Layout = ({ children }: React.PropsWithChildren) => {
