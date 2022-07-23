@@ -24,7 +24,7 @@ const baseQueryWithReauth = async (
 	if (result?.error?.status === 401) {
 		console.log('Getting new accessToken')
 		// get new accessToken from authorization server
-		const refreshResult = await baseQuery('/refresh', api, extraOptions)
+		const refreshResult = await baseQuery('/auth/refresh', api, extraOptions)
 		console.log(refreshResult)
 		if (refreshResult?.data) {
 			const state: any = api.getState()

@@ -11,6 +11,7 @@ import * as yup from 'yup'
 import { FormPage } from './FormPage'
 import { Link } from 'react-router-dom'
 import { ErrorInputWrapper } from '../../components/forms/ErrorInputWrapper'
+import { ElideIcon } from '../../components/ElideIcon'
 
 type Inputs = {
 	name: string
@@ -74,6 +75,11 @@ export const Register = () => {
 
 	return (
 		<div>
+			<div className="pb-6">
+				<span className="btn btn-ghost btn-circle text-accent">
+					<ElideIcon />
+				</span>
+			</div>
 			<h1 className="text-2xl text-secondary-content font-bold">Create Account</h1>
 			<h3 className="text-md text-base-content font-bold pt-2 pb-4">Start your journey</h3>
 			<div className="[&>*:not(:last-child)]:mb-6 mt-10">

@@ -8,3 +8,10 @@ export const RequireAuth = () => {
 
 	return token ? <Outlet /> : <Navigate to="/login" state={{ from: location }} replace />
 }
+
+export const RequireNoAuth = () => {
+	const token = useSelector(selectCurrentToken)
+	const location = useLocation()
+
+	return token ? <Navigate to="/dashboard" state={{ from: location }} /> : <Outlet />
+}

@@ -4,18 +4,22 @@ import { Public } from './components/Public'
 import { Dashboard } from './features/auth/Dashboard'
 import { LoginPage } from './features/auth/Login'
 import { RegisterPage } from './features/auth/Register'
-import { RequireAuth } from './features/auth/RequireAuth'
+import { RequireAuth, RequireNoAuth } from './features/auth/RequireAuth'
 
 function App() {
 	return (
 		<Routes>
 			<Route path="/" element={<OutletLayout />}>
-				{/*Public routes*/}
+				{/*General routes*/}
 				<Route index element={<Public />} />
-				<Route path="login" element={<LoginPage />} />
-				<Route path="register" element={<RegisterPage />} />
 
-				{/*Protected Routes*/}
+				{/*Unauthenticated Routes*/}
+				<Route element={<RequireNoAuth />}>
+					<Route path="login" element={<LoginPage />} />
+					<Route path="register" element={<RegisterPage />} />
+				</Route>
+
+				{/*Authehticated Routes*/}
 				<Route element={<RequireAuth />}>
 					<Route path="dashboard" element={<Dashboard />} />
 				</Route>

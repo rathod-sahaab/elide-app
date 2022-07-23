@@ -3,8 +3,10 @@ lockfileVersion: 5.4
 specifiers:
   '@hookform/resolvers': ^2.9.6
   '@reduxjs/toolkit': ^1.8.3
+  '@tailwindcss/typography': ^0.5.4
   '@types/react': ^18.0.15
   '@types/react-dom': ^18.0.6
+  '@types/redux-persist': ^4.3.1
   '@vitejs/plugin-react': ^2.0.0
   autoprefixer: ^10.4.7
   axios: ^0.27.2
@@ -17,6 +19,7 @@ specifiers:
   react-icons: ^4.4.0
   react-redux: ^8.0.2
   react-router-dom: ^6.3.0
+  redux-persist: ^6.0.0
   tailwindcss: ^3.1.6
   typescript: ^4.6.4
   vite: ^3.0.0
@@ -25,6 +28,7 @@ specifiers:
 dependencies:
   '@hookform/resolvers': 2.9.6_react-hook-form@7.33.1
   '@reduxjs/toolkit': 1.8.3_kkwg4cbsojnjnupd3btipussee
+  '@tailwindcss/typography': 0.5.4_tailwindcss@3.1.6
   axios: 0.27.2
   daisyui: 2.19.0_ugi4xkrfysqkt4c4y6hkyfj344
   react: 18.2.0
@@ -33,11 +37,13 @@ dependencies:
   react-icons: 4.4.0_react@18.2.0
   react-redux: 8.0.2_rxpulxqxsibgdk5rs4llgxl6gy
   react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
+  redux-persist: 6.0.0_react@18.2.0+redux@4.2.0
   yup: 0.32.11
 
 devDependencies:
   '@types/react': 18.0.15
   '@types/react-dom': 18.0.6
+  '@types/redux-persist': 4.3.1_react@18.2.0+redux@4.2.0
   '@vitejs/plugin-react': 2.0.0_vite@3.0.0
   autoprefixer: 10.4.7_postcss@8.4.14
   postcss: 8.4.14
@@ -279,7 +285,6 @@ packages:
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.9
-    dev: false
 
   /@babel/template/7.18.6:
     resolution: {integrity: sha512-JoDWzPe+wgBsTTgdnIma3iHNFC7YVJoPssVBDjiHfNlyt4YcunDtcDOUmfVDfCK5MfdsaIoX9PkijPhjH3nYUw==}
@@ -399,6 +404,17 @@ packages:
       reselect: 4.1.6
     dev: false
 
+  /@tailwindcss/typography/0.5.4_tailwindcss@3.1.6:
+    resolution: {integrity: sha512-QEdg40EmGvE7kKoDei8zr5sf4D1pIayHj4R31bH3lX8x2BtTiR+jNejYPOkhbmy3DXgkMF9jC8xqNiGFAuL9Sg==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || insiders'
+    dependencies:
+      lodash.castarray: 4.4.0
+      lodash.isplainobject: 4.0.6
+      lodash.merge: 4.6.2
+      tailwindcss: 3.1.6
+    dev: false
+
   /@types/hoist-non-react-statics/3.3.1:
     resolution: {integrity: sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA==}
     dependencies:
@@ -424,6 +440,16 @@ packages:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
       csstype: 3.1.0
+
+  /@types/redux-persist/4.3.1_react@18.2.0+redux@4.2.0:
+    resolution: {integrity: sha512-YkMnMUk+4//wPtiSTMfsxST/F9Gh9sPWX0LVxHuOidGjojHtMdpep2cYvQgfiDMnj34orXyZI+QJCQMZDlafKA==}
+    deprecated: This is a stub types definition for redux-persist (https://github.com/rt2zz/redux-persist). redux-persist provides its own type definitions, so you don't need @types/redux-persist installed!
+    dependencies:
+      redux-persist: 6.0.0_react@18.2.0+redux@4.2.0
+    transitivePeerDependencies:
+      - react
+      - redux
+    dev: true
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
@@ -1053,6 +1079,18 @@ packages:
     resolution: {integrity: sha512-mKnC+QJ9pWVzv+C4/U3rRsHapFfHvQFoFB92e52xeyGMcX6/OlIl78je1u8vePzYZSkkogMPJ2yjxxsb89cxyw==}
     dev: false
 
+  /lodash.castarray/4.4.0:
+    resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}
+    dev: false
+
+  /lodash.isplainobject/4.0.6:
+    resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
+    dev: false
+
+  /lodash.merge/4.6.2:
+    resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
+    dev: false
+
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
     dev: false
@@ -1062,7 +1100,6 @@ packages:
     hasBin: true
     dependencies:
       js-tokens: 4.0.0
-    dev: false
 
   /magic-string/0.26.2:
     resolution: {integrity: sha512-NzzlXpclt5zAbmo6h6jNc8zl2gNRGHvmsZW4IvZhTC4W7k4OlLP+S5YLussa/r3ixNT66KOQfNORlXHSOy/X4A==}
@@ -1319,7 +1356,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /read-cache/1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
@@ -1331,6 +1367,18 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+
+  /redux-persist/6.0.0_react@18.2.0+redux@4.2.0:
+    resolution: {integrity: sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ==}
+    peerDependencies:
+      react: '>=16'
+      redux: '>4.0.0'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      redux: 4.2.0
 
   /redux-thunk/2.4.1_redux@4.2.0:
     resolution: {integrity: sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q==}
@@ -1344,11 +1392,9 @@ packages:
     resolution: {integrity: sha512-oSBmcKKIuIR4ME29/AeNUnl5L+hvBq7OaJWzaptTQJAntaPvxIJqfnjbaEiCzzaIz+XmVILfqAM3Ob0aXLPfjA==}
     dependencies:
       '@babel/runtime': 7.18.6
-    dev: false
 
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
-    dev: false
 
   /reselect/4.1.6:
     resolution: {integrity: sha512-ZovIuXqto7elwnxyXbBtCPo9YFEr3uJqj2rRbcOOog1bmu2Ag85M4hixSwFWyaBMKXNgvPaJ9OSu9SkBPIeJHQ==}
