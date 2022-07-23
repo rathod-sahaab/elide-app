@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+import { ElideIcon } from './ElideIcon'
 import ThemeChooser from './ThemeChooser'
 
 const Navbar = () => {
@@ -24,7 +26,9 @@ const Navbar = () => {
 						/>
 					</svg>
 				</label>
-				<span className="font-bold pl-2">elide.in</span>
+				<Link to="/" className="btn btn-ghost btn-circle text-primary">
+					<ElideIcon />
+				</Link>
 			</div>
 			<div className="navbar-end">
 				<ThemeChooser />

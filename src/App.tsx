@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import Layout, { OutletLayout } from './components/Layout'
+import { OutletLayout } from './components/Layout'
 import { Public } from './components/Public'
 import { Dashboard } from './features/auth/Dashboard'
 import { LoginPage } from './features/auth/Login'

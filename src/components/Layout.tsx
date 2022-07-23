@@ -20,12 +20,10 @@ export const OutletLayout = () => {
 	return <Outlet />
 }
 
-const Layout = ({ children }: React.PropsWithChildren) => {
+export const AuthLayout = ({ children }: React.PropsWithChildren) => {
 	return (
 		<ThemeProvider>
 			<ThemedLayout>{children}</ThemedLayout>
 		</ThemeProvider>
 	)
 }
-
-export default Layout
