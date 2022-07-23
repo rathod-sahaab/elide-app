@@ -1,8 +1,14 @@
+import { FiCheckCircle } from 'react-icons/fi'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { selectCurrentToken } from '../features/auth/authSlice'
 import { Login } from '../features/auth/Login'
 
 export const Public = () => {
+	const token = useSelector(selectCurrentToken)
+
 	return (
-		<div className="w-screen h-screen [&>section:not(:first-child)]:py-12 [&>section:not(:first-child)]:px-6">
+		<div className="w-screen h-screen [&>section:not(:first-child)]:py-12 [&>section:not(:first-child)]:px-6 overflow-auto">
 			<section className="w-screen lg:h-screen flex flex-col lg:flex-row items-center justify-around pt-24 lg:pt-0">
 				<div className="prose p-6 lg:my-0">
 					<h1>Elide, make your urls simpler</h1>
@@ -18,7 +24,19 @@ export const Public = () => {
 					</p>
 				</div>
 				<div className="w-full max-w-sm card shadow-lg p-6 bg-base-200">
-					<Login />
+					{token ? (
+						<>
+							<div className="p-6 flex flex-col items-center justify-center">
+								<FiCheckCircle className="text-success text-4xl" />
+								<div className="pt-6 text-xl">Already logged in!</div>
+							</div>
+							<Link to="/dashboard" className="btn">
+								Go to Dashboard
+							</Link>
+						</>
+					) : (
+						<Login />
+					)}
 				</div>
 			</section>
 			<section>
