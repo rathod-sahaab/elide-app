@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import ThemeProvider, { useTheme } from '../hooks/use-theme'
+import { useTheme } from '../hooks/use-theme'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 
@@ -16,9 +16,20 @@ export const AuthLayout = ({ children }: React.PropsWithChildren) => {
 	return (
 		<>
 			<Sidebar>
-				<Navbar />
-				<main>{children}</main>
+				<NoSidebarLayout fixedNavbar={false}>{children}</NoSidebarLayout>
 			</Sidebar>
+		</>
+	)
+}
+
+export const NoSidebarLayout = ({
+	children,
+	fixedNavbar = true,
+}: React.PropsWithChildren & { fixedNavbar?: boolean }) => {
+	return (
+		<>
+			<Navbar fixed={fixedNavbar} />
+			<main>{children}</main>
 		</>
 	)
 }

@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import { Navigate, Outlet, useLocation } from 'react-router-dom'
-import { AuthLayout } from '../../components/Layout'
+import { AuthLayout, NoSidebarLayout } from '../../components/Layout'
 import { selectCurrentToken } from './authSlice'
 
 export const RequireAuth = () => {
@@ -20,5 +20,11 @@ export const RequireNoAuth = () => {
 	const token = useSelector(selectCurrentToken)
 	const location = useLocation()
 
-	return token ? <Navigate to="/dashboard" state={{ from: location }} /> : <Outlet />
+	return token ? (
+		<Navigate to="/dashboard" state={{ from: location }} />
+	) : (
+		<NoSidebarLayout>
+			<Outlet />
+		</NoSidebarLayout>
+	)
 }

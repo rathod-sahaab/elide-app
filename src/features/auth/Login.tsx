@@ -85,7 +85,7 @@ export const Login = () => {
 					<input
 						className="input w-full bg-base-100 block"
 						placeholder="Email"
-						{...register('email', { required: true, disabled: isLoading })}
+						{...register('email', { disabled: isLoading })}
 						onChange={() => {
 							console.log('triggered')
 							if (errors.email) {
@@ -101,7 +101,7 @@ export const Login = () => {
 							className="input w-full bg-base-100 block"
 							type={passwordHidden ? 'password' : 'text'}
 							placeholder="Password"
-							{...register('password', { required: true, disabled: isLoading })}
+							{...register('password', { disabled: isLoading })}
 							onChange={handleChange}
 						/>
 

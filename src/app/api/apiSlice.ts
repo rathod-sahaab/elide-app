@@ -5,13 +5,6 @@ import { logOut, setCredentials } from '../../features/auth/authSlice'
 const baseQuery = fetchBaseQuery({
 	baseUrl: 'http://localhost:5000',
 	credentials: 'include',
-	prepareHeaders: (headers, { getState }: { getState: any }) => {
-		const token = getState().auth.token
-		if (token) {
-			headers.set('Authorization', `Bearer ${token}`)
-		}
-		return headers
-	},
 })
 
 const baseQueryWithReauth = async (

@@ -14,15 +14,18 @@ import {
 } from 'redux-persist'
 
 import storage from 'redux-persist/lib/storage'
+import { linksSliceReducer } from '../features/links/linksSlice'
 
 const persistConfig = {
 	key: 'root',
 	version: 1,
 	storage,
+	blacklist: ['links'],
 }
 
 const rootReducer = combineReducers({
 	auth: authSliceReducer,
+	links: linksSliceReducer,
 	[apiSlice.reducerPath]: apiSlice.reducer,
 })
 
