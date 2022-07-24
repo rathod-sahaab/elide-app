@@ -8,6 +8,8 @@ export interface ILink {
 	active: boolean
 }
 
+export type ILinkData = Omit<ILink, 'id'>
+
 const linksSlice = createSlice({
 	name: 'links',
 	initialState: <ILink[]>[
@@ -15,13 +17,16 @@ const linksSlice = createSlice({
 		{ id: 2, slug: 'abhay', url: 'https://abhay.rs', active: true, description: 'hello' },
 	],
 	reducers: {
-		createLink: (state, action: { payload: { slug: string; url: string; active: boolean } }) => {
+		createLink: (state, action: { payload: ILinkData }) => {
 			const { slug, url } = action.payload
 			state.push({ id: state.length + 1, slug, url, active: action.payload.active })
 		},
 		deleteLink: (state, action: { payload: { id: number } }) => {
 			const { id } = action.payload
 			state = state.filter((link) => link.id !== id)
+		},
+		addLinks: (state: ILink[], action: { payload: ILink[] }) => {
+			state.push(...action.payload)
 		},
 	},
 })
