@@ -39,7 +39,7 @@ export const AddLinkForm = () => {
 	return (
 		<div>
 			<div className="[&>*:not(:last-child)]:mb-6">
-				<h1 className="text-xl font-bold px-2 pt-2">Add Link</h1>
+				<h1 className="text-2xl text-center font-bold">Create Link</h1>
 				<ErrorInputWrapper fieldError={errors.slug}>
 					<div className="input-group">
 						<span className="font-bold">elide.in/</span>
@@ -75,11 +75,8 @@ export const AddLinkForm = () => {
 						/>
 					</div>
 				</ErrorInputWrapper>
-				<button
-					className="btn btn-block flex flex-nowrap items-center justify-between"
-					onClick={handleSubmit(submitHandler)}
-				>
-					Add Link
+				<button className="btn btn-block text-center" onClick={handleSubmit(submitHandler)}>
+					Create
 				</button>
 			</div>
 		</div>
@@ -88,7 +85,7 @@ export const AddLinkForm = () => {
 
 export const AddLinkCard = () => {
 	return (
-		<div className="card bg-base-200 max-w-sm w-full shadow p-4">
+		<div className="card bg-base-200 max-w-md w-full shadow p-4">
 			<AddLinkForm />
 		</div>
 	)

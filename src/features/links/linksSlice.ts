@@ -14,7 +14,14 @@ const linksSlice = createSlice({
 	name: 'links',
 	initialState: <ILink[]>[
 		{ id: 1, slug: 'google', url: 'https://www.google.com', active: true, description: 'hello' },
-		{ id: 2, slug: 'abhay', url: 'https://abhay.rs', active: true, description: 'hello' },
+		{
+			id: 2,
+			slug: 'abhay',
+			url: 'https://abhay.rs',
+			active: false,
+			description:
+				'This is the link to my personal website made with gatsby deployed on github-pages.',
+		},
 	],
 	reducers: {
 		createLink: (state, action: { payload: ILinkData }) => {
