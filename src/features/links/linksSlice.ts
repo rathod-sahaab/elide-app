@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { RootState } from '../../app/store'
 
 export interface ILink {
 	id: number
@@ -12,34 +13,23 @@ export type ILinkData = Omit<ILink, 'id'>
 
 const linksSlice = createSlice({
 	name: 'links',
-	initialState: <ILink[]>[
-		{ id: 1, slug: 'google', url: 'https://www.google.com', active: true, description: 'hello' },
-		{
-			id: 2,
-			slug: 'abhay',
-			url: 'https://abhay.rs',
-			active: false,
-			description:
-				'This is the link to my personal website made with gatsby deployed on github-pages.',
-		},
-	],
+	initialState: <ILink[]>[],
 	reducers: {
-		createLink: (state, action: { payload: ILinkData }) => {
-			const { slug, url } = action.payload
-			state.push({ id: state.length + 1, slug, url, active: action.payload.active })
+		createLink: (state: ILink[], action: { payload: ILink }) => {
+			state.push(action.payload)
 		},
-		deleteLink: (state, action: { payload: { id: number } }) => {
+		deleteLink: (state: ILink[], action: PayloadAction<{ id: number }>) => {
 			const { id } = action.payload
 			state = state.filter((link) => link.id !== id)
 		},
-		addLinks: (state: ILink[], action: { payload: ILink[] }) => {
+		addLinks: (state: ILink[], action: PayloadAction<ILink[]>) => {
 			state.push(...action.payload)
 		},
 	},
 })
 
-export const { createLink, deleteLink } = linksSlice.actions
+export const { createLink, deleteLink, addLinks } = linksSlice.actions
 
 export const linksSliceReducer = linksSlice.reducer
 
-export const selectLinks = (state: any): ILink[] => state.links
+export const selectLinks = (state: RootState) => state.links

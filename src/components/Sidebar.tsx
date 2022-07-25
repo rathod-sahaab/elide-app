@@ -47,7 +47,7 @@ const Sidebar = ({ children }: React.PropsWithChildren) => {
 	return (
 		<div className="drawer drawer-mobile">
 			<input id="drawer-1" type="checkbox" className="drawer-toggle" />
-			<div className="drawer-content">{children}</div>
+			<div className="drawer-content flex flex-col">{children}</div>
 			<SidebarItems />
 		</div>
 	)

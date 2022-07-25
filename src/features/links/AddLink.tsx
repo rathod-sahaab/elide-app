@@ -3,14 +3,9 @@ import * as yup from 'yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useDispatch } from 'react-redux'
-import { createLink } from './linksSlice'
-
-type AddLinkInput = {
-	slug: string
-	url: string
-	active: boolean
-	description?: string
-}
+import { createLink as createLinkActionCreator, ILink, ILinkData } from './linksSlice'
+import { useCreateLinkMutation } from './linksApiSlice'
+import { IoMdClose } from 'react-icons/io'
 
 const schema = yup.object({
 	slug: yup.string().required('Slug is required'),
@@ -19,31 +14,39 @@ const schema = yup.object({
 	description: yup.string(),
 })
 
-export const AddLinkForm = () => {
+export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
+	const [createLink, { isLoading }] = useCreateLinkMutation()
 	const dispatch = useDispatch()
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<AddLinkInput>({
+	} = useForm<ILinkData>({
 		resolver: yupResolver(schema),
 		defaultValues: {
 			active: true,
 		},
 	})
 
-	const submitHandler: SubmitHandler<AddLinkInput> = async (data) => {
-		console.log(data)
-		dispatch(createLink(data))
+	const submitHandler: SubmitHandler<ILinkData> = async (data) => {
+		try {
+			const createdLinkData: ILink = await createLink({ ...data }).unwrap()
+			console.log(createdLinkData)
+			dispatch(createLinkActionCreator(createdLinkData))
+			if (closeFn) closeFn()
+		} catch (err) {
+			console.log(err)
+		}
 	}
+
 	return (
 		<div>
 			<div className="[&>*:not(:last-child)]:mb-6">
-				<h1 className="text-2xl text-center font-bold">Create Link</h1>
 				<ErrorInputWrapper fieldError={errors.slug}>
 					<div className="input-group">
 						<span className="font-bold">elide.in/</span>
 						<input
+							disabled={isLoading}
 							className="input w-full bg-base-100 block"
 							placeholder="slug"
 							{...register('slug')}
@@ -52,6 +55,7 @@ export const AddLinkForm = () => {
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.url}>
 					<input
+						disabled={isLoading}
 						className="input w-full bg-base-100 block"
 						placeholder="URL"
 						{...register('url')}
@@ -59,6 +63,7 @@ export const AddLinkForm = () => {
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.description}>
 					<input
+						disabled={isLoading}
 						className="input w-full bg-base-100 block"
 						placeholder="Description"
 						{...register('description')}
@@ -68,6 +73,7 @@ export const AddLinkForm = () => {
 					<div className="flex items-center p-4 border border-base-300 rounded-xl justify-between">
 						<label className="text-base">Active</label>
 						<input
+							disabled={isLoading}
 							className="toggle"
 							placeholder="slug"
 							type="checkbox"
@@ -75,7 +81,11 @@ export const AddLinkForm = () => {
 						/>
 					</div>
 				</ErrorInputWrapper>
-				<button className="btn btn-block text-center" onClick={handleSubmit(submitHandler)}>
+				<button
+					disabled={isLoading}
+					className="btn btn-ghost btn-outline btn-block text-center"
+					onClick={handleSubmit(submitHandler)}
+				>
 					Create
 				</button>
 			</div>
@@ -87,6 +97,22 @@ export const AddLinkCard = () => {
 	return (
 		<div className="card bg-base-200 max-w-md w-full shadow p-4">
 			<AddLinkForm />
+		</div>
+	)
+}
+
+export const AddLinkModal = ({ open, closeFn }: { open: boolean; closeFn: () => void }) => {
+	return (
+		<div className={'modal ' + (open ? 'modal-open' : '')}>
+			<div className="modal-box max-w-md relative bg-base-200">
+				<div className="flex items-center justify-between pb-6">
+					<h1 className="text-2xl font-bold text-primary">Create Link</h1>
+					<button className="btn btn-circle btn-md" onClick={closeFn}>
+						<IoMdClose size="1.5em" />
+					</button>
+				</div>
+				<AddLinkForm closeFn={closeFn} />
+			</div>
 		</div>
 	)
 }
