@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { IoMdAdd } from 'react-icons/io'
-import { AddLinkCard, AddLinkModal } from './AddLink'
+import { AddLinkModal } from './AddLink'
 import { useGetLinksQuery } from './linksApiSlice'
 import { ILink } from './linksSlice'
 
@@ -8,7 +8,7 @@ const ActivityIndicator = ({ active }: { active: boolean }) => {
 	return (
 		<div
 			className={
-				'tooltip tooltip-left capitalize cursor-pointer ' +
+				'tooltip tooltip-left cursor-pointer capitalize ' +
 				(active ? 'tooltip-success' : 'tooltip-warning')
 			}
 			data-tip={active ? 'active' : 'inactive'}
@@ -20,13 +20,13 @@ const ActivityIndicator = ({ active }: { active: boolean }) => {
 
 const LinkCard = ({ slug, url, active, description }: ILink) => {
 	return (
-		<div className="max-w-md w-full [&>*:not(:last-child)]:mb-2">
+		<div className="card w-full max-w-md bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2">
 			<div className="flex items-center justify-between">
 				<h3 className="font-bold text-accent">{slug}</h3>
 				<ActivityIndicator active={active} />
 			</div>
 			{description && (
-				<p className="text-ellipsis overflow-hidden whitespace-nowrap">{description}</p>
+				<p className="overflow-hidden text-ellipsis whitespace-nowrap">{description}</p>
 			)}
 			<a href={url} className="link" target="_blank">
 				{url}
@@ -50,8 +50,8 @@ export const Links = () => {
 	// dispatch(addLinks(data as ILink[]))
 
 	return (
-		<div className="[&>*:not(:last-child)]:mb-4 pr-4 border-r-[1px] border-base-200 max-w-md">
-			<div className="flex items-center justify-between mb-6">
+		<div className="max-w-md border-r-[1px] border-base-200 pr-4 [&>*:not(:last-child)]:mb-4">
+			<div className="mb-6 flex items-center justify-between">
 				<h1 className="text-2xl font-bold">Links</h1>
 				<button className="btn btn-ghost btn-circle" onClick={() => setOpen(true)}>
 					<IoMdAdd size="1.5em" />
@@ -66,7 +66,6 @@ export const Links = () => {
 			{(links as ILink[]).map((link: ILink, index) => (
 				<div>
 					<LinkCard key={link.id} {...link} />
-					<div className="divider"></div>
 				</div>
 			))}
 		</div>

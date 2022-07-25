@@ -6,7 +6,7 @@ export const ErrorInputWrapper = ({
 }: React.PropsWithChildren & { fieldError?: FieldError }) => {
 	return (
 		<div>
-			{fieldError && <div className="text-sm pb-2 text-error">{fieldError.message}</div>}
+			{fieldError && <div className="pb-2 text-sm text-error">{fieldError.message}</div>}
 			{children}
 		</div>
 	)

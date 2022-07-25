@@ -80,13 +80,13 @@ export const Register = () => {
 					<ElideIcon />
 				</span>
 			</div>
-			<h1 className="text-2xl text-secondary-content font-bold">Create Account</h1>
-			<h3 className="text-md text-base-content font-bold pt-2 pb-4">Start your journey</h3>
-			<div className="[&>*:not(:last-child)]:mb-6 mt-10">
+			<h1 className="text-2xl font-bold text-secondary-content">Create Account</h1>
+			<h3 className="text-md pt-2 pb-4 font-bold text-base-content">Start your journey</h3>
+			<div className="mt-10 [&>*:not(:last-child)]:mb-6">
 				{error && <Error message={error} />}
 				<ErrorInputWrapper fieldError={errors.name}>
 					<input
-						className="input w-full bg-base-100 block"
+						className="input block w-full bg-base-100"
 						placeholder="Your name"
 						{...register('name', { required: true, disabled: isLoading })}
 						onChange={handleChange}
@@ -94,7 +94,7 @@ export const Register = () => {
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.email}>
 					<input
-						className="input w-full bg-base-100 block"
+						className="input block w-full bg-base-100"
 						placeholder="Your email"
 						{...register('email', { required: true, disabled: isLoading })}
 						onChange={handleChange}
@@ -102,7 +102,7 @@ export const Register = () => {
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.password}>
 					<input
-						className="input w-full bg-base-100 block"
+						className="input block w-full bg-base-100"
 						type="password"
 						placeholder="Password"
 						{...register('password', { required: true, disabled: isLoading })}
@@ -111,7 +111,7 @@ export const Register = () => {
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.passwordConfirmation}>
 					<input
-						className="input w-full bg-base-100 block"
+						className="input block w-full bg-base-100"
 						type="password"
 						placeholder="Confirm Password"
 						{...register('passwordConfirmation', { required: true, disabled: isLoading })}
@@ -119,7 +119,7 @@ export const Register = () => {
 					/>
 				</ErrorInputWrapper>
 				<button
-					className="btn btn-block py-8 px-6 flex flex-nowrap items-center justify-between"
+					className="btn btn-block flex flex-nowrap items-center justify-between py-8 px-6"
 					disabled={isLoading}
 					onClick={handleSubmit(submitHandler)}
 				>
@@ -127,7 +127,7 @@ export const Register = () => {
 					<MdOutlineChevronRight size="1.8em" />
 				</button>
 			</div>
-			<div className="text-right font-bold text-sm mt-16">
+			<div className="mt-16 text-right text-sm font-bold">
 				<Link to="/login">Already a user? Sign in</Link>
 			</div>
 		</div>

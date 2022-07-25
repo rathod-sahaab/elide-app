@@ -8,8 +8,8 @@ const SidebarItems = () => {
 	return (
 		<div className="drawer-side">
 			<label htmlFor="drawer-1" className="drawer-overlay "></label>
-			<div className="bg-base-200 text-base-content flex flex-col justify-between w-80">
-				<ul className="menu p-4 overflow-y-auto">
+			<div className="flex w-80 flex-col justify-between bg-base-200 text-base-content">
+				<ul className="menu overflow-y-auto p-4">
 					<label
 						htmlFor="drawer-1"
 						className="btn btn-ghost btn-circle drawer-button text-xl lg:hidden"
@@ -32,7 +32,7 @@ const SidebarItems = () => {
 						</div>
 					</li>
 				</ul>
-				<ul className="menu p-4 overflow-y-auto">
+				<ul className="menu overflow-y-auto p-4">
 					<li>
 						<Link to="/about">
 							<IoInformationCircle /> About

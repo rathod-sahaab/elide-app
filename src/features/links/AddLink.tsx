@@ -47,7 +47,7 @@ export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
 						<span className="font-bold">elide.in/</span>
 						<input
 							disabled={isLoading}
-							className="input w-full bg-base-100 block"
+							className="input block w-full bg-base-100"
 							placeholder="slug"
 							{...register('slug')}
 						/>
@@ -56,7 +56,7 @@ export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
 				<ErrorInputWrapper fieldError={errors.url}>
 					<input
 						disabled={isLoading}
-						className="input w-full bg-base-100 block"
+						className="input block w-full bg-base-100"
 						placeholder="URL"
 						{...register('url')}
 					/>
@@ -64,13 +64,13 @@ export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
 				<ErrorInputWrapper fieldError={errors.description}>
 					<input
 						disabled={isLoading}
-						className="input w-full bg-base-100 block"
+						className="input block w-full bg-base-100"
 						placeholder="Description"
 						{...register('description')}
 					/>
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.active}>
-					<div className="flex items-center p-4 border border-base-300 rounded-xl justify-between">
+					<div className="flex items-center justify-between rounded-xl border border-base-300 p-4">
 						<label className="text-base">Active</label>
 						<input
 							disabled={isLoading}
@@ -83,7 +83,7 @@ export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
 				</ErrorInputWrapper>
 				<button
 					disabled={isLoading}
-					className="btn btn-ghost btn-outline btn-block text-center"
+					className="btn btn-outline btn-ghost btn-block text-center"
 					onClick={handleSubmit(submitHandler)}
 				>
 					Create
@@ -95,7 +95,7 @@ export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
 
 export const AddLinkCard = () => {
 	return (
-		<div className="card bg-base-200 max-w-md w-full shadow p-4">
+		<div className="card w-full max-w-md bg-base-200 p-4 shadow">
 			<AddLinkForm />
 		</div>
 	)
@@ -104,7 +104,7 @@ export const AddLinkCard = () => {
 export const AddLinkModal = ({ open, closeFn }: { open: boolean; closeFn: () => void }) => {
 	return (
 		<div className={'modal ' + (open ? 'modal-open' : '')}>
-			<div className="modal-box max-w-md relative bg-base-200">
+			<div className="modal-box relative max-w-md bg-base-200">
 				<div className="flex items-center justify-between pb-6">
 					<h1 className="text-2xl font-bold text-primary">Create Link</h1>
 					<button className="btn btn-circle btn-md" onClick={closeFn}>

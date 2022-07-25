@@ -77,13 +77,13 @@ export const Login = () => {
 					<ElideIcon />
 				</Link>
 			</div>
-			<h1 className="text-2xl text-secondary-content font-bold">Welcome Back</h1>
-			<h3 className="text-md text-base-content font-bold pt-2 pb-4">Sign in to continue</h3>
-			<div className="[&>*:not(:last-child)]:mb-6 mt-10">
+			<h1 className="text-2xl font-bold text-secondary-content">Welcome Back</h1>
+			<h3 className="text-md pt-2 pb-4 font-bold text-base-content">Sign in to continue</h3>
+			<div className="mt-10 [&>*:not(:last-child)]:mb-6">
 				{error && <Error message={error} />}
 				<ErrorInputWrapper fieldError={errors.email}>
 					<input
-						className="input w-full bg-base-100 block"
+						className="input block w-full bg-base-100"
 						placeholder="Email"
 						{...register('email', { disabled: isLoading })}
 						onChange={() => {
@@ -98,7 +98,7 @@ export const Login = () => {
 				<ErrorInputWrapper fieldError={errors.password}>
 					<div className="relative">
 						<input
-							className="input w-full bg-base-100 block"
+							className="input block w-full bg-base-100"
 							type={passwordHidden ? 'password' : 'text'}
 							placeholder="Password"
 							{...register('password', { disabled: isLoading })}
@@ -106,7 +106,7 @@ export const Login = () => {
 						/>
 
 						<button
-							className="btn btn-circle btn-ghost absolute right-1 top-0"
+							className="btn btn-ghost btn-circle absolute right-1 top-0"
 							onClick={() => setPasswordHidden(!passwordHidden)}
 						>
 							{passwordHidden ? <RiEyeLine size="1.5em" /> : <RiEyeOffLine size="1.5em" />}
@@ -115,7 +115,7 @@ export const Login = () => {
 				</ErrorInputWrapper>
 
 				<button
-					className="btn btn-block py-8 px-6 flex flex-nowrap items-center justify-between"
+					className="btn btn-block flex flex-nowrap items-center justify-between py-8 px-6"
 					disabled={isLoading}
 					onClick={handleSubmit(submitHandler)}
 				>
@@ -123,7 +123,7 @@ export const Login = () => {
 					<MdOutlineChevronRight size="1.8em" />
 				</button>
 			</div>
-			<div className="flex justify-between font-bold text-sm mt-16">
+			<div className="mt-16 flex justify-between text-sm font-bold">
 				<Link to="/forgot-password">Forgot Password?</Link>
 				<Link to="/register">Create Account</Link>
 			</div>

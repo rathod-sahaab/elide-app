@@ -8,8 +8,8 @@ export const Public = () => {
 	const token = useSelector(selectCurrentToken)
 
 	return (
-		<div className="w-screen h-screen [&>section:not(:first-child)]:py-12 [&>section:not(:first-child)]:px-6 overflow-auto">
-			<section className="w-screen lg:h-screen flex flex-col lg:flex-row items-center justify-around pt-24 lg:pt-0">
+		<div className="h-screen w-screen overflow-auto [&>section:not(:first-child)]:py-12 [&>section:not(:first-child)]:px-6">
+			<section className="flex w-screen flex-col items-center justify-around pt-24 lg:h-screen lg:flex-row lg:pt-0">
 				<div className="prose p-6 lg:my-0">
 					<h1>Elide, make your urls simpler</h1>
 					<p>
@@ -23,11 +23,11 @@ export const Public = () => {
 						it yourself!
 					</p>
 				</div>
-				<div className="w-full max-w-sm card shadow-lg p-6 bg-base-200">
+				<div className="card w-full max-w-sm bg-base-200 p-6 shadow-lg">
 					{token ? (
 						<>
-							<div className="p-6 flex flex-col items-center justify-center">
-								<FiCheckCircle className="text-success text-4xl" />
+							<div className="flex flex-col items-center justify-center p-6">
+								<FiCheckCircle className="text-4xl text-success" />
 								<div className="pt-6 text-xl">Already logged in!</div>
 							</div>
 							<Link to="/dashboard" className="btn">
