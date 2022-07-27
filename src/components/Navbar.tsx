@@ -4,12 +4,12 @@ import ThemeChooser from './ThemeChooser'
 
 const Navbar = ({ fixed }: { fixed?: boolean }) => {
 	return (
-		<div className={'navbar z-30 bg-base-100 ' + (fixed ? 'fixed top-0 w-screen' : 'sticky')}>
+		<div className={'navbar z-30 bg-base-100 ' + (fixed ? 'fixed top-0 w-screen' : '')}>
 			<div className="navbar-start">
 				{!fixed && (
 					<label
 						tabIndex={0}
-						className="btn btn-ghost btn-circle drawer-button lg:hidden"
+						className="drawer-button btn btn-ghost btn-circle lg:hidden"
 						htmlFor="drawer-1"
 					>
 						<svg

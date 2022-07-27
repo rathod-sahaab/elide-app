@@ -12,7 +12,7 @@ const SidebarItems = () => {
 				<ul className="menu overflow-y-auto p-4">
 					<label
 						htmlFor="drawer-1"
-						className="btn btn-ghost btn-circle drawer-button text-xl lg:hidden"
+						className="drawer-button btn btn-ghost btn-circle text-xl lg:hidden"
 					>
 						<IoMdClose />
 					</label>
@@ -45,9 +45,9 @@ const SidebarItems = () => {
 }
 const Sidebar = ({ children }: React.PropsWithChildren) => {
 	return (
-		<div className="drawer drawer-mobile">
+		<div className="drawer-mobile drawer">
 			<input id="drawer-1" type="checkbox" className="drawer-toggle" />
-			<div className="drawer-content flex flex-col">{children}</div>
+			<div className="drawer-content flex h-screen flex-col">{children}</div>
 			<SidebarItems />
 		</div>
 	)

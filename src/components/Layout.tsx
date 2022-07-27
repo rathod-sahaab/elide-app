@@ -29,7 +29,7 @@ export const NoSidebarLayout = ({
 	return (
 		<>
 			<Navbar fixed={fixedNavbar} />
-			<main>{children}</main>
+			<main className="h-full overflow-y-auto">{children}</main>
 		</>
 	)
 }

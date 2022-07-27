@@ -14,7 +14,13 @@ const schema = yup.object({
 	description: yup.string(),
 })
 
-export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
+export const AddLinkForm = ({
+	closeFn,
+	refetchFn,
+}: {
+	closeFn?: () => void
+	refetchFn?: () => void
+}) => {
 	const [createLink, { isLoading }] = useCreateLinkMutation()
 	const dispatch = useDispatch()
 	const {
@@ -34,6 +40,7 @@ export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
 			console.log(createdLinkData)
 			dispatch(createLinkActionCreator(createdLinkData))
 			if (closeFn) closeFn()
+			if (refetchFn) refetchFn()
 		} catch (err) {
 			console.log(err)
 		}
@@ -101,7 +108,15 @@ export const AddLinkCard = () => {
 	)
 }
 
-export const AddLinkModal = ({ open, closeFn }: { open: boolean; closeFn: () => void }) => {
+export const AddLinkModal = ({
+	open,
+	closeFn,
+	refetchFn,
+}: {
+	open: boolean
+	refetchFn: () => void
+	closeFn: () => void
+}) => {
 	return (
 		<div className={'modal ' + (open ? 'modal-open' : '')}>
 			<div className="modal-box relative max-w-md bg-base-200">
@@ -111,7 +126,7 @@ export const AddLinkModal = ({ open, closeFn }: { open: boolean; closeFn: () => 
 						<IoMdClose size="1.5em" />
 					</button>
 				</div>
-				<AddLinkForm closeFn={closeFn} />
+				<AddLinkForm closeFn={closeFn} refetchFn={refetchFn} />
 			</div>
 		</div>
 	)

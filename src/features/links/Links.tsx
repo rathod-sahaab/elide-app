@@ -38,7 +38,7 @@ const LinkCard = ({ slug, url, active, description }: ILink) => {
 export const Links = () => {
 	// const links = useSelector(selectLinks)
 
-	const { isLoading, data: links } = useGetLinksQuery({ offset: 0, limit: 10 })
+	const { isLoading, data: links, refetch } = useGetLinksQuery({ offset: 0, limit: 10 })
 	const [open, setOpen] = useState(false)
 
 	if (isLoading) {
@@ -62,11 +62,10 @@ export const Links = () => {
 				closeFn={() => {
 					setOpen(false)
 				}}
+				refetchFn={refetch}
 			/>
-			{(links as ILink[]).map((link: ILink, index) => (
-				<div>
-					<LinkCard key={link.id} {...link} />
-				</div>
+			{(links as ILink[]).map((link) => (
+				<LinkCard key={link.id} {...link} />
 			))}
 		</div>
 	)
