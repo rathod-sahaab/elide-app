@@ -20,28 +20,28 @@ export const DeleteLinkForm = ({ link, closeFn, refetchFn }: IDeleteLinkFormProp
 			console.error(err)
 		}
 	}
+	if (!link) {
+		return <div className="alert alert-error">Some error occured!</div>
+	}
 
 	return (
-		<div>
-			<p>Are you sure you want to delete this link?</p>
-			<div className="flex items-center justify-between">
-				<button
-					className="btn btn-outline"
-					disabled={isLoading}
-					onClick={() => {
-						if (closeFn) closeFn()
-					}}
-				>
-					Cancel
-				</button>
-				<button
-					className="btn btn-error"
-					disabled={isLoading}
-					onClick={() => handleDelete(link.id)}
-				>
-					Delete Link
-				</button>
-			</div>
+		<div className="text-center">
+			<p className="mb-6">
+				Are you sure you want to delete link <b>elide.in/{link.slug}</b> pointing to{' '}
+				<a href={link.url} className="link">
+					{link.url}
+				</a>
+				?
+			</p>
+			<button
+				className="btn btn-error"
+				disabled={isLoading}
+				onClick={() => {
+					if (link) handleDelete(link.id)
+				}}
+			>
+				Delete Link
+			</button>
 		</div>
 	)
 }
@@ -55,17 +55,15 @@ export const DeleteLinkModal = ({
 	return (
 		<div className={'modal ' + (open ? 'modal-open' : '')}>
 			<div className="modal-box relative max-w-md bg-base-200">
-				<div className="flex items-center justify-between pb-6">
-					<h1 className="text-2xl font-bold text-primary">Delete Link</h1>
-					<button
-						className="btn btn-circle btn-md"
-						onClick={() => {
-							if (rest.closeFn) rest.closeFn()
-						}}
-					>
-						<IoMdClose size="1.5em" />
-					</button>
-				</div>
+				<button
+					className="btn btn-circle absolute -top-4 -right-4"
+					onClick={() => {
+						if (rest.closeFn) rest.closeFn()
+					}}
+				>
+					<IoMdClose size="1.5em" />
+				</button>
+				<h1 className="pb-6 text-2xl font-bold text-primary">Delete Link</h1>
 				<DeleteLinkForm {...rest} />
 			</div>
 		</div>

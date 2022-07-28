@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { IoMdAdd } from 'react-icons/io'
-import { IoTrashBin, IoTrashOutline } from 'react-icons/io5'
+import { IoQrCodeOutline, IoTrashBin, IoTrashOutline } from 'react-icons/io5'
 import { AddLinkModal } from './AddLink'
 import { DeleteLinkModal } from './DeleteLink'
 import { useGetLinksQuery } from './linksApiSlice'
@@ -40,13 +40,20 @@ const LinkCard = ({
 			<a href={url} className="link" target="_blank">
 				{url}
 			</a>
-			<div className="flex items-center justify-end">
-				<button
-					className="btn btn-ghost btn-circle"
-					onClick={() => deleteLink({ id, slug, url, active, description })}
-				>
-					<IoTrashOutline size="1.5em" />
-				</button>
+			<div className="flex items-center justify-between">
+				<div>
+					<button
+						className="btn btn-ghost btn-circle"
+						onClick={() => deleteLink({ id, slug, url, active, description })}
+					>
+						<IoTrashOutline size="1.5em" />
+					</button>
+				</div>
+				<div>
+					<button className="btn btn-ghost btn-circle">
+						<IoQrCodeOutline size="1.5em" />
+					</button>
+				</div>
 			</div>
 		</div>
 	)
