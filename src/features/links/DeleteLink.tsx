@@ -54,9 +54,9 @@ export const DeleteLinkModal = ({
 } & IDeleteLinkFormProps) => {
 	return (
 		<div className={'modal ' + (open ? 'modal-open' : '')}>
-			<div className="modal-box relative max-w-md bg-base-200">
+			<div className="modal-box relative max-w-md overflow-visible bg-base-200">
 				<button
-					className="btn btn-circle absolute -top-4 -right-4"
+					className="btn btn-circle absolute -top-5 -right-5"
 					onClick={() => {
 						if (rest.closeFn) rest.closeFn()
 					}}

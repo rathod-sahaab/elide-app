@@ -5,6 +5,7 @@ import { AddLinkModal } from './AddLink'
 import { DeleteLinkModal } from './DeleteLink'
 import { useGetLinksQuery } from './linksApiSlice'
 import { ILink } from './linksSlice'
+import { QrCodeModal } from './QrCodeModal'
 
 const ActivityIndicator = ({ active }: { active: boolean }) => {
 	return (
@@ -27,7 +28,8 @@ const LinkCard = ({
 	active,
 	description,
 	deleteLink,
-}: ILink & { deleteLink: (link: ILink) => void }) => {
+	setActiveQr,
+}: ILink & { deleteLink: (link: ILink) => void; setActiveQr: (value: string) => void }) => {
 	return (
 		<div className="card w-full max-w-md bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2">
 			<div className="flex items-center justify-between">
@@ -50,7 +52,10 @@ const LinkCard = ({
 					</button>
 				</div>
 				<div>
-					<button className="btn btn-ghost btn-circle">
+					<button
+						className="btn btn-ghost btn-circle"
+						onClick={() => setActiveQr(`https://elide.in/${slug}`)}
+					>
 						<IoQrCodeOutline size="1.5em" />
 					</button>
 				</div>
@@ -63,13 +68,23 @@ export const Links = () => {
 	// const links = useSelector(selectLinks)
 
 	const { isLoading, data: links, refetch } = useGetLinksQuery({ offset: 0, limit: 10 })
+
+	// modals
 	const [addLinkModalOpen, setAddLinkModalOpen] = useState(false)
 	const [deleteLinkModalOpen, setDeleteLinkModalOpen] = useState(false)
+	const [qrCodeModalOpen, setQrCodeModalOpen] = useState(false)
+
 	const [linkToBeDeleted, setLinkToBeDeleted] = useState<ILink | null>(null)
+	const [qrCodeData, setQrCodeData] = useState<string>('')
 
 	const handleDeleteLink = (link: ILink) => {
 		setLinkToBeDeleted(link)
 		setDeleteLinkModalOpen(true)
+	}
+
+	const handleQrCodeClick = (value: string) => {
+		setQrCodeData(value)
+		setQrCodeModalOpen(true)
 	}
 
 	if (isLoading) {
@@ -103,8 +118,20 @@ export const Links = () => {
 				}}
 				refetchFn={refetch}
 			/>
+			<QrCodeModal
+				open={qrCodeModalOpen}
+				closeFn={() => {
+					setQrCodeModalOpen(false)
+				}}
+				data={qrCodeData}
+			/>
 			{(links as ILink[]).map((link) => (
-				<LinkCard key={link.id} {...link} deleteLink={handleDeleteLink} />
+				<LinkCard
+					key={link.id}
+					{...link}
+					deleteLink={handleDeleteLink}
+					setActiveQr={handleQrCodeClick}
+				/>
 			))}
 		</div>
 	)
