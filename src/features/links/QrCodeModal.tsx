@@ -51,12 +51,12 @@ export const QrCodeModal = ({
 							</button>
 						))}
 					</div>
-					<div className="btn-group mt-6 flex">
-						<a className="btn flex-1">
+					<div className="btn-group mt-6">
+						<a className="btn w-1/2">
 							<MdOutlineFileDownload size="1.5em" className="mr-2" /> png
 						</a>
 						<a
-							className="btn flex-1"
+							className="btn w-1/2"
 							download={`elide-in-${slug}-${level}.svg`}
 							href={`data:img/svg+xml;base64,${base64Svg}`}
 						>

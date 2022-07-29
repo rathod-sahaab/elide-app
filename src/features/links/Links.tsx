@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { IoMdAdd } from 'react-icons/io'
-import { IoQrCodeOutline, IoTrashBin, IoTrashOutline } from 'react-icons/io5'
+import { IoQrCodeOutline, IoTrashOutline } from 'react-icons/io5'
 import { AddLinkModal } from './AddLink'
 import { DeleteLinkModal } from './DeleteLink'
 import { useGetLinksQuery } from './linksApiSlice'
@@ -96,13 +96,19 @@ export const Links = () => {
 	// dispatch(addLinks(data as ILink[]))
 
 	return (
-		<div className="max-w-md border-r-[1px] border-base-200 pr-4 [&>*:not(:last-child)]:mb-4">
-			<div className="mb-6 flex items-center justify-between">
+		<div className="[&>*:not(:last-child)]:mb-4">
+			<div className="m-auto mb-6 flex max-w-screen-sm items-center justify-between">
 				<h1 className="text-2xl font-bold">Links</h1>
-				<button className="btn btn-ghost btn-circle" onClick={() => setAddLinkModalOpen(true)}>
-					<IoMdAdd size="1.5em" />
-				</button>
+				<div className="tooltip tooltip-left" data-tip="Create Link">
+					<button
+						className="btn btn-ghost btn-circle"
+						onClick={() => setAddLinkModalOpen(true)}
+					>
+						<IoMdAdd size="1.5em" />
+					</button>
+				</div>
 			</div>
+			<div className="divider m-auto max-w-screen-lg p-4"></div>
 			<AddLinkModal
 				open={addLinkModalOpen}
 				closeFn={() => {
@@ -125,14 +131,16 @@ export const Links = () => {
 				}}
 				data={qrCodeData}
 			/>
-			{(links as ILink[]).map((link) => (
-				<LinkCard
-					key={link.id}
-					{...link}
-					deleteLink={handleDeleteLink}
-					setActiveQr={handleQrCodeClick}
-				/>
-			))}
+			<div className="m-auto grid max-w-fit grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
+				{(links as ILink[]).map((link) => (
+					<LinkCard
+						key={link.id}
+						{...link}
+						deleteLink={handleDeleteLink}
+						setActiveQr={handleQrCodeClick}
+					/>
+				))}
+			</div>
 		</div>
 	)
 }
