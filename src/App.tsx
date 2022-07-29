@@ -5,6 +5,7 @@ import { Dashboard } from './components/pages/auth/Dashboard'
 import { LoginPage } from './features/auth/Login'
 import { RegisterPage } from './features/auth/Register'
 import { RequireAuth, RequireNoAuth } from './features/auth/RequireAuth'
+import { About } from './components/pages/public/About'
 
 function App() {
 	return (
@@ -12,6 +13,7 @@ function App() {
 			<Route path="/" element={<OutletLayout />}>
 				{/*General routes*/}
 				<Route index element={<Public />} />
+				<Route path="about" element={<About />} />
 
 				{/*Unauthenticated Routes*/}
 				<Route element={<RequireNoAuth />}>

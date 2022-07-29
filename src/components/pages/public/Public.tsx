@@ -1,11 +1,11 @@
 import { FiCheckCircle } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { selectCurrentToken } from '../../../features/auth/authSlice'
+import { selectCurrentUser } from '../../../features/auth/authSlice'
 import { Login } from '../../../features/auth/Login'
 
 export const Public = () => {
-	const token = useSelector(selectCurrentToken)
+	const user = useSelector(selectCurrentUser)
 
 	return (
 		<div className="h-screen w-screen overflow-auto [&>section:not(:first-child)]:py-12 [&>section:not(:first-child)]:px-6">
@@ -24,7 +24,7 @@ export const Public = () => {
 					</p>
 				</div>
 				<div className="card w-full max-w-sm bg-base-200 p-6 shadow-lg">
-					{token ? (
+					{user ? (
 						<>
 							<div className="flex flex-col items-center justify-center p-6">
 								<FiCheckCircle className="text-4xl text-success" />
