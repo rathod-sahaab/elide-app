@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { IoMdClose } from 'react-icons/io'
+import { IoMdAdd, IoMdClose } from 'react-icons/io'
 import { IoGrid, IoInformationCircle, IoPerson } from 'react-icons/io5'
 import { HiUserGroup } from 'react-icons/hi'
 import { FiChevronDown } from 'react-icons/fi'
@@ -27,8 +27,13 @@ const SidebarItems = () => {
 						</Link>
 					</li>
 					<li>
-						<div>
-							<HiUserGroup /> Organizations <FiChevronDown className="flex" />
+						<div className="flex justify-between">
+							<div className="flex items-center justify-start">
+								<HiUserGroup className="mr-3" /> <span>Organizations</span>
+							</div>
+							<button className="btn btn-ghost btn-circle btn-sm">
+								<IoMdAdd size="1.5em" />
+							</button>
 						</div>
 					</li>
 				</ul>
