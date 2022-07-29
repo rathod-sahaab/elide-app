@@ -45,7 +45,7 @@ const LinkCard = ({
 			<div className="flex items-center justify-between">
 				<div>
 					<button
-						className="btn btn-ghost btn-circle"
+						className="btn btn-circle btn-ghost"
 						onClick={() => deleteLink({ id, slug, url, active, description })}
 					>
 						<IoTrashOutline size="1.5em" />
@@ -53,7 +53,7 @@ const LinkCard = ({
 				</div>
 				<div>
 					<button
-						className="btn btn-ghost btn-circle"
+						className="btn btn-circle btn-ghost"
 						onClick={() => setActiveQr(`https://elide.in/${slug}`)}
 					>
 						<IoQrCodeOutline size="1.5em" />
@@ -101,14 +101,21 @@ export const Links = () => {
 				<h1 className="text-2xl font-bold">Links</h1>
 				<div className="tooltip tooltip-left" data-tip="Create Link">
 					<button
-						className="btn btn-ghost btn-circle"
+						className="btn btn-circle btn-ghost"
 						onClick={() => setAddLinkModalOpen(true)}
 					>
 						<IoMdAdd size="1.5em" />
 					</button>
 				</div>
 			</div>
-			<div className="divider m-auto max-w-screen-lg p-4"></div>
+			<div className="divider m-auto max-w-screen-lg p-4">
+				<div className="breadcrumbs text-sm">
+					<ul>
+						<li>Organisation</li>
+						<li>Project</li>
+					</ul>
+				</div>
+			</div>
 			<AddLinkModal
 				open={addLinkModalOpen}
 				closeFn={() => {
