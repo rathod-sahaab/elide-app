@@ -1,69 +1,12 @@
 import { useState } from 'react'
 import { HiOutlineFolder, HiOutlineUsers } from 'react-icons/hi'
 import { IoMdAdd } from 'react-icons/io'
-import { IoQrCodeOutline, IoTrashOutline } from 'react-icons/io5'
 import { AddLinkModal } from './AddLink'
 import { DeleteLinkModal } from './DeleteLink'
+import { LinkCard } from './LinkCard'
 import { useGetLinksQuery } from './linksApiSlice'
 import { ILink } from './linksSlice'
 import { QrCodeModal } from './QrCodeModal'
-
-const ActivityIndicator = ({ active }: { active: boolean }) => {
-	return (
-		<div
-			className={
-				'tooltip tooltip-left cursor-pointer capitalize ' +
-				(active ? 'tooltip-success' : 'tooltip-warning')
-			}
-			data-tip={active ? 'active' : 'inactive'}
-		>
-			<span className={'badge ' + (active ? 'badge-success' : 'badge-warning')}></span>
-		</div>
-	)
-}
-
-const LinkCard = ({
-	id,
-	slug,
-	url,
-	active,
-	description,
-	deleteLink,
-	setActiveQr,
-}: ILink & { deleteLink: (link: ILink) => void; setActiveQr: (value: string) => void }) => {
-	return (
-		<div className="card w-full max-w-md bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2">
-			<div className="flex items-center justify-between">
-				<h3 className="font-bold text-accent">{slug}</h3>
-				<ActivityIndicator active={active} />
-			</div>
-			{description && (
-				<p className="overflow-hidden text-ellipsis whitespace-nowrap">{description}</p>
-			)}
-			<a href={url} className="link" target="_blank">
-				{url}
-			</a>
-			<div className="flex items-center justify-between">
-				<div>
-					<button
-						className="btn btn-ghost btn-circle"
-						onClick={() => deleteLink({ id, slug, url, active, description })}
-					>
-						<IoTrashOutline size="1.5em" />
-					</button>
-				</div>
-				<div>
-					<button
-						className="btn btn-ghost btn-circle"
-						onClick={() => setActiveQr(`https://elide.in/${slug}`)}
-					>
-						<IoQrCodeOutline size="1.5em" />
-					</button>
-				</div>
-			</div>
-		</div>
-	)
-}
 
 export const Links = () => {
 	// const links = useSelector(selectLinks)
@@ -145,7 +88,7 @@ export const Links = () => {
 				}}
 				data={qrCodeData}
 			/>
-			<div className="m-auto grid max-w-fit grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
+			<div className="m-auto grid max-w-fit grid-cols-1 items-start gap-4 md:grid-cols-2 2xl:grid-cols-3">
 				{(links as ILink[]).map((link) => (
 					<LinkCard
 						key={link.id}
