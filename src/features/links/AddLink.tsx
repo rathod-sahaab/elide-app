@@ -119,13 +119,11 @@ export const AddLinkModal = ({
 }) => {
 	return (
 		<div className={'modal ' + (open ? 'modal-open' : '')}>
-			<div className="modal-box relative max-w-md bg-base-200">
-				<div className="flex items-center justify-between pb-6">
-					<h1 className="text-2xl font-bold text-primary">Create Link</h1>
-					<button className="btn btn-circle btn-md" onClick={closeFn}>
-						<IoMdClose size="1.5em" />
-					</button>
-				</div>
+			<div className="modal-box relative max-w-md overflow-visible bg-base-200">
+				<button className="btn btn-square absolute -top-6 -right-6" onClick={closeFn}>
+					<IoMdClose size="1.5em" />
+				</button>
+				<h1 className="text-2xl font-bold mb-6 text-primary">Create Link</h1>
 				<AddLinkForm closeFn={closeFn} refetchFn={refetchFn} />
 			</div>
 		</div>

@@ -28,7 +28,7 @@ export const DeleteLinkForm = ({ link, closeFn, refetchFn }: IDeleteLinkFormProp
 		<div className="text-center">
 			<p className="mb-6">
 				Are you sure you want to delete link <b>elide.in/{link.slug}</b> pointing to{' '}
-				<a href={link.url} className="link">
+				<a href={link.url} className="link" target="_blank">
 					{link.url}
 				</a>
 				?
@@ -56,7 +56,7 @@ export const DeleteLinkModal = ({
 		<div className={'modal ' + (open ? 'modal-open' : '')}>
 			<div className="modal-box relative max-w-md overflow-visible bg-base-200">
 				<button
-					className="btn btn-circle absolute -top-5 -right-5"
+					className="btn btn-square absolute -top-6 -right-6"
 					onClick={() => {
 						if (rest.closeFn) rest.closeFn()
 					}}

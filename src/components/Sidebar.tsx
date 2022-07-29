@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom'
 import { IoMdAdd, IoMdClose } from 'react-icons/io'
 import { IoGrid, IoInformationCircle, IoPerson } from 'react-icons/io5'
 import { HiUserGroup } from 'react-icons/hi'
-import { FiChevronDown } from 'react-icons/fi'
 
 const SidebarItems = () => {
 	return (
