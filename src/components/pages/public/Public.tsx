@@ -1,8 +1,8 @@
 import { FiCheckCircle } from 'react-icons/fi'
 import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { selectCurrentToken } from '../features/auth/authSlice'
-import { Login } from '../features/auth/Login'
+import { selectCurrentToken } from '../../../features/auth/authSlice'
+import { Login } from '../../../features/auth/Login'
 
 export const Public = () => {
 	const token = useSelector(selectCurrentToken)

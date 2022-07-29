@@ -1,4 +1,4 @@
-import { Links } from '../../features/links/Links'
+import { Links } from '../../../features/links/Links'
 
 export const Dashboard = () => {
 	return (
