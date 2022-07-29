@@ -77,7 +77,7 @@ export const AddLinkForm = ({
 					/>
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.active}>
-					<div className="flex items-center justify-between rounded-xl border border-base-300 p-4">
+					<div className="flex flex-row items-center justify-between rounded-[var(--rounded-btn)] bg-base-100 p-3.5">
 						<label className="text-base">Active</label>
 						<input
 							disabled={isLoading}
@@ -123,7 +123,7 @@ export const AddLinkModal = ({
 				<button className="btn btn-square absolute -top-6 -right-6" onClick={closeFn}>
 					<IoMdClose size="1.5em" />
 				</button>
-				<h1 className="text-2xl font-bold mb-6 text-primary">Create Link</h1>
+				<h1 className="mb-6 text-2xl font-bold text-primary">Create Link</h1>
 				<AddLinkForm closeFn={closeFn} refetchFn={refetchFn} />
 			</div>
 		</div>
