@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { HiFolder, HiOutlineFolder, HiOutlineUsers, HiUserGroup } from 'react-icons/hi'
+import { HiOutlineFolder, HiOutlineUsers } from 'react-icons/hi'
 import { IoMdAdd } from 'react-icons/io'
 import { IoQrCodeOutline, IoTrashOutline } from 'react-icons/io5'
 import { AddLinkModal } from './AddLink'
@@ -105,7 +105,7 @@ export const Links = () => {
 						className="btn btn-ghost btn-circle"
 						onClick={() => setAddLinkModalOpen(true)}
 					>
-						<IoMdAdd size="1.5em" />
+						<IoMdAdd size="2em" />
 					</button>
 				</div>
 			</div>
