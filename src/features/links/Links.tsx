@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { HiFolder, HiOutlineFolder, HiOutlineUsers, HiUserGroup } from 'react-icons/hi'
 import { IoMdAdd } from 'react-icons/io'
 import { IoQrCodeOutline, IoTrashOutline } from 'react-icons/io5'
 import { AddLinkModal } from './AddLink'
@@ -45,7 +46,7 @@ const LinkCard = ({
 			<div className="flex items-center justify-between">
 				<div>
 					<button
-						className="btn btn-circle btn-ghost"
+						className="btn btn-ghost btn-circle"
 						onClick={() => deleteLink({ id, slug, url, active, description })}
 					>
 						<IoTrashOutline size="1.5em" />
@@ -53,7 +54,7 @@ const LinkCard = ({
 				</div>
 				<div>
 					<button
-						className="btn btn-circle btn-ghost"
+						className="btn btn-ghost btn-circle"
 						onClick={() => setActiveQr(`https://elide.in/${slug}`)}
 					>
 						<IoQrCodeOutline size="1.5em" />
@@ -101,20 +102,26 @@ export const Links = () => {
 				<h1 className="text-2xl font-bold">Links</h1>
 				<div className="tooltip tooltip-left" data-tip="Create Link">
 					<button
-						className="btn btn-circle btn-ghost"
+						className="btn btn-ghost btn-circle"
 						onClick={() => setAddLinkModalOpen(true)}
 					>
 						<IoMdAdd size="1.5em" />
 					</button>
 				</div>
 			</div>
-			<div className="divider m-auto max-w-screen-lg p-4">
-				<div className="breadcrumbs text-sm">
-					<ul>
-						<li>Organisation</li>
-						<li>Project</li>
-					</ul>
-				</div>
+			<div className="divider m-auto max-w-screen-lg p-4 [&::before]:w-auto [&::after]:w-auto">
+				{false && (
+					<div className="breadcrumbs hidden text-sm">
+						<ul>
+							<li>
+								<HiOutlineUsers className="mr-2" /> Organisation
+							</li>
+							<li>
+								<HiOutlineFolder className="mr-2" /> Project
+							</li>
+						</ul>
+					</div>
+				)}
 			</div>
 			<AddLinkModal
 				open={addLinkModalOpen}
