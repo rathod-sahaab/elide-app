@@ -27,10 +27,8 @@ const SidebarItems = () => {
 						</Link>
 					</li>
 					<li>
-						<div className="flex justify-between">
-							<div className="flex items-center justify-start">
-								<HiUserGroup className="mr-3" /> <span>Organizations</span>
-							</div>
+						<div className="grid grid-cols-[auto_1fr_auto]">
+							<HiUserGroup /> <span>Organizations</span>
 							<button className="btn btn-ghost btn-circle btn-sm">
 								<IoMdAdd size="1.5em" />
 							</button>
