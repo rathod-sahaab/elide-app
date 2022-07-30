@@ -17,10 +17,10 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 			}),
 		}),
 		createOrganisation: builder.mutation({
-			query: (data: IOrganisationData) => ({
+			query: ({ name, description }: IOrganisationData) => ({
 				url: '/organisations',
 				method: 'POST',
-				body: { data },
+				body: { name, description },
 			}),
 		}),
 	}),

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import { IoMdAdd, IoMdClose } from 'react-icons/io'
+import { IoMdClose } from 'react-icons/io'
 import { IoGrid, IoInformationCircle, IoPerson } from 'react-icons/io5'
-import { HiUserGroup } from 'react-icons/hi'
+import { OrganisationSidebar } from '../features/organisations/OrganisationSidebar'
 
 const SidebarItems = () => {
 	return (
@@ -11,7 +11,7 @@ const SidebarItems = () => {
 				<ul className="menu overflow-y-auto p-4">
 					<label
 						htmlFor="drawer-1"
-						className="drawer-button btn btn-ghost btn-circle text-xl lg:hidden"
+						className="drawer-button btn btn-circle btn-ghost text-xl lg:hidden"
 					>
 						<IoMdClose />
 					</label>
@@ -25,14 +25,7 @@ const SidebarItems = () => {
 							<IoPerson /> Profile
 						</Link>
 					</li>
-					<li>
-						<div className="grid grid-cols-[auto_1fr_auto]">
-							<HiUserGroup /> <span>Organizations</span>
-							<button className="btn btn-ghost btn-circle btn-sm">
-								<IoMdAdd size="1.5em" />
-							</button>
-						</div>
-					</li>
+					<OrganisationSidebar />
 				</ul>
 				<ul className="menu overflow-y-auto p-4">
 					<li>

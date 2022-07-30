@@ -78,7 +78,7 @@ export const CreateOrganisationModal = ({
 	refetchFn,
 }: {
 	open: boolean
-	refetchFn: () => void
+	refetchFn?: () => void
 	closeFn: () => void
 }) => {
 	const { theme } = useTheme()
