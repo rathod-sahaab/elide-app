@@ -3,10 +3,16 @@ import { FieldError } from 'react-hook-form'
 export const ErrorInputWrapper = ({
 	children,
 	fieldError,
-}: React.PropsWithChildren & { fieldError?: FieldError }) => {
+	altComponent,
+}: React.PropsWithChildren & { fieldError?: FieldError; altComponent?: JSX.Element }) => {
 	return (
-		<div>
-			{fieldError && <div className="pb-2 text-sm text-error">{fieldError.message}</div>}
+		<div className="form-control">
+			<label className="label">
+				<span className="label-text">
+					{fieldError && <div className="text-error">{fieldError.message}</div>}
+				</span>
+				<span className="label-text-alt">{!!altComponent && altComponent}</span>
+			</label>
 			{children}
 		</div>
 	)

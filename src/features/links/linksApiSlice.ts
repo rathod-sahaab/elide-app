@@ -27,7 +27,18 @@ export const linksApiSlice = apiSlice.injectEndpoints({
 				},
 			}),
 		}),
+		getSlugAvailability: builder.query({
+			query: ({ slug }: { slug: string }) => ({
+				url: `/links/${slug}/availability`,
+			}),
+		}),
 	}),
 })
 
-export const { useCreateLinkMutation, useDeleteLinkMutation, useGetLinksQuery } = linksApiSlice
+export const {
+	useCreateLinkMutation,
+	useDeleteLinkMutation,
+	useGetLinksQuery,
+	useLazyGetLinksQuery,
+	useLazyGetSlugAvailabilityQuery,
+} = linksApiSlice

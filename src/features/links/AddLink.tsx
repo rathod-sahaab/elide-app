@@ -4,8 +4,9 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useDispatch } from 'react-redux'
 import { createLink as createLinkActionCreator, ILink, ILinkData } from './linksSlice'
-import { useCreateLinkMutation } from './linksApiSlice'
+import { useCreateLinkMutation, useLazyGetSlugAvailabilityQuery } from './linksApiSlice'
 import { IoMdClose } from 'react-icons/io'
+import { useState } from 'react'
 
 const schema = yup.object({
 	slug: yup.string().required('Slug is required'),
@@ -22,7 +23,11 @@ export const AddLinkForm = ({
 	refetchFn?: () => void
 }) => {
 	const [createLink, { isLoading }] = useCreateLinkMutation()
+	const [slugAvailabilityTrigger] = useLazyGetSlugAvailabilityQuery()
+	const [slug, setSlug] = useState('')
+	const [slugAvailable, setSlugAvailable] = useState(false)
 	const dispatch = useDispatch()
+
 	const {
 		register,
 		handleSubmit,
@@ -48,8 +53,19 @@ export const AddLinkForm = ({
 
 	return (
 		<div>
-			<div className="[&>*:not(:last-child)]:mb-6">
-				<ErrorInputWrapper fieldError={errors.slug}>
+			<div className="[&>*]:mb-4">
+				<ErrorInputWrapper
+					fieldError={errors.slug}
+					altComponent={
+						slug !== '' && !slugAvailable ? (
+							<span className="text-error">Unavailable</span>
+						) : slug !== '' ? (
+							<span className="text-success">Available</span>
+						) : (
+							<></>
+						)
+					}
+				>
 					<div className="input-group">
 						<span className="font-bold">elide.in/</span>
 						<input
@@ -57,6 +73,21 @@ export const AddLinkForm = ({
 							className="input block w-full bg-base-100"
 							placeholder="slug"
 							{...register('slug')}
+							onChange={async (e) => {
+								const slugInput = e.target.value
+								setSlug(slugInput)
+								try {
+									if (slugInput === '') {
+										// For forwarding this error to yup
+										setSlugAvailable(true)
+										return
+									}
+									const payload = await slugAvailabilityTrigger({
+										slug: slugInput,
+									}).unwrap()
+									setSlugAvailable(payload.available)
+								} catch (_) {}
+							}}
 						/>
 					</div>
 				</ErrorInputWrapper>
@@ -69,9 +100,9 @@ export const AddLinkForm = ({
 					/>
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.description}>
-					<input
+					<textarea
 						disabled={isLoading}
-						className="input block w-full bg-base-100"
+						className="textarea block w-full bg-base-100"
 						placeholder="Description"
 						{...register('description')}
 					/>
@@ -89,8 +120,8 @@ export const AddLinkForm = ({
 					</div>
 				</ErrorInputWrapper>
 				<button
-					disabled={isLoading}
-					className="btn btn-outline btn-ghost btn-block text-center"
+					disabled={isLoading || !slugAvailable}
+					className="btn btn-outline btn-ghost btn-block mt-4 text-center"
 					onClick={handleSubmit(submitHandler)}
 				>
 					Create
