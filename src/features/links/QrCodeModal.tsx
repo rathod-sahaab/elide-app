@@ -1,5 +1,5 @@
 import { QRCodeCanvas, QRCodeSVG } from 'qrcode.react'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { IoMdClose } from 'react-icons/io'
 import { MdOutlineFileDownload } from 'react-icons/md'
