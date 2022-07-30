@@ -5,6 +5,10 @@ export interface IOrganisationData {
 	description?: string
 }
 
+export interface IOrganisation extends IOrganisationData {
+	id: number
+}
+
 export const organisationsApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getOrganisations: builder.query({
