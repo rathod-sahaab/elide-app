@@ -1,4 +1,6 @@
+import { createPortal } from 'react-dom'
 import { IoMdClose } from 'react-icons/io'
+import { useTheme } from '../../hooks/use-theme'
 import { useDeleteLinkMutation } from './linksApiSlice'
 import { ILink } from './linksSlice'
 
@@ -52,8 +54,9 @@ export const DeleteLinkModal = ({
 }: {
 	open: boolean
 } & IDeleteLinkFormProps) => {
-	return (
-		<div className={'modal ' + (open ? 'modal-open' : '')}>
+	const { theme } = useTheme()
+	return createPortal(
+		<div className={'modal ' + (open ? 'modal-open' : '')} data-theme={theme}>
 			<div className="modal-box relative max-w-md overflow-visible bg-base-200">
 				<button
 					className="btn btn-square absolute -top-6 -right-6"
@@ -66,6 +69,7 @@ export const DeleteLinkModal = ({
 				<h1 className="pb-6 text-2xl font-bold text-primary">Delete Link</h1>
 				<DeleteLinkForm {...rest} />
 			</div>
-		</div>
+		</div>,
+		document.getElementById('modal-root') as HTMLElement,
 	)
 }

@@ -7,6 +7,8 @@ import { createLink as createLinkActionCreator, ILink, ILinkData } from './links
 import { useCreateLinkMutation, useLazyGetSlugAvailabilityQuery } from './linksApiSlice'
 import { IoMdClose } from 'react-icons/io'
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
+import { useTheme } from '../../hooks/use-theme'
 
 const schema = yup.object({
 	slug: yup.string().required('Slug is required'),
@@ -148,8 +150,9 @@ export const AddLinkModal = ({
 	refetchFn: () => void
 	closeFn: () => void
 }) => {
-	return (
-		<div className={'modal ' + (open ? 'modal-open' : '')}>
+	const { theme } = useTheme()
+	return createPortal(
+		<div className={'modal ' + (open ? 'modal-open' : '')} data-theme={theme}>
 			<div className="modal-box relative max-w-md overflow-visible bg-base-200">
 				<button className="btn btn-square absolute -top-6 -right-6" onClick={closeFn}>
 					<IoMdClose size="1.5em" />
@@ -157,6 +160,7 @@ export const AddLinkModal = ({
 				<h1 className="mb-6 text-2xl font-bold text-primary">Create Link</h1>
 				<AddLinkForm closeFn={closeFn} refetchFn={refetchFn} />
 			</div>
-		</div>
+		</div>,
+		document.getElementById('modal-root') as HTMLElement,
 	)
 }

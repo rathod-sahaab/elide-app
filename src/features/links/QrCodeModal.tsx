@@ -1,5 +1,6 @@
 import { QRCodeCanvas, QRCodeSVG } from 'qrcode.react'
 import { useEffect, useMemo, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { IoMdClose } from 'react-icons/io'
 import { MdOutlineFileDownload } from 'react-icons/md'
 import { useTheme } from '../../hooks/use-theme'
@@ -21,8 +22,6 @@ export const QrCodeModal = ({
 	const slug = data.split('/').pop()
 	const [base64Svg, setBase64Svg] = useState<string | null>(null)
 
-	const [qrBgColor, setQrBgColor] = useState<string>()
-
 	const { theme } = useTheme()
 
 	useEffect(() => {
@@ -36,13 +35,8 @@ export const QrCodeModal = ({
 		setBase64Svg(btoa(svg))
 	}, [level, data])
 
-	useEffect(() => {
-		const style = window.getComputedStyle(document.body)
-		setQrBgColor(style.getPropertyValue('--b2'))
-	}, [theme])
-
-	return (
-		<div className={'modal ' + (open ? 'modal-open' : '')}>
+	return createPortal(
+		<div className={'modal ' + (open ? 'modal-open' : '')} data-theme={theme}>
 			<div className="modal-box relative w-max overflow-visible bg-base-200">
 				<button className="btn btn-square absolute -top-6 -right-6" onClick={closeFn}>
 					<IoMdClose size="1.5em" />
@@ -100,6 +94,7 @@ export const QrCodeModal = ({
 					</div>
 				</div>
 			</div>
-		</div>
+		</div>,
+		document.getElementById('modal-root') as HTMLElement,
 	)
 }
