@@ -89,14 +89,15 @@ export const Links = () => {
 				data={qrCodeData}
 			/>
 			<div className="m-auto grid max-w-fit grid-cols-1 items-start gap-4 md:grid-cols-2 2xl:grid-cols-3">
-				{(links as ILink[]).map((link) => (
-					<LinkCard
-						key={link.id}
-						{...link}
-						deleteLink={handleDeleteLink}
-						setActiveQr={handleQrCodeClick}
-					/>
-				))}
+				{links &&
+					(links as ILink[]).map((link) => (
+						<LinkCard
+							key={link.id}
+							{...link}
+							deleteLink={handleDeleteLink}
+							setActiveQr={handleQrCodeClick}
+						/>
+					))}
 			</div>
 		</div>
 	)

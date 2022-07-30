@@ -9,6 +9,11 @@ export interface IOrganisation extends IOrganisationData {
 	id: number
 }
 
+export interface IOrganisationRole {
+	role: string
+	organisation: IOrganisation
+}
+
 export const organisationsApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getOrganisations: builder.query({
