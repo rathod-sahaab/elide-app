@@ -26,13 +26,17 @@ export const LinkCard = ({
 				<h3 className="align-middle font-bold text-accent">{slug}</h3>
 				<ActivityIndicator active={active} />
 			</div>
-			{description && (
+			{description ? (
 				<p className="overflow-hidden text-ellipsis whitespace-nowrap">{description}</p>
+			) : (
+				<p className="text-content overflow-hidden text-ellipsis whitespace-nowrap italic opacity-50">
+					No description
+				</p>
 			)}
 			<a href={url} className="link" target="_blank">
 				{url}
 			</a>
-			<div className="operations absolute bottom-0 right-0 bg-base-200 transition transition-transform duration-250">
+			<div className="operations duration-250 absolute bottom-0 right-0 bg-base-200 transition transition-transform">
 				<CardButton onClick={() => deleteLink({ id, slug, url, active, description })}>
 					<IoTrashOutline size="1.35em" />
 				</CardButton>
