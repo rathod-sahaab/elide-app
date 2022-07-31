@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { HiUserGroup } from 'react-icons/hi'
-import { IoMdAdd, IoMdClose } from 'react-icons/io'
+import { IoMdAdd, IoMdCheckmark, IoMdClose } from 'react-icons/io'
+import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 import { CreateOrganisationModal } from './CreateOrganisation'
 import {
@@ -51,26 +52,24 @@ export const OrganisationSidebar = () => {
 					const isActive =
 						stateOrgRole.organisation &&
 						orgRole.organisation.id === stateOrgRole.organisation.id
+
+					const { organisation, role } = orgRole
 					return (
-						<li
-							key={orgRole.organisation.id}
-							className={'pl-10 ' + (orgsExpanded ? '' : 'hidden')}
-						>
-							<button
+						<li key={organisation.id} className={'pl-10 ' + (orgsExpanded ? '' : 'hidden')}>
+							<div
 								className={
-									'flex items-center justify-between ' + (isActive ? 'active' : '')
+									'flex items-center justify-between [&:hover>.btn]:opacity-100 [&:hover>.link]:underline ' +
+									(isActive ? 'active' : '')
 								}
-								onClick={() => {
-									if (!isActive) {
-										dispatch(setActiveOrganisation(orgRole))
-									}
-								}}
 							>
-								<span>
-									{orgRole.organisation.name}
-									<span className="italic opacity-70"> #{orgRole.organisation.id}</span>
-								</span>
-								{isActive && (
+								<Link
+									to={`/organisations/${organisation.id}`}
+									className="link no-underline"
+								>
+									{organisation.name}
+									<span className="italic opacity-70"> #{organisation.id}</span>
+								</Link>
+								{isActive ? (
 									<button
 										className="btn btn-circle btn-xs"
 										onClick={(e) => {
@@ -80,8 +79,18 @@ export const OrganisationSidebar = () => {
 									>
 										<IoMdClose size="1.2em" />
 									</button>
+								) : (
+									<button
+										className="btn btn-circle btn-xs opacity-30"
+										onClick={(e) => {
+											e.stopPropagation()
+											dispatch(setActiveOrganisation(orgRole))
+										}}
+									>
+										<IoMdCheckmark size="1.2em" />
+									</button>
 								)}
-							</button>
+							</div>
 						</li>
 					)
 				})
