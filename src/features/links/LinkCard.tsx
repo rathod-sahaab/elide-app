@@ -36,7 +36,7 @@ export const LinkCard = ({
 			<a href={url} className="link" target="_blank">
 				{url}
 			</a>
-			<div className="operations duration-250 absolute bottom-0 right-0 bg-base-200 transition transition-transform">
+			<div className="operations duration-350 absolute bottom-0 right-0 bg-base-200 transition transition-transform">
 				<CardButton onClick={() => deleteLink({ id, slug, url, active, description })}>
 					<IoTrashOutline size="1.35em" />
 				</CardButton>

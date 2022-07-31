@@ -1,13 +1,20 @@
 import { useState } from 'react'
 import { HiUserGroup } from 'react-icons/hi'
 import { IoMdAdd } from 'react-icons/io'
+import { useSelector } from 'react-redux'
+import { useAppDispatch } from '../../app/hooks'
 import { CreateOrganisationModal } from './CreateOrganisation'
-import { IOrganisation, IOrganisationRole, useGetOrganisationsQuery } from './orgnisationsApiSlice'
+import { selectOrganisation, setOrganisation } from './organisationsSlice'
+import { IOrganisationRole, useGetOrganisationsQuery } from './orgnisationsApiSlice'
 
 export const OrganisationSidebar = () => {
 	const [orgsExpanded, setOrgsExpanded] = useState(true)
 	const [createModalOpen, setCreateModalOpen] = useState(false)
 	const { isLoading, data: organisations, refetch } = useGetOrganisationsQuery({})
+
+	const dispatch = useAppDispatch()
+
+	const stateOrgRole = useSelector(selectOrganisation)
 	return (
 		<>
 			<li>
@@ -36,14 +43,28 @@ export const OrganisationSidebar = () => {
 				<></>
 			) : (
 				organisations &&
-				(organisations as IOrganisationRole[]).map((orgRole) => (
-					<li
-						key={orgRole.organisation.id}
-						className={'pl-10 ' + (orgsExpanded ? '' : 'hidden')}
-					>
-						<button>{orgRole.organisation.name}</button>
-					</li>
-				))
+				(organisations as IOrganisationRole[]).map((orgRole) => {
+					const isActive =
+						stateOrgRole.organisation &&
+						orgRole.organisation.id === stateOrgRole.organisation.id
+					return (
+						<li
+							key={orgRole.organisation.id}
+							className={'pl-10 ' + (orgsExpanded ? '' : 'hidden')}
+						>
+							<button
+								className={isActive ? 'active' : ''}
+								onClick={() => {
+									if (!isActive) {
+										dispatch(setOrganisation(orgRole))
+									}
+								}}
+							>
+								{orgRole.organisation.name}
+							</button>
+						</li>
+					)
+				})
 			)}
 		</>
 	)

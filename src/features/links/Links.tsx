@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { HiOutlineFolder, HiOutlineUsers } from 'react-icons/hi'
+import { HiOutlineFolder, HiOutlineLink, HiOutlineUsers } from 'react-icons/hi'
 import { IoMdAdd } from 'react-icons/io'
+import { useSelector } from 'react-redux'
+import { selectOrganisation } from '../organisations/organisationsSlice'
 import { AddLinkModal } from './AddLink'
 import { DeleteLinkModal } from './DeleteLink'
 import { LinkCard } from './LinkCard'
@@ -9,8 +11,6 @@ import { ILink } from './linksSlice'
 import { QrCodeModal } from './QrCodeModal'
 
 export const Links = () => {
-	// const links = useSelector(selectLinks)
-
 	const { isLoading, data: links, refetch } = useGetLinksQuery({ offset: 0, limit: 10 })
 
 	// modals
@@ -20,6 +20,8 @@ export const Links = () => {
 
 	const [linkToBeDeleted, setLinkToBeDeleted] = useState<ILink | null>(null)
 	const [qrCodeData, setQrCodeData] = useState<string>('')
+
+	const stateOrgRole = useSelector(selectOrganisation)
 
 	const handleDeleteLink = (link: ILink) => {
 		setLinkToBeDeleted(link)
@@ -35,37 +37,44 @@ export const Links = () => {
 		return <div>Loading...</div>
 	}
 
-	// const dispatch = useAppDispatch()
-
-	// dispatch(addLinks(data as ILink[]))
-
 	return (
 		<div className="[&>*:not(:last-child)]:mb-4">
 			<div className="m-auto mb-6 flex max-w-screen-sm items-center justify-between">
-				<h1 className="text-2xl font-bold">Links</h1>
+				{
+					<div className="breadcrumbs overflow-visible">
+						<ul>
+							{stateOrgRole.organisation && (
+								<li>
+									<HiOutlineUsers className="mr-2" size="1.35em" />{' '}
+									<span className="tooltip" data-tip="Selected Organization">
+										{stateOrgRole.organisation.name}
+									</span>
+								</li>
+							)}
+							{false && (
+								<li>
+									<HiOutlineFolder className="mr-2" size="1.35em" />
+									<span className="tooltip" data-tip="Selected Project">
+										Project
+									</span>
+								</li>
+							)}
+							<li>
+								<HiOutlineLink className="mr-2" size="1.35em" /> Links
+							</li>
+						</ul>
+					</div>
+				}
 				<div className="tooltip tooltip-left" data-tip="Create Link">
 					<button
 						className="btn btn-ghost btn-circle"
 						onClick={() => setAddLinkModalOpen(true)}
 					>
-						<IoMdAdd size="2em" />
+						<IoMdAdd size="1.75em" />
 					</button>
 				</div>
 			</div>
-			<div className="divider m-auto max-w-screen-lg p-4 [&::before]:w-auto [&::after]:w-auto">
-				{false && (
-					<div className="breadcrumbs hidden text-sm">
-						<ul>
-							<li>
-								<HiOutlineUsers className="mr-2" /> Organisation
-							</li>
-							<li>
-								<HiOutlineFolder className="mr-2" /> Project
-							</li>
-						</ul>
-					</div>
-				)}
-			</div>
+			<div className="divider m-auto max-w-screen-md p-4"></div>
 			<AddLinkModal
 				open={addLinkModalOpen}
 				closeFn={() => {
