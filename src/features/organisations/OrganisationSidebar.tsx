@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { HiUserGroup } from 'react-icons/hi'
-import { IoMdAdd } from 'react-icons/io'
+import { IoMdAdd, IoMdClose } from 'react-icons/io'
 import { useSelector } from 'react-redux'
 import { useAppDispatch } from '../../app/hooks'
 import { CreateOrganisationModal } from './CreateOrganisation'
@@ -53,14 +53,30 @@ export const OrganisationSidebar = () => {
 							className={'pl-10 ' + (orgsExpanded ? '' : 'hidden')}
 						>
 							<button
-								className={isActive ? 'active' : ''}
+								className={
+									'flex items-center justify-between ' + (isActive ? 'active' : '')
+								}
 								onClick={() => {
 									if (!isActive) {
 										dispatch(setOrganisation(orgRole))
 									}
 								}}
 							>
-								{orgRole.organisation.name}
+								<span>
+									{orgRole.organisation.name}
+									<span className="italic opacity-70"> #{orgRole.organisation.id}</span>
+								</span>
+								{isActive && (
+									<button
+										className="btn btn-circle btn-xs"
+										onClick={(e) => {
+											e.stopPropagation()
+											dispatch(setOrganisation({ organisation: null, role: null }))
+										}}
+									>
+										<IoMdClose size="1.2em" />
+									</button>
+								)}
 							</button>
 						</li>
 					)
