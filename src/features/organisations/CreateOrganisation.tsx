@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { IoMdClose } from 'react-icons/io'
 import * as yup from 'yup'
 import { ErrorInputWrapper } from '../../components/forms/ErrorInputWrapper'
-import { useTheme } from '../../hooks/use-theme'
+import { useTheme } from '../../app/hooks/use-theme'
 import {
 	IOrganisation,
 	IOrganisationData,

@@ -1,5 +1,5 @@
 import { Outlet } from 'react-router-dom'
-import { useTheme } from '../hooks/use-theme'
+import { useTheme } from '../app/hooks/use-theme'
 import Navbar from './Navbar'
 import Sidebar from './Sidebar'
 

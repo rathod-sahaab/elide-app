@@ -1,6 +1,6 @@
 import { createPortal } from 'react-dom'
 import { IoMdClose } from 'react-icons/io'
-import { useTheme } from '../../hooks/use-theme'
+import { useTheme } from '../../app/hooks/use-theme'
 import { useDeleteLinkMutation } from './linksApiSlice'
 import { ILink } from './linksSlice'
 

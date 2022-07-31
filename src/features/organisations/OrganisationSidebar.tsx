@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { HiUserGroup } from 'react-icons/hi'
 import { IoMdAdd, IoMdClose } from 'react-icons/io'
-import { useSelector } from 'react-redux'
-import { useAppDispatch } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 import { CreateOrganisationModal } from './CreateOrganisation'
 import { selectOrganisation, setOrganisation } from './organisationsSlice'
 import { IOrganisationRole, useGetOrganisationsQuery } from './orgnisationsApiSlice'
@@ -14,7 +13,8 @@ export const OrganisationSidebar = () => {
 
 	const dispatch = useAppDispatch()
 
-	const stateOrgRole = useSelector(selectOrganisation)
+	const stateOrgRole = useAppSelector(selectOrganisation)
+
 	return (
 		<>
 			<li>

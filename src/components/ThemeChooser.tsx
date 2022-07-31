@@ -1,4 +1,4 @@
-import { THEMES, useTheme } from '../hooks/use-theme'
+import { THEMES, useTheme } from '../app/hooks/use-theme'
 import { HiOutlineColorSwatch } from 'react-icons/hi'
 
 export default function ThemeChooser() {
