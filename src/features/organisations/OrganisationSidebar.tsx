@@ -3,7 +3,11 @@ import { HiUserGroup } from 'react-icons/hi'
 import { IoMdAdd, IoMdClose } from 'react-icons/io'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 import { CreateOrganisationModal } from './CreateOrganisation'
-import { selectOrganisation, setOrganisation } from './organisationsSlice'
+import {
+	clearActiveOrganisation,
+	selectOrganisation,
+	setActiveOrganisation,
+} from './organisationsSlice'
 import { IOrganisationRole, useGetOrganisationsQuery } from './orgnisationsApiSlice'
 
 export const OrganisationSidebar = () => {
@@ -58,7 +62,7 @@ export const OrganisationSidebar = () => {
 								}
 								onClick={() => {
 									if (!isActive) {
-										dispatch(setOrganisation(orgRole))
+										dispatch(setActiveOrganisation(orgRole))
 									}
 								}}
 							>
@@ -71,7 +75,7 @@ export const OrganisationSidebar = () => {
 										className="btn btn-circle btn-xs"
 										onClick={(e) => {
 											e.stopPropagation()
-											dispatch(setOrganisation({ organisation: null, role: null }))
+											dispatch(clearActiveOrganisation())
 										}}
 									>
 										<IoMdClose size="1.2em" />
