@@ -30,6 +30,7 @@ export const OrganisationSidebar = () => {
 						className="btn btn-ghost btn-circle btn-sm"
 						onClick={(e) => {
 							e.stopPropagation()
+							e.preventDefault()
 							setCreateModalOpen(true)
 						}}
 					>
@@ -37,7 +38,11 @@ export const OrganisationSidebar = () => {
 					</button>
 					<button
 						className="btn btn-ghost btn-circle btn-sm"
-						onClick={() => setOrgsExpanded((prev) => !prev)}
+						onClick={(e) => {
+							e.stopPropagation()
+							e.preventDefault()
+							setOrgsExpanded((prev) => !prev)
+						}}
 					>
 						{orgsExpanded ? (
 							<MdOutlineArrowDropUp size="1.5em" />
@@ -57,7 +62,7 @@ export const OrganisationSidebar = () => {
 			) : (
 				organisations &&
 				(organisations as IOrganisationRole[]).map((orgRole) => {
-					const isActive =
+					const isActiveOrganisation =
 						stateOrgRole.organisation &&
 						orgRole.organisation.id === stateOrgRole.organisation.id
 
@@ -65,26 +70,22 @@ export const OrganisationSidebar = () => {
 
 					return (
 						<li key={organisation.id} className={'pl-10 ' + (orgsExpanded ? '' : 'hidden')}>
-							<div
+							<NavLink
+								to={`/organisations/${organisation.id}`}
 								className={
-									'flex items-center justify-between [&:hover>.btn]:opacity-100 [&:hover>.link]:underline ' +
-									(isActive ? 'active' : '')
+									'flex items-center justify-between [&:hover>.btn]:opacity-100 [&:hover>.link]:underline'
 								}
 							>
-								<NavLink
-									to={`/organisations/${organisation.id}`}
-									className={({ isActive }) =>
-										'link no-underline' + (isActive ? ' text-primary' : '')
-									}
-								>
+								<span>
 									{organisation.name}
 									<span className="italic opacity-70"> #{organisation.id}</span>
-								</NavLink>
-								{isActive ? (
+								</span>
+								{isActiveOrganisation ? (
 									<button
 										className="btn btn-circle btn-xs"
 										onClick={(e) => {
 											e.stopPropagation()
+											e.preventDefault()
 											dispatch(clearActiveOrganisation())
 										}}
 									>
@@ -95,13 +96,14 @@ export const OrganisationSidebar = () => {
 										className="btn btn-circle btn-xs opacity-30"
 										onClick={(e) => {
 											e.stopPropagation()
+											e.preventDefault()
 											dispatch(setActiveOrganisation(orgRole))
 										}}
 									>
 										<IoMdCheckmark size="1.2em" />
 									</button>
 								)}
-							</div>
+							</NavLink>
 						</li>
 					)
 				})
