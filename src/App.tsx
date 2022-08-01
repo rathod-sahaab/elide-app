@@ -10,6 +10,7 @@ import { NotFound } from './components/pages/public/404'
 import { Organisations } from './features/organisations/components/Organisations'
 import { Organisation } from './features/organisations/components/Organisation'
 import { OrganisationMembers } from './features/organisations/components/OrganisationMembers'
+import { OrganisationInvitations } from './features/organisations/components/OrganisationInvitations'
 
 function App() {
 	return (
@@ -32,7 +33,7 @@ function App() {
 						<Route index element={<Organisations />} />
 						<Route path=":organisationId" element={<Organisation />}>
 							<Route path="members" element={<OrganisationMembers />} />
-							<Route path="invites" element={<OrganisationMembers />} />
+							<Route path="invites" element={<OrganisationInvitations />} />
 							<Route path="*" element={<Navigate to="members" replace />} />
 							<Route index element={<Navigate to="members" replace />} />
 						</Route>

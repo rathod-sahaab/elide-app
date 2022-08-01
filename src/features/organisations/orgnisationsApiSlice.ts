@@ -14,6 +14,23 @@ export interface IOrganisationRole {
 	organisation: IOrganisation
 }
 
+export interface IUser {
+	id: number
+	name: string
+	email: string
+}
+
+export interface IOrganisationInvitation {
+	role: string
+	status: string
+	user: IUser
+}
+
+export interface IOrganisationMemberRole {
+	role: string
+	user: IUser
+}
+
 export const organisationsApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getOrganisations: builder.query({
@@ -46,6 +63,24 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 				},
 			}),
 		}),
+		getOrganisationInvitations: builder.query({
+			query: ({
+				organisationId,
+				offset,
+				limit,
+			}: {
+				organisationId: number
+				offset: number
+				limit: number
+			}) => ({
+				url: `/organisations/${organisationId}/invitations`,
+				method: 'GET',
+				params: {
+					offset,
+					limit,
+				},
+			}),
+		}),
 	}),
 })
 
@@ -53,4 +88,5 @@ export const {
 	useGetOrganisationsQuery,
 	useCreateOrganisationMutation,
 	useGetOrganisationMembersQuery,
+	useGetOrganisationInvitationsQuery,
 } = organisationsApiSlice

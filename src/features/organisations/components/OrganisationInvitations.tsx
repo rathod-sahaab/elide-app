@@ -1,15 +1,17 @@
 import { useParams } from 'react-router-dom'
 import { ElideBadge } from '../../../components/atoms/ElideBadge'
-import { useGetOrganisationMembersQuery } from '../orgnisationsApiSlice'
-import { IOrganisationMemberRole } from '../orgnisationsApiSlice'
+import {
+	IOrganisationInvitation,
+	useGetOrganisationInvitationsQuery,
+} from '../orgnisationsApiSlice'
 
-export const OrganisationMembers = () => {
+export const OrganisationInvitations = () => {
 	const params = useParams()
 
 	// FIXME: handle this error
 	const organisationId = parseInt(params.organisationId || '0', 10)
 
-	const { data: members, isLoading } = useGetOrganisationMembersQuery({
+	const { data: invitations, isLoading } = useGetOrganisationInvitationsQuery({
 		organisationId,
 		offset: 0,
 		limit: 10,
@@ -23,19 +25,20 @@ export const OrganisationMembers = () => {
 			<div className="prose m-auto mb-12">
 				<h1 className="text-center">
 					{organisationId}
-					{"'"}s Members
+					{"'"}s Invitations
 				</h1>
 			</div>
 			<div className="m-auto w-11/12 max-w-screen-sm">
-				{members &&
-					(members as IOrganisationMemberRole[]).map((member) => {
+				{invitations &&
+					(invitations as IOrganisationInvitation[]).map((invitation) => {
 						return (
 							<div
-								key={member.user.id}
+								key={invitation.user.id}
 								className="card flex flex-row items-center justify-between bg-base-200 p-6 shadow-md"
 							>
-								<span className="font-bold">{member.user.name}</span>
-								<ElideBadge>{member.role}</ElideBadge>
+								<span className="font-bold">{invitation.user.name}</span>
+								<ElideBadge>{invitation.role}</ElideBadge>
+								<ElideBadge>{invitation.status}</ElideBadge>
 							</div>
 						)
 					})}

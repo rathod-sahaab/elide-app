@@ -1,13 +1,5 @@
 import { NavLink, Outlet, useParams } from 'react-router-dom'
 
-export interface IOrganisationMemberRole {
-	role: string
-	user: {
-		name: string
-		id: number
-	}
-}
-
 // TODO: use this
 export interface OrganisationParams {
 	organisationId: string
