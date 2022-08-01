@@ -32,6 +32,9 @@ export interface IOrganisationMemberRole {
 	user: IUser
 }
 
+export const ROLES = ['ADMIN', 'MAKER', 'VIEWER'] as const
+export type RoleType = typeof ROLES[number]
+
 export const organisationsApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getOrganisations: builder.query({
@@ -83,6 +86,24 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 				},
 			}),
 		}),
+		sendInvitaion: builder.mutation({
+			query: ({
+				organisationId,
+				memberEmail,
+				role,
+			}: {
+				organisationId: number
+				memberEmail: string
+				role: string
+			}) => ({
+				url: `/organisations/${organisationId}/invite`,
+				method: 'POST',
+				body: {
+					memberEmail,
+					role,
+				},
+			}),
+		}),
 	}),
 })
 
@@ -92,4 +113,5 @@ export const {
 	useGetOrganisationMembersQuery,
 	useGetOrganisationInvitationsQuery,
 	useGetOrganisationQuery,
+	useSendInvitaionMutation,
 } = organisationsApiSlice

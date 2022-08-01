@@ -28,8 +28,8 @@ export const OrganisationInvitations = () => {
 
 	return (
 		<>
-			<div className="prose m-auto mb-12">
-				<h1 className="text-center">{`${organisation.name}'s invitations`}</h1>
+			<div className="prose m-auto mb-12 text-center">
+				<h1>{`${organisation.name}'s invitations`}</h1>
 			</div>
 			<div className="m-auto w-11/12 max-w-screen-sm">
 				{invitations &&
@@ -40,8 +40,20 @@ export const OrganisationInvitations = () => {
 								className="card flex flex-row items-center justify-between bg-base-200 p-6 shadow-md"
 							>
 								<span className="font-bold">{invitation.user.name}</span>
-								<ElideBadge>{invitation.role}</ElideBadge>
-								<ElideBadge>{invitation.status}</ElideBadge>
+								<span className="grid grid-cols-2 gap-4">
+									<ElideBadge variant="success">{invitation.role}</ElideBadge>
+									<ElideBadge
+										variant={
+											invitation.status === 'PENDING' || invitation.status === 'CANCELED'
+												? 'warning'
+												: invitation.status === 'ACCEPTED'
+												? 'success'
+												: 'error'
+										}
+									>
+										{invitation.status}
+									</ElideBadge>
+								</span>
 							</div>
 						)
 					})}

@@ -13,7 +13,7 @@ export const Organisation = () => {
 
 	return (
 		<div>
-			<div className="tabs-lg tabs tabs-boxed m-auto flex w-11/12 max-w-screen-sm justify-center my-12">
+			<div className="tabs-lg tabs tabs-boxed m-auto my-12 flex w-11/12 max-w-screen-sm justify-center">
 				<NavLink
 					to="members"
 					className={({ isActive }) => 'tab ' + (isActive ? 'tab-active' : '')}
@@ -24,7 +24,7 @@ export const Organisation = () => {
 					to="invites"
 					className={({ isActive }) => 'tab ' + (isActive ? 'tab-active' : '')}
 				>
-					Invites
+					Invitations
 				</NavLink>
 			</div>
 			<Outlet />

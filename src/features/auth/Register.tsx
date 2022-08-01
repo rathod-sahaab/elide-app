@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FieldError, SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
-import { useLoginMutation } from './authApiSlice'
+import { useLoginMutation, useRegisterMutation } from './authApiSlice'
 import { setCredentials } from './authSlice'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { BiErrorCircle } from 'react-icons/bi'
@@ -9,7 +9,7 @@ import { MdOutlineChevronRight } from 'react-icons/md'
 
 import * as yup from 'yup'
 import { FormPage } from './FormPage'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ErrorInputWrapper } from '../../components/forms/ErrorInputWrapper'
 import { ElideIcon } from '../../components/ElideIcon'
 
@@ -44,8 +44,9 @@ const Error = ({ message }: { message: string }) => {
 }
 
 export const Register = () => {
-	const [login, { isLoading }] = useLoginMutation()
+	const [registerApi, { isLoading }] = useRegisterMutation()
 	const dispatch = useDispatch()
+	const navigate = useNavigate()
 
 	const {
 		register,
@@ -61,15 +62,16 @@ export const Register = () => {
 	}
 
 	const submitHandler: SubmitHandler<Inputs> = async ({ name, email, password }) => {
-		console.log({ email, password })
+		console.log({ email, password, name })
 		try {
-			// const userdata = await login({ email, password }).unwrap()
-			// console.log(userdata)
-			// dispatch(setCredentials({ ...userdata, email }))
-			console.log({ name, email, password })
+			const userdata = await registerApi({ email, password, name }).unwrap()
+			console.log(userdata)
+			setTimeout(() => {
+				navigate('/login')
+			}, 3000)
 		} catch (err) {
 			console.log(err)
-			setError('Invalid email or password')
+			setError('Error registering')
 		}
 	}
 
