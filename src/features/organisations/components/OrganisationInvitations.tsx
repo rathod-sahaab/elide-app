@@ -3,6 +3,7 @@ import { ElideBadge } from '../../../components/atoms/ElideBadge'
 import {
 	IOrganisationInvitation,
 	useGetOrganisationInvitationsQuery,
+	useGetOrganisationQuery,
 } from '../orgnisationsApiSlice'
 
 export const OrganisationInvitations = () => {
@@ -11,22 +12,24 @@ export const OrganisationInvitations = () => {
 	// FIXME: handle this error
 	const organisationId = parseInt(params.organisationId || '0', 10)
 
-	const { data: invitations, isLoading } = useGetOrganisationInvitationsQuery({
+	const { data: organisation, isLoading: organisationLoading } = useGetOrganisationQuery({
+		id: organisationId,
+	})
+
+	const { data: invitations, isLoading: invitationsLoading } = useGetOrganisationInvitationsQuery({
 		organisationId,
 		offset: 0,
 		limit: 10,
 	})
 
-	if (isLoading) {
+	if (organisationLoading || invitationsLoading) {
 		return <div>Loading...</div>
 	}
+
 	return (
 		<>
 			<div className="prose m-auto mb-12">
-				<h1 className="text-center">
-					{organisationId}
-					{"'"}s Invitations
-				</h1>
+				<h1 className="text-center">{`${organisation.name}'s invitations`}</h1>
 			</div>
 			<div className="m-auto w-11/12 max-w-screen-sm">
 				{invitations &&

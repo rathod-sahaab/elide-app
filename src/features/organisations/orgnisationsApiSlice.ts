@@ -1,4 +1,5 @@
 import { apiSlice } from '../../app/api/apiSlice'
+import { PaginationArgs } from '../../commons/types'
 
 export interface IOrganisationData {
 	name: string
@@ -38,6 +39,11 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 				url: '/organisations',
 			}),
 		}),
+		getOrganisation: builder.query({
+			query: ({ id }) => ({
+				url: `/organisations/${id}`,
+			}),
+		}),
 		createOrganisation: builder.mutation({
 			query: ({ name, description }: IOrganisationData) => ({
 				url: '/organisations',
@@ -52,9 +58,7 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 				limit,
 			}: {
 				organisationId: number
-				offset: number
-				limit: number
-			}) => ({
+			} & PaginationArgs) => ({
 				url: `/organisations/${organisationId}/members`,
 				method: 'GET',
 				params: {
@@ -70,9 +74,7 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 				limit,
 			}: {
 				organisationId: number
-				offset: number
-				limit: number
-			}) => ({
+			} & PaginationArgs) => ({
 				url: `/organisations/${organisationId}/invitations`,
 				method: 'GET',
 				params: {
@@ -89,4 +91,5 @@ export const {
 	useCreateOrganisationMutation,
 	useGetOrganisationMembersQuery,
 	useGetOrganisationInvitationsQuery,
+	useGetOrganisationQuery,
 } = organisationsApiSlice

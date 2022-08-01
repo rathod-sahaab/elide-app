@@ -1,7 +1,10 @@
 import { useParams } from 'react-router-dom'
 import { ElideBadge } from '../../../components/atoms/ElideBadge'
-import { useGetOrganisationMembersQuery } from '../orgnisationsApiSlice'
-import { IOrganisationMemberRole } from '../orgnisationsApiSlice'
+import {
+	useGetOrganisationMembersQuery,
+	useGetOrganisationQuery,
+	IOrganisationMemberRole,
+} from '../orgnisationsApiSlice'
 
 export const OrganisationMembers = () => {
 	const params = useParams()
@@ -9,22 +12,23 @@ export const OrganisationMembers = () => {
 	// FIXME: handle this error
 	const organisationId = parseInt(params.organisationId || '0', 10)
 
-	const { data: members, isLoading } = useGetOrganisationMembersQuery({
+	const { data: organisation, isLoading: organisationLoading } = useGetOrganisationQuery({
+		id: organisationId,
+	})
+
+	const { data: members, isLoading: membersLoading } = useGetOrganisationMembersQuery({
 		organisationId,
 		offset: 0,
 		limit: 10,
 	})
 
-	if (isLoading) {
+	if (membersLoading || organisationLoading) {
 		return <div>Loading...</div>
 	}
 	return (
 		<>
 			<div className="prose m-auto mb-12">
-				<h1 className="text-center">
-					{organisationId}
-					{"'"}s Members
-				</h1>
+				<h1 className="text-center">{`${organisation.name}'s members`}</h1>
 			</div>
 			<div className="m-auto w-11/12 max-w-screen-sm">
 				{members &&
