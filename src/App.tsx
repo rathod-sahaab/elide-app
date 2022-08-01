@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import { OutletLayout } from './components/Layout'
 import { Public } from './components/pages/public/Public'
 import { Dashboard } from './components/pages/auth/Dashboard'
@@ -9,6 +9,7 @@ import { About } from './components/pages/public/About'
 import { NotFound } from './components/pages/public/404'
 import { Organisations } from './features/organisations/components/Organisations'
 import { Organisation } from './features/organisations/components/Organisation'
+import { OrganisationMembers } from './features/organisations/components/OrganisationMembers'
 
 function App() {
 	return (
@@ -29,7 +30,12 @@ function App() {
 					<Route path="dashboard" element={<Dashboard />} />
 					<Route path="organisations">
 						<Route index element={<Organisations />} />
-						<Route path=":organisationId" element={<Organisation />} />
+						<Route path=":organisationId" element={<Organisation />}>
+							<Route path="members" element={<OrganisationMembers />} />
+							<Route path="invites" element={<OrganisationMembers />} />
+							<Route path="*" element={<Navigate to="members" replace />} />
+							<Route index element={<Navigate to="members" replace />} />
+						</Route>
 					</Route>
 				</Route>
 
