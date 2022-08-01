@@ -3,6 +3,8 @@ import { IoMdClose } from 'react-icons/io'
 import { useParams } from 'react-router-dom'
 import { ElideBadge } from '../../../components/atoms/ElideBadge'
 import {
+	InvitationStatusType,
+	INVITATION_STATUSES,
 	IOrganisationInvitation,
 	useGetOrganisationInvitationsQuery,
 	useGetOrganisationQuery,
@@ -13,6 +15,8 @@ export const OrganisationInvitations = () => {
 	const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
 	const [invitationToBeCanceled, setInvitationToBeCaneled] =
 		useState<IOrganisationInvitation | null>(null)
+
+	const [selectedStatus, setSelectedStatus] = useState<InvitationStatusType | undefined>('PENDING')
 
 	const params = useParams()
 
@@ -31,6 +35,7 @@ export const OrganisationInvitations = () => {
 		organisationId,
 		offset: 0,
 		limit: 10,
+		status: selectedStatus,
 	})
 
 	if (organisationLoading || invitationsLoading) {
@@ -50,6 +55,23 @@ export const OrganisationInvitations = () => {
 			/>
 			<div className="prose m-auto mb-12 text-center">
 				<h1>{`${organisation.name}'s invitations`}</h1>
+			</div>
+			<div className="tabs-lg tabs tabs-boxed m-auto my-12 flex max-w-screen-sm justify-center">
+				{INVITATION_STATUSES.map((status) => (
+					<button
+						key={status}
+						className={'tab ' + (status === selectedStatus ? 'tab-active' : '')}
+						onClick={() => status !== selectedStatus && setSelectedStatus(status)}
+					>
+						{status}
+					</button>
+				))}
+				<button
+					className={'tab ' + (selectedStatus === undefined ? 'tab-active' : '')}
+					onClick={() => selectedStatus && setSelectedStatus(undefined)}
+				>
+					ALL
+				</button>
 			</div>
 			<div className="card m-auto w-11/12 max-w-screen-sm shadow-md">
 				{invitations &&

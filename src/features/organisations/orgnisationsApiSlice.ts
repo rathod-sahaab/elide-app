@@ -36,6 +36,9 @@ export interface IOrganisationMemberRole {
 export const ROLES = ['ADMIN', 'MAKER', 'VIEWER'] as const
 export type RoleType = typeof ROLES[number]
 
+export const INVITATION_STATUSES = ['PENDING', 'CANCELED', 'REJECTED', 'ACCEPTED'] as const
+export type InvitationStatusType = typeof INVITATION_STATUSES[number]
+
 export const organisationsApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		getOrganisations: builder.query({
@@ -76,14 +79,17 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 				organisationId,
 				offset,
 				limit,
+				status,
 			}: {
 				organisationId: number
+				status?: InvitationStatusType
 			} & PaginationArgs) => ({
 				url: `/organisations/${organisationId}/invitations`,
 				method: 'GET',
 				params: {
 					offset,
 					limit,
+					status,
 				},
 			}),
 		}),
