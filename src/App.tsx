@@ -6,6 +6,9 @@ import { LoginPage } from './features/auth/Login'
 import { RegisterPage } from './features/auth/Register'
 import { RequireAuth, RequireNoAuth } from './features/auth/RequireAuth'
 import { About } from './components/pages/public/About'
+import { NotFound } from './components/pages/public/404'
+import { Organisations } from './features/organisations/components/Organisations'
+import { Organisation } from './features/organisations/components/Organisation'
 
 function App() {
 	return (
@@ -24,7 +27,13 @@ function App() {
 				{/*Authehticated Routes*/}
 				<Route element={<RequireAuth />}>
 					<Route path="dashboard" element={<Dashboard />} />
+					<Route path="organisations">
+						<Route index element={<Organisations />} />
+						<Route path=":organisationId" element={<Organisation />} />
+					</Route>
 				</Route>
+
+				<Route path="*" element={<NotFound />} />
 			</Route>
 		</Routes>
 	)

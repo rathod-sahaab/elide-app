@@ -12,8 +12,8 @@ import {
 } from './orgnisationsApiSlice'
 
 const schema = yup.object({
-	name: yup.string().required(),
-	description: yup.string(),
+	name: yup.string().required('Name is required'),
+	description: yup.string().required('Description is required'),
 })
 
 export const CreateOrganisationForm = ({
