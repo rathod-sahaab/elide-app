@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { HiUserGroup } from 'react-icons/hi'
 import { IoMdAdd, IoMdCheckmark, IoMdClose } from 'react-icons/io'
-import { Link } from 'react-router-dom'
+import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from 'react-icons/md'
+import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 import { CreateOrganisationModal } from './CreateOrganisation'
 import {
@@ -23,10 +24,7 @@ export const OrganisationSidebar = () => {
 	return (
 		<>
 			<li>
-				<div
-					className="grid grid-cols-[auto_1fr_auto]"
-					onClick={() => setOrgsExpanded((prev) => !prev)}
-				>
+				<NavLink to="/organisations" className="grid grid-cols-[auto_1fr_auto_auto]" end={true}>
 					<HiUserGroup /> <span>Organizations</span>
 					<button
 						className="btn btn-ghost btn-circle btn-sm"
@@ -37,7 +35,17 @@ export const OrganisationSidebar = () => {
 					>
 						<IoMdAdd size="1.5em" />
 					</button>
-				</div>
+					<button
+						className="btn btn-ghost btn-circle btn-sm"
+						onClick={() => setOrgsExpanded((prev) => !prev)}
+					>
+						{orgsExpanded ? (
+							<MdOutlineArrowDropUp size="1.5em" />
+						) : (
+							<MdOutlineArrowDropDown size="1.5em" />
+						)}
+					</button>
+				</NavLink>
 			</li>
 			<CreateOrganisationModal
 				open={createModalOpen}
@@ -53,7 +61,8 @@ export const OrganisationSidebar = () => {
 						stateOrgRole.organisation &&
 						orgRole.organisation.id === stateOrgRole.organisation.id
 
-					const { organisation, role } = orgRole
+					const { organisation } = orgRole
+
 					return (
 						<li key={organisation.id} className={'pl-10 ' + (orgsExpanded ? '' : 'hidden')}>
 							<div
@@ -62,13 +71,15 @@ export const OrganisationSidebar = () => {
 									(isActive ? 'active' : '')
 								}
 							>
-								<Link
+								<NavLink
 									to={`/organisations/${organisation.id}`}
-									className="link no-underline"
+									className={({ isActive }) =>
+										'link no-underline' + (isActive ? ' text-primary' : '')
+									}
 								>
 									{organisation.name}
 									<span className="italic opacity-70"> #{organisation.id}</span>
-								</Link>
+								</NavLink>
 								{isActive ? (
 									<button
 										className="btn btn-circle btn-xs"
