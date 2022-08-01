@@ -7,7 +7,7 @@ import {
 	useGetOrganisationQuery,
 	IOrganisationMemberRole,
 } from '../orgnisationsApiSlice'
-import { OrganisationInvitationModal } from './OrganisationInvitationForm'
+import { OrganisationInvitationModal } from './forms/OrganisationInvitationForm'
 
 export const OrganisationMembers = () => {
 	const params = useParams()

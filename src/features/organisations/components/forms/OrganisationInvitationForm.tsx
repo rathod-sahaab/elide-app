@@ -1,15 +1,14 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
-import { ErrorInputWrapper } from '../../../components/forms/ErrorInputWrapper'
+import { ErrorInputWrapper } from '../../../../components/forms/ErrorInputWrapper'
 import {
-	IOrganisationData,
 	IOrganisationInvitation,
 	ROLES,
 	RoleType,
 	useSendInvitaionMutation,
-} from '../orgnisationsApiSlice'
-import { ElideModal } from '../../../components/ElideModal'
+} from '../../orgnisationsApiSlice'
+import { ElideModal } from '../../../../components/ElideModal'
 
 export interface IInvitationFormData {
 	email: string

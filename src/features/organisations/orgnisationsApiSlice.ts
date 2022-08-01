@@ -22,6 +22,7 @@ export interface IUser {
 }
 
 export interface IOrganisationInvitation {
+	id: string
 	role: string
 	status: string
 	user: IUser
@@ -104,6 +105,18 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 				},
 			}),
 		}),
+		cancelInvitation: builder.mutation({
+			query: ({
+				organisationId,
+				invitationId,
+			}: {
+				organisationId: number
+				invitationId: string
+			}) => ({
+				url: `/organisations/${organisationId}/invitations/${invitationId}`,
+				method: 'DELETE',
+			}),
+		}),
 	}),
 })
 
@@ -114,4 +127,5 @@ export const {
 	useGetOrganisationInvitationsQuery,
 	useGetOrganisationQuery,
 	useSendInvitaionMutation,
+	useCancelInvitationMutation,
 } = organisationsApiSlice

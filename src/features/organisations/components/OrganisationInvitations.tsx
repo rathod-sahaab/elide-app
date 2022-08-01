@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { IoMdClose } from 'react-icons/io'
 import { useParams } from 'react-router-dom'
 import { ElideBadge } from '../../../components/atoms/ElideBadge'
 import {
@@ -5,8 +7,13 @@ import {
 	useGetOrganisationInvitationsQuery,
 	useGetOrganisationQuery,
 } from '../orgnisationsApiSlice'
+import { OrganisationCancelInvitationModal } from './forms/CancelInvitationForm'
 
 export const OrganisationInvitations = () => {
+	const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
+	const [invitationToBeCanceled, setInvitationToBeCaneled] =
+		useState<IOrganisationInvitation | null>(null)
+
 	const params = useParams()
 
 	// FIXME: handle this error
@@ -16,7 +23,11 @@ export const OrganisationInvitations = () => {
 		id: organisationId,
 	})
 
-	const { data: invitations, isLoading: invitationsLoading } = useGetOrganisationInvitationsQuery({
+	const {
+		data: invitations,
+		isLoading: invitationsLoading,
+		refetch,
+	} = useGetOrganisationInvitationsQuery({
 		organisationId,
 		offset: 0,
 		limit: 10,
@@ -28,32 +39,60 @@ export const OrganisationInvitations = () => {
 
 	return (
 		<>
+			<OrganisationCancelInvitationModal
+				open={isCancelModalOpen}
+				organisationId={organisationId}
+				invitation={invitationToBeCanceled}
+				closeFn={() => {
+					setIsCancelModalOpen(false)
+				}}
+				refetchFn={refetch}
+			/>
 			<div className="prose m-auto mb-12 text-center">
 				<h1>{`${organisation.name}'s invitations`}</h1>
 			</div>
-			<div className="m-auto w-11/12 max-w-screen-sm">
+			<div className="card m-auto w-11/12 max-w-screen-sm shadow-md">
 				{invitations &&
-					(invitations as IOrganisationInvitation[]).map((invitation) => {
+					(invitations as IOrganisationInvitation[]).map((invitation, index) => {
+						const isPending = invitation.status === 'PENDING'
+						const isAccepted = invitation.status === 'ACCEPTED'
 						return (
-							<div
-								key={invitation.user.id}
-								className="card flex flex-row items-center justify-between bg-base-200 p-6 shadow-md"
-							>
-								<span className="font-bold">{invitation.user.name}</span>
-								<span className="grid grid-cols-2 gap-4">
-									<ElideBadge variant="success">{invitation.role}</ElideBadge>
-									<ElideBadge
-										variant={
-											invitation.status === 'PENDING' || invitation.status === 'CANCELED'
-												? 'warning'
-												: invitation.status === 'ACCEPTED'
-												? 'success'
-												: 'error'
+							<div key={invitation.id}>
+								<div className="flex flex-row items-center justify-between bg-base-200 p-4">
+									<span className="font-bold">{invitation.user.name}</span>
+									<span
+										className={
+											'grid gap-3 ' +
+											(isPending
+												? 'grid-cols-[auto_auto_auto]'
+												: 'grid-cols-[auto_auto]')
 										}
 									>
-										{invitation.status}
-									</ElideBadge>
-								</span>
+										<ElideBadge variant="success">{invitation.role}</ElideBadge>
+										<ElideBadge
+											variant={isPending ? 'warning' : isAccepted ? 'success' : 'error'}
+										>
+											{invitation.status}
+										</ElideBadge>
+										{isPending && (
+											<button
+												className="btn btn-warning btn-sm"
+												onClick={() => {
+													setInvitationToBeCaneled(invitation)
+													setIsCancelModalOpen(true)
+												}}
+											>
+												<IoMdClose size="1.35em" />
+											</button>
+										)}
+									</span>
+								</div>
+								{index < invitations.length - 1 ? (
+									<div
+										key={`divider-${invitation.id}`}
+										className="divider m-0 h-0 p-0"
+									></div>
+								) : null}
 							</div>
 						)
 					})}
