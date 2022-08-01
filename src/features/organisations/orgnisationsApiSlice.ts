@@ -28,7 +28,29 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 				body: { name, description },
 			}),
 		}),
+		getOrganisationMembers: builder.query({
+			query: ({
+				organisationId,
+				offset,
+				limit,
+			}: {
+				organisationId: number
+				offset: number
+				limit: number
+			}) => ({
+				url: `/organisations/${organisationId}/members`,
+				method: 'GET',
+				params: {
+					offset,
+					limit,
+				},
+			}),
+		}),
 	}),
 })
 
-export const { useGetOrganisationsQuery, useCreateOrganisationMutation } = organisationsApiSlice
+export const {
+	useGetOrganisationsQuery,
+	useCreateOrganisationMutation,
+	useGetOrganisationMembersQuery,
+} = organisationsApiSlice
