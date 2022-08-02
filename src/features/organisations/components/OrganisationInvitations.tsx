@@ -84,7 +84,7 @@ export const OrganisationInvitations = () => {
 									<span className="font-bold">{invitation.user.name}</span>
 									<span
 										className={
-											'grid gap-3 ' +
+											'grid gap-2 ' +
 											(isPending
 												? 'grid-cols-[auto_auto_auto]'
 												: 'grid-cols-[auto_auto]')
@@ -98,7 +98,7 @@ export const OrganisationInvitations = () => {
 										</ElideBadge>
 										{isPending && (
 											<button
-												className="btn btn-warning btn-sm"
+												className="btn btn-warning btn-square btn-sm"
 												onClick={() => {
 													setInvitationToBeCaneled(invitation)
 													setIsCancelModalOpen(true)
