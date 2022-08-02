@@ -103,7 +103,7 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 				memberEmail: string
 				role: string
 			}) => ({
-				url: `/organisations/${organisationId}/invite`,
+				url: `/organisations/${organisationId}/invitations`,
 				method: 'POST',
 				body: {
 					memberEmail,

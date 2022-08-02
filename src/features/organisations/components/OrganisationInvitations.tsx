@@ -10,11 +10,15 @@ import {
 	useGetOrganisationQuery,
 } from '../orgnisationsApiSlice'
 import { OrganisationCancelInvitationModal } from './forms/CancelInvitationForm'
+import { OrganisationInvitationModal } from './forms/OrganisationInvitationForm'
+
+import { IoPaperPlaneOutline } from 'react-icons/io5'
 
 export const OrganisationInvitations = () => {
 	const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
 	const [invitationToBeCanceled, setInvitationToBeCaneled] =
 		useState<IOrganisationInvitation | null>(null)
+	const [invitaionModalOpen, setInvitationModalOpen] = useState(false)
 
 	const [selectedStatus, setSelectedStatus] = useState<InvitationStatusType | undefined>('PENDING')
 
@@ -44,6 +48,11 @@ export const OrganisationInvitations = () => {
 
 	return (
 		<>
+			<OrganisationInvitationModal
+				organisationId={organisationId}
+				open={invitaionModalOpen}
+				closeFn={() => setInvitationModalOpen(false)}
+			/>
 			<OrganisationCancelInvitationModal
 				open={isCancelModalOpen}
 				organisationId={organisationId}
@@ -55,6 +64,12 @@ export const OrganisationInvitations = () => {
 			/>
 			<div className="prose m-auto mb-12 text-center">
 				<h1>{`${organisation.name}'s invitations`}</h1>
+				<button
+					className="btn btn-ghost bg-base-200"
+					onClick={() => setInvitationModalOpen(true)}
+				>
+					<IoPaperPlaneOutline size="1.35em" className="mr-2" /> Invite
+				</button>
 			</div>
 			<div className="tabs-lg tabs tabs-boxed m-auto my-12 flex max-w-screen-sm justify-center">
 				{INVITATION_STATUSES.map((status) => (

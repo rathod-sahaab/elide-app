@@ -10,6 +10,8 @@ import {
 	IOrganisationData,
 	useCreateOrganisationMutation,
 } from './orgnisationsApiSlice'
+import { useState } from 'react'
+import { APIError } from '../../commons/types'
 
 const schema = yup.object({
 	name: yup.string().required('Name is required'),
@@ -25,6 +27,8 @@ export const CreateOrganisationForm = ({
 }) => {
 	const [createOrganisation, { isLoading }] = useCreateOrganisationMutation()
 
+	const [error, setError] = useState<string | null>(null)
+
 	const {
 		register,
 		handleSubmit,
@@ -39,13 +43,19 @@ export const CreateOrganisationForm = ({
 			console.log(createdOrganisation)
 			if (closeFn) closeFn()
 			if (refetchFn) refetchFn()
-		} catch (err) {
-			console.log(err)
+		} catch (err: any) {
+			if (err.status) {
+				const apiError = err.data as APIError
+				setError(apiError.message)
+			} else {
+				console.log(err)
+			}
 		}
 	}
 
 	return (
 		<div className="[&>*]:mb-4">
+			{error && <div className="alert alert-error">{error}</div>}
 			<ErrorInputWrapper fieldError={errors.name}>
 				<input
 					disabled={isLoading}

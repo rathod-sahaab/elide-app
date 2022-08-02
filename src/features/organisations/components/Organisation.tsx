@@ -21,7 +21,7 @@ export const Organisation = () => {
 					Members
 				</NavLink>
 				<NavLink
-					to="invites"
+					to="invitations"
 					className={({ isActive }) => 'tab ' + (isActive ? 'tab-active' : '')}
 				>
 					Invitations

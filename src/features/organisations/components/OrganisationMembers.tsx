@@ -1,5 +1,3 @@
-import { useState } from 'react'
-import { IoPaperPlaneOutline } from 'react-icons/io5'
 import { useParams } from 'react-router-dom'
 import { ElideBadge } from '../../../components/atoms/ElideBadge'
 import {
@@ -7,12 +5,9 @@ import {
 	useGetOrganisationQuery,
 	IOrganisationMemberRole,
 } from '../orgnisationsApiSlice'
-import { OrganisationInvitationModal } from './forms/OrganisationInvitationForm'
 
 export const OrganisationMembers = () => {
 	const params = useParams()
-	const [invitaionModalOpen, setInvitationModalOpen] = useState(false)
-
 	// FIXME: handle this error
 	const organisationId = parseInt(params.organisationId || '0', 10)
 
@@ -31,19 +26,8 @@ export const OrganisationMembers = () => {
 	}
 	return (
 		<>
-			<OrganisationInvitationModal
-				organisationId={organisationId}
-				open={invitaionModalOpen}
-				closeFn={() => setInvitationModalOpen(false)}
-			/>
 			<div className="prose m-auto mb-12 text-center">
 				<h1>{`${organisation.name}'s members`}</h1>
-				<button
-					className="btn btn-ghost bg-base-200"
-					onClick={() => setInvitationModalOpen(true)}
-				>
-					<IoPaperPlaneOutline size="1.35em" className="mr-2" /> Invite
-				</button>
 			</div>
 			<div className="m-auto w-11/12 max-w-screen-sm">
 				{members &&

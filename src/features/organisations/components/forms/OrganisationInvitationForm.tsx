@@ -9,6 +9,9 @@ import {
 	useSendInvitaionMutation,
 } from '../../orgnisationsApiSlice'
 import { ElideModal } from '../../../../components/ElideModal'
+import { APIError } from '../../../../commons/types'
+import { useState } from 'react'
+import { ElideErrorCard } from '../../../../components/ElideAlert'
 
 export interface IInvitationFormData {
 	email: string
@@ -31,6 +34,8 @@ export const OrganisationInvitationForm = ({
 }) => {
 	const [sendInvitation, { isLoading }] = useSendInvitaionMutation()
 
+	const [error, setError] = useState<string | null>(null)
+
 	const {
 		register,
 		handleSubmit,
@@ -49,19 +54,28 @@ export const OrganisationInvitationForm = ({
 			console.log(createdOrganisation)
 			if (closeFn) closeFn()
 			if (refetchFn) refetchFn()
-		} catch (err) {
-			console.log(err)
+		} catch (err: any) {
+			if (err.status) {
+				const apiError = err.data as APIError
+				setError(apiError.message)
+			} else {
+				console.log(err)
+			}
 		}
 	}
 
 	return (
 		<div className="[&>*]:mb-4">
+			{error && <ElideErrorCard>{error}</ElideErrorCard>}
 			<ErrorInputWrapper fieldError={errors.email}>
 				<input
 					disabled={isLoading}
 					className="input block w-full bg-base-100"
 					placeholder="Member Email"
 					{...register('email')}
+					onChange={() => {
+						setError(null)
+					}}
 				/>
 			</ErrorInputWrapper>
 			<ErrorInputWrapper fieldError={errors.role}>

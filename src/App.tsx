@@ -33,7 +33,7 @@ function App() {
 						<Route index element={<Organisations />} />
 						<Route path=":organisationId" element={<Organisation />}>
 							<Route path="members" element={<OrganisationMembers />} />
-							<Route path="invites" element={<OrganisationInvitations />} />
+							<Route path="invitations" element={<OrganisationInvitations />} />
 							<Route path="*" element={<Navigate to="members" replace />} />
 							<Route index element={<Navigate to="members" replace />} />
 						</Route>
