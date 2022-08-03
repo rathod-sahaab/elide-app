@@ -29,7 +29,7 @@ export const InvitationsSidebar = () => {
 		<li>
 			<NavLink to="/invitations">
 				<IoMailUnreadSharp /> Invitations
-				<span className="badge indicator-item badge-primary">{data.count}</span>
+				<span className="badge indicator-item badge-secondary">{data.count}</span>
 			</NavLink>
 		</li>
 	)

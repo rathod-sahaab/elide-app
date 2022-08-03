@@ -95,7 +95,7 @@ export const OrganisationInvitations = () => {
 						const isAccepted = invitation.status === 'ACCEPTED'
 						return (
 							<div key={invitation.id}>
-								<div className="flex flex-row items-center justify-between bg-base-200 p-4">
+								<div className="flex items-center justify-between bg-base-200 p-4">
 									<span className="font-bold">{invitation.user.name}</span>
 									<span
 										className={
