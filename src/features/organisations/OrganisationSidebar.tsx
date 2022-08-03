@@ -24,32 +24,36 @@ export const OrganisationSidebar = () => {
 	return (
 		<>
 			<li>
-				<NavLink to="/organisations" className="grid grid-cols-[auto_1fr_auto_auto]" end={true}>
+				<NavLink to="/organisations" className="grid grid-cols-[auto_1fr_auto]" end={true}>
 					<HiUserGroup /> <span>Organizations</span>
-					<button
-						className="btn btn-ghost btn-circle btn-sm"
-						onClick={(e) => {
-							e.stopPropagation()
-							e.preventDefault()
-							setCreateModalOpen(true)
-						}}
-					>
-						<IoMdAdd size="1.5em" />
-					</button>
-					<button
-						className="btn btn-ghost btn-circle btn-sm"
-						onClick={(e) => {
-							e.stopPropagation()
-							e.preventDefault()
-							setOrgsExpanded((prev) => !prev)
-						}}
-					>
-						{orgsExpanded ? (
-							<MdOutlineArrowDropUp size="1.5em" />
-						) : (
-							<MdOutlineArrowDropDown size="1.5em" />
+					<span>
+						<button
+							className="btn btn-ghost btn-circle btn-sm"
+							onClick={(e) => {
+								e.stopPropagation()
+								e.preventDefault()
+								setCreateModalOpen(true)
+							}}
+						>
+							<IoMdAdd size="1.5em" />
+						</button>
+						{organisations && organisations.length > 0 && (
+							<button
+								className="btn btn-ghost btn-circle btn-sm ml-2"
+								onClick={(e) => {
+									e.stopPropagation()
+									e.preventDefault()
+									setOrgsExpanded((prev) => !prev)
+								}}
+							>
+								{orgsExpanded ? (
+									<MdOutlineArrowDropUp size="1.5em" />
+								) : (
+									<MdOutlineArrowDropDown size="1.5em" />
+								)}
+							</button>
 						)}
-					</button>
+					</span>
 				</NavLink>
 			</li>
 			<CreateOrganisationModal

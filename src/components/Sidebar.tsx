@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { IoMdClose } from 'react-icons/io'
 import { IoGrid, IoInformationCircle, IoPerson } from 'react-icons/io5'
 import { OrganisationSidebar } from '../features/organisations/OrganisationSidebar'
+import { InvitationsSidebar } from '../features/user/InvitationsSidebar'
 
 const SidebarItems = () => {
 	return (
@@ -11,7 +12,7 @@ const SidebarItems = () => {
 				<ul className="menu overflow-y-auto p-4">
 					<label
 						htmlFor="drawer-1"
-						className="btn btn-circle drawer-button btn-ghost text-xl lg:hidden"
+						className="drawer-button btn btn-ghost btn-circle text-xl lg:hidden"
 					>
 						<IoMdClose />
 					</label>
@@ -26,6 +27,7 @@ const SidebarItems = () => {
 						</NavLink>
 					</li>
 					<OrganisationSidebar />
+					<InvitationsSidebar />
 				</ul>
 				<ul className="menu overflow-y-auto p-4">
 					<li>
@@ -40,7 +42,7 @@ const SidebarItems = () => {
 }
 const Sidebar = ({ children }: React.PropsWithChildren) => {
 	return (
-		<div className="drawer drawer-mobile">
+		<div className="drawer-mobile drawer">
 			<input id="drawer-1" type="checkbox" className="drawer-toggle" />
 			<div className="drawer-content flex h-screen flex-col">{children}</div>
 			<SidebarItems />
