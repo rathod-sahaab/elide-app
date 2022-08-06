@@ -2,13 +2,14 @@ import { ErrorInputWrapper } from '../../components/forms/ErrorInputWrapper'
 import * as yup from 'yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useDispatch } from 'react-redux'
 import { createLink as createLinkActionCreator, ILink, ILinkData } from './linksSlice'
 import { useCreateLinkMutation, useLazyGetSlugAvailabilityQuery } from './linksApiSlice'
 import { IoMdClose } from 'react-icons/io'
 import { useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTheme } from '../../app/hooks/use-theme'
+import { selectOrganisation } from '../organisations/organisationsSlice'
+import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 
 const schema = yup.object({
 	slug: yup.string().required('Slug is required'),
@@ -24,11 +25,13 @@ export const AddLinkForm = ({
 	closeFn?: () => void
 	refetchFn?: () => void
 }) => {
+	const organisation = useAppSelector(selectOrganisation)
+
 	const [createLink, { isLoading }] = useCreateLinkMutation()
 	const [slugAvailabilityTrigger] = useLazyGetSlugAvailabilityQuery()
 	const [slug, setSlug] = useState('')
 	const [slugAvailable, setSlugAvailable] = useState(false)
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 
 	const {
 		register,
@@ -43,7 +46,10 @@ export const AddLinkForm = ({
 
 	const submitHandler: SubmitHandler<ILinkData> = async (data) => {
 		try {
-			const createdLinkData: ILink = await createLink({ ...data }).unwrap()
+			const createdLinkData: ILink = await createLink({
+				...data,
+				organisationId: organisation?.organisation?.id,
+			}).unwrap()
 			console.log(createdLinkData)
 			dispatch(createLinkActionCreator(createdLinkData))
 			if (closeFn) closeFn()

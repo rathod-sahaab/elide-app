@@ -4,7 +4,7 @@ import { ILink } from './linksSlice'
 
 const CardButton = ({ children, onClick }: React.PropsWithChildren<{ onClick: () => void }>) => {
 	return (
-		<button className="btn btn-ghost btn-circle" onClick={onClick}>
+		<button className="btn btn-circle btn-ghost" onClick={onClick}>
 			{children}
 		</button>
 	)
@@ -21,7 +21,7 @@ export const LinkCard = ({
 }: ILink & { deleteLink: (link: ILink) => void; setActiveQr: (value: string) => void }) => {
 	const elideUrl = `https://elide.in/${slug}`
 	return (
-		<div className="card relative w-full max-w-md bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2 [&>.operations]:translate-x-full [&:hover>.operations]:translate-x-0">
+		<div className="card bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2 [&>.operations]:translate-x-full [&:hover>.operations]:translate-x-0">
 			<div className="flex items-center justify-between">
 				<h3 className="align-middle font-bold text-accent">{slug}</h3>
 				<ActivityIndicator active={active} />

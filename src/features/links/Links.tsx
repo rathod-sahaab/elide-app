@@ -11,7 +11,14 @@ import { ILink } from './linksSlice'
 import { QrCodeModal } from './QrCodeModal'
 
 export const Links = () => {
-	const { isLoading, data: links, refetch } = useGetLinksQuery({ offset: 0, limit: 10 })
+	const organisation = useSelector(selectOrganisation)
+
+	console.log(organisation)
+	const {
+		isLoading,
+		data: links,
+		refetch,
+	} = useGetLinksQuery({ offset: 0, limit: 10, organisationId: organisation?.organisation?.id })
 
 	// modals
 	const [addLinkModalOpen, setAddLinkModalOpen] = useState(false)
@@ -67,7 +74,7 @@ export const Links = () => {
 				}
 				<div className="tooltip tooltip-left" data-tip="Create Link">
 					<button
-						className="btn btn-ghost btn-circle"
+						className="btn btn-circle btn-ghost"
 						onClick={() => setAddLinkModalOpen(true)}
 					>
 						<IoMdAdd size="1.75em" />
@@ -97,7 +104,7 @@ export const Links = () => {
 				}}
 				data={qrCodeData}
 			/>
-			<div className="m-auto grid max-w-fit grid-cols-1 items-start gap-4 md:grid-cols-2 2xl:grid-cols-3">
+			<div className="m-auto grid grid-cols-1 gap-4 md:grid-cols-2 2xl:grid-cols-3">
 				{links &&
 					(links as ILink[]).map((link) => (
 						<LinkCard

@@ -5,11 +5,26 @@ import { ILinkData } from './linksSlice'
 export const linksApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		createLink: builder.mutation({
-			query: (data: ILinkData) => ({
-				url: '/links',
-				method: 'POST',
-				body: { ...data },
-			}),
+			query: ({
+				organisationId,
+				...data
+			}: ILinkData & { organisationId?: undefined | number }) => {
+				const fetchArgs = {
+					url: '/links',
+					method: 'POST',
+					body: { ...data },
+				}
+				if (organisationId) {
+					return {
+						...fetchArgs,
+						body: {
+							...data,
+							organisationId,
+						},
+					}
+				}
+				return fetchArgs
+			},
 		}),
 		deleteLink: builder.mutation({
 			query: ({ id }: { id: number }) => ({
@@ -18,14 +33,28 @@ export const linksApiSlice = apiSlice.injectEndpoints({
 			}),
 		}),
 		getLinks: builder.query({
-			query: ({ offset, limit }: PaginationArgs) => ({
-				url: '/links',
-				method: 'GET',
-				params: {
-					offset,
-					limit,
-				},
-			}),
+			query: ({
+				offset,
+				limit,
+				organisationId,
+			}: PaginationArgs & { organisationId: undefined | number }) => {
+				const fetchArgs = {
+					url: '/links',
+					method: 'GET',
+					params: {
+						offset,
+						limit,
+					},
+				}
+
+				if (organisationId) {
+					return {
+						...fetchArgs,
+						url: `/organisations/${organisationId}/links`,
+					}
+				}
+				return fetchArgs
+			},
 		}),
 		getSlugAvailability: builder.query({
 			query: ({ slug }: { slug: string }) => ({
