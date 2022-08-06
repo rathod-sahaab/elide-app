@@ -73,7 +73,10 @@ export const OrganisationSidebar = () => {
 					const { organisation } = orgRole
 
 					return (
-						<li key={organisation.id} className={'pl-10 ' + (orgsExpanded ? '' : 'hidden')}>
+						<li
+							key={organisation.id}
+							className={'pl-10 ' + (orgsExpanded || isActiveOrganisation ? '' : 'hidden')}
+						>
 							<NavLink
 								to={`/organisations/${organisation.id}`}
 								className={
