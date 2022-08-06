@@ -6,6 +6,7 @@ import {
 	IUserInvitation,
 	useAcceptInvitationMutation,
 	useGetInvitationsQuery,
+	useRejectInvitationMutation,
 } from './userApiSlice'
 
 const InvitationsList = ({
@@ -16,36 +17,27 @@ const InvitationsList = ({
 	refetchFn?: () => void
 }) => {
 	const [acceptInvitation, { isLoading: isLoadingAccept }] = useAcceptInvitationMutation()
-	const [rejectInvitation, { isLoading: isLoadingReject }] = useAcceptInvitationMutation()
+	const [rejectInvitation, { isLoading: isLoadingReject }] = useRejectInvitationMutation()
 
-	const handleAcceptInvitation = async (invitation: IUserInvitation) => {
-		try {
-			const response = await acceptInvitation({ id: invitation.id })
-			if (refetchFn) refetchFn()
-			console.log(response)
-		} catch (err: any) {
-			if (err.status) {
-				const apiError = err.data as APIError
-				console.error(apiError.statusCode, apiError.message)
+	const handleInvitation =
+		(apiFunction: typeof acceptInvitation | typeof rejectInvitation) =>
+		async (invitation: IUserInvitation) => {
+			try {
+				const response = await apiFunction({ id: invitation.id })
+				if (refetchFn) refetchFn()
+				console.log(response)
+			} catch (err: any) {
+				if (err.status) {
+					const apiError = err.data as APIError
+					console.error(apiError.statusCode, apiError.message)
+				}
+				return err
 			}
-			return err
 		}
-	}
 
-	const handleRejectInvitation = async (invitation: IUserInvitation) => {
-		try {
-			const response = await rejectInvitation({ id: invitation.id })
-			if (refetchFn) refetchFn()
-			console.log(response)
-			console.log(response)
-		} catch (err: any) {
-			if (err.status) {
-				const apiError = err.data as APIError
-				console.error(apiError.statusCode, apiError.message)
-			}
-			return err
-		}
-	}
+	// TODO: Get reviewed
+	const handleAcceptInvitation = handleInvitation(acceptInvitation)
+	const handleRejectInvitation = handleInvitation(rejectInvitation)
 
 	return (
 		<div className="card bg-base-200 shadow-md">

@@ -37,7 +37,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
 		rejectInvitation: builder.mutation({
 			query: ({ id }: { id: string }) => ({
 				url: `/users/invitations/${id}`,
-				method: 'POST',
+				method: 'DELETE',
 			}),
 		}),
 	}),
