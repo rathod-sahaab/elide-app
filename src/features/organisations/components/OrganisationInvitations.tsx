@@ -10,7 +10,7 @@ import {
 	useGetOrganisationQuery,
 } from '../orgnisationsApiSlice'
 import { OrganisationCancelInvitationModal } from './forms/CancelInvitationForm'
-import { OrganisationInvitationModal } from './forms/OrganisationInvitationForm'
+import { OrganisationInvitationModal } from './forms/InviteMemberForm'
 
 import { IoPaperPlaneOutline } from 'react-icons/io5'
 
