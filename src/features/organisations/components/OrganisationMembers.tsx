@@ -29,17 +29,27 @@ export const OrganisationMembers = () => {
 			<div className="prose m-auto mb-12 text-center">
 				<h1>{`${organisation.name}'s members`}</h1>
 			</div>
-			<div className="m-auto w-11/12 max-w-screen-sm">
+			<div className="card m-auto w-11/12 max-w-screen-sm bg-base-200 shadow-md">
+				<div className="flex items-center justify-between p-4 text-sm font-bold uppercase opacity-70">
+					<span>Member</span>
+					<span>Role</span>
+				</div>
+				<div className="divider m-0 h-0 p-0"></div>
 				{members &&
-					(members as IOrganisationMemberRole[]).map((member) => {
+					(members as IOrganisationMemberRole[]).map((member, index) => {
 						return (
-							<div
-								key={member.user.id}
-								className="card flex flex-row items-center justify-between bg-base-200 p-6 shadow-md"
-							>
-								<span className="font-bold">{member.user.name}</span>
-								<ElideBadge variant="success">{member.role}</ElideBadge>
-							</div>
+							<>
+								<div key={member.user.id} className="flex items-center justify-between p-4">
+									<span className="font-bold">{member.user.name}</span>
+									<ElideBadge variant="success">{member.role}</ElideBadge>
+								</div>
+								{index !== members.length - 1 && (
+									<div
+										className="divider m-0 h-0 p-0"
+										key={`divider-${member.user.id}`}
+									></div>
+								)}
+							</>
 						)
 					})}
 			</div>

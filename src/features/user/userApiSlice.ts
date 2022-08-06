@@ -28,7 +28,24 @@ export const userApiSlice = apiSlice.injectEndpoints({
 				},
 			}),
 		}),
+		acceptInvitation: builder.mutation({
+			query: ({ id }: { id: string }) => ({
+				url: `/users/invitations/${id}`,
+				method: 'PUT',
+			}),
+		}),
+		rejectInvitation: builder.mutation({
+			query: ({ id }: { id: string }) => ({
+				url: `/users/invitations/${id}`,
+				method: 'POST',
+			}),
+		}),
 	}),
 })
 
-export const { useGetInvitationCountQuery, useGetInvitationsQuery } = userApiSlice
+export const {
+	useGetInvitationCountQuery,
+	useGetInvitationsQuery,
+	useAcceptInvitationMutation,
+	useRejectInvitationMutation,
+} = userApiSlice
