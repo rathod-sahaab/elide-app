@@ -10,6 +10,7 @@ import { createPortal } from 'react-dom'
 import { useTheme } from '../../app/hooks/use-theme'
 import { selectOrganisation } from '../organisations/organisationsSlice'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
+import { selectActiveProject } from '../projects/projectsSlice'
 
 const schema = yup.object({
 	slug: yup.string().required('Slug is required'),
@@ -25,7 +26,8 @@ export const AddLinkForm = ({
 	closeFn?: () => void
 	refetchFn?: () => void
 }) => {
-	const organisation = useAppSelector(selectOrganisation)
+	const activeOrganisation = useAppSelector(selectOrganisation)
+	const activeProject = useAppSelector(selectActiveProject)
 
 	const [createLink, { isLoading }] = useCreateLinkMutation()
 	const [slugAvailabilityTrigger] = useLazyGetSlugAvailabilityQuery()
@@ -48,7 +50,8 @@ export const AddLinkForm = ({
 		try {
 			const createdLinkData: ILink = await createLink({
 				...data,
-				organisationId: organisation?.organisation?.id,
+				projectId: activeProject.project?.id,
+				organisationId: activeOrganisation?.organisation?.id,
 			}).unwrap()
 			console.log(createdLinkData)
 			dispatch(createLinkActionCreator(createdLinkData))

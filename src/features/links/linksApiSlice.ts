@@ -7,12 +7,23 @@ export const linksApiSlice = apiSlice.injectEndpoints({
 		createLink: builder.mutation({
 			query: ({
 				organisationId,
+				projectId,
 				...data
-			}: ILinkData & { organisationId?: undefined | number }) => {
+			}: ILinkData & { organisationId?: undefined | number; projectId: undefined | number }) => {
 				const fetchArgs = {
 					url: '/links',
 					method: 'POST',
 					body: { ...data },
+				}
+				/* API only needs projectId if both projectId and organisationId are relevant */
+				if (projectId) {
+					return {
+						...fetchArgs,
+						body: {
+							...data,
+							projectId,
+						},
+					}
 				}
 				if (organisationId) {
 					return {

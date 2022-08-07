@@ -1,6 +1,9 @@
 -  [ ] Edit Link
 -  [ ] Projects
-   -  [] Create project
-   -  [] List projects
-   -  [] Set project active
+   -  [x] Create project
+   -  [x] List projects
+   -  [x] Set project active
+   -  [] Add a link in project
    -  [] Edit project
+-  Optimisations
+   -  [] Debounce on slug check
