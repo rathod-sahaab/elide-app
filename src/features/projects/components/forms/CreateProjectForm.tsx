@@ -33,6 +33,7 @@ export const CreateProjectForm = ({
 		register,
 		handleSubmit,
 		formState: { errors },
+		reset,
 	} = useForm<IProjectCreationData>({
 		resolver: yupResolver(schema),
 	})
@@ -44,6 +45,7 @@ export const CreateProjectForm = ({
 				description: description !== '' ? description : undefined,
 				organisationId: organisation.organisation?.id,
 			}).unwrap()
+			reset({ name: '', description: '' })
 			console.log(createdProject)
 			if (closeFn) closeFn()
 			if (refetchFn) refetchFn()
