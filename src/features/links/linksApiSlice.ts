@@ -37,7 +37,11 @@ export const linksApiSlice = apiSlice.injectEndpoints({
 				offset,
 				limit,
 				organisationId,
-			}: PaginationArgs & { organisationId: undefined | number }) => {
+				projectId,
+			}: PaginationArgs & {
+				organisationId: undefined | number
+				projectId: undefined | number
+			}) => {
 				const fetchArgs = {
 					url: '/links',
 					method: 'GET',
@@ -45,6 +49,13 @@ export const linksApiSlice = apiSlice.injectEndpoints({
 						offset,
 						limit,
 					},
+				}
+
+				if (projectId) {
+					return {
+						...fetchArgs,
+						url: `/projects/${projectId}/links`,
+					}
 				}
 
 				if (organisationId) {

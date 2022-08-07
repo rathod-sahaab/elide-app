@@ -5,6 +5,7 @@ import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from 'react-icons/md'
 import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 import { openCreateOrganisationModal } from '../../app/ui/uiSlice'
+import { clearActiveProject } from '../projects/projectsSlice'
 import { CreateOrganisationModal } from './CreateOrganisation'
 import {
 	clearActiveOrganisation,
@@ -90,6 +91,7 @@ export const OrganisationSidebar = () => {
 											e.stopPropagation()
 											e.preventDefault()
 											dispatch(clearActiveOrganisation())
+											dispatch(clearActiveProject())
 										}}
 									>
 										<IoMdClose size="1.2em" />
@@ -101,6 +103,7 @@ export const OrganisationSidebar = () => {
 											e.stopPropagation()
 											e.preventDefault()
 											dispatch(setActiveOrganisation(orgRole))
+											dispatch(clearActiveProject())
 										}}
 									>
 										<IoMdCheckmark size="1.2em" />

@@ -22,7 +22,8 @@ export const Links = () => {
 	} = useGetLinksQuery({
 		offset: 0,
 		limit: 10,
-		organisationId: activeOrganisation?.organisation?.id,
+		organisationId: activeOrganisation.organisation?.id,
+		projectId: activeProject.project?.id,
 	})
 
 	// modals

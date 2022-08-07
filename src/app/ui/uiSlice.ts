@@ -15,7 +15,7 @@ const initialState: {
 		deleteLinkModal: false,
 		createOrganisationModal: false,
 		inviteMemberModal: false,
-		createProjectModal: true,
+		createProjectModal: false,
 	},
 }
 

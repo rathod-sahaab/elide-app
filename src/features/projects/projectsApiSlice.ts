@@ -6,7 +6,7 @@ export interface IProjectCreationData {
 }
 
 export interface IProject {
-	id: string
+	id: number
 	name: string
 	description?: string
 }
