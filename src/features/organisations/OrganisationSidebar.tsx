@@ -4,6 +4,7 @@ import { IoMdAdd, IoMdCheckmark, IoMdClose } from 'react-icons/io'
 import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from 'react-icons/md'
 import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
+import { openCreateOrganisationModal } from '../../app/ui/uiSlice'
 import { CreateOrganisationModal } from './CreateOrganisation'
 import {
 	clearActiveOrganisation,
@@ -14,7 +15,6 @@ import { IOrganisationRole, useGetOrganisationsQuery } from './orgnisationsApiSl
 
 export const OrganisationSidebar = () => {
 	const [orgsExpanded, setOrgsExpanded] = useState(true)
-	const [createModalOpen, setCreateModalOpen] = useState(false)
 	const { isLoading, data: organisations, refetch } = useGetOrganisationsQuery({})
 
 	const dispatch = useAppDispatch()
@@ -32,7 +32,7 @@ export const OrganisationSidebar = () => {
 							onClick={(e) => {
 								e.stopPropagation()
 								e.preventDefault()
-								setCreateModalOpen(true)
+								dispatch(openCreateOrganisationModal())
 							}}
 						>
 							<IoMdAdd size="1.5em" />
@@ -56,11 +56,7 @@ export const OrganisationSidebar = () => {
 					</span>
 				</NavLink>
 			</li>
-			<CreateOrganisationModal
-				open={createModalOpen}
-				closeFn={() => setCreateModalOpen(false)}
-				refetchFn={refetch}
-			/>
+			<CreateOrganisationModal refetchFn={refetch} />
 			{isLoading ? (
 				<></>
 			) : (

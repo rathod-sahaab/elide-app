@@ -10,8 +10,11 @@ import {
 	IOrganisationData,
 	useCreateOrganisationMutation,
 } from './orgnisationsApiSlice'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { APIError } from '../../commons/types'
+import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
+import { closeCreateOrganisationModal, uiSelectCreateOrganisation } from '../../app/ui/uiSlice'
+import { ElideModal } from '../../components/ElideModal'
 
 const schema = yup.object({
 	name: yup.string().required('Name is required'),
@@ -82,26 +85,20 @@ export const CreateOrganisationForm = ({
 	)
 }
 
-export const CreateOrganisationModal = ({
-	open,
-	closeFn,
-	refetchFn,
-}: {
-	open: boolean
-	refetchFn?: () => void
-	closeFn: () => void
-}) => {
-	const { theme } = useTheme()
-	return createPortal(
-		<div className={'modal ' + (open ? 'modal-open' : '')} data-theme={theme}>
-			<div className="modal-box relative max-w-md overflow-visible bg-base-200">
-				<button className="btn btn-square absolute -top-6 -right-6" onClick={closeFn}>
-					<IoMdClose size="1.5em" />
-				</button>
-				<h1 className="mb-6 text-2xl font-bold text-primary">Create Organisation</h1>
-				<CreateOrganisationForm closeFn={closeFn} refetchFn={refetchFn} />
-			</div>
-		</div>,
-		document.getElementById('modal-root') as HTMLElement,
+export const CreateOrganisationModal = ({ refetchFn }: { refetchFn?: () => void }) => {
+	const open = useAppSelector(uiSelectCreateOrganisation)
+	const dispatch = useAppDispatch()
+
+	return (
+		<ElideModal
+			open={open}
+			closeFn={() => dispatch(closeCreateOrganisationModal())}
+			title="Create Organisation"
+		>
+			<CreateOrganisationForm
+				closeFn={() => dispatch(closeCreateOrganisationModal())}
+				refetchFn={refetchFn}
+			/>
+		</ElideModal>
 	)
 }

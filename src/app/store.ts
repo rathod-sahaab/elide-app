@@ -16,6 +16,7 @@ import {
 import storage from 'redux-persist/lib/storage'
 import { linksSliceReducer } from '../features/links/linksSlice'
 import { orgainsationSliceReducer } from '../features/organisations/organisationsSlice'
+import { uiSliceReducer } from './ui/uiSlice'
 
 const persistConfig = {
 	key: 'root',
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
 	auth: authSliceReducer,
 	links: linksSliceReducer,
 	organisation: orgainsationSliceReducer,
+	ui: uiSliceReducer,
 	[apiSlice.reducerPath]: apiSlice.reducer,
 })
 
