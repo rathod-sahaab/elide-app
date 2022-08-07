@@ -1,31 +1,31 @@
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
-import { ErrorInputWrapper } from '../../components/forms/ErrorInputWrapper'
-import {
-	IOrganisation,
-	IOrganisationData,
-	useCreateOrganisationMutation,
-} from './orgnisationsApiSlice'
+import { ErrorInputWrapper } from '../../../../components/forms/ErrorInputWrapper'
 import { useState } from 'react'
-import { APIError } from '../../commons/types'
-import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
-import { closeCreateOrganisationModal, uiSelectCreateOrganisation } from '../../app/ui/uiSlice'
-import { ElideModal } from '../../components/ElideModal'
+import { APIError } from '../../../../commons/types'
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks/use-app-dispacth-selector'
+import { closeCreateProjectModal, uiSelectCreateProject } from '../../../../app/ui/uiSlice'
+import { ElideModal } from '../../../../components/ElideModal'
+import { IProjectCreationData, useCreateProjectMutation } from '../../projectsApiSlice'
+import { selectOrganisation } from '../../../organisations/organisationsSlice'
 
 const schema = yup.object({
 	name: yup.string().required('Name is required'),
-	description: yup.string().required('Description is required'),
+	description: yup.string(),
 })
 
-export const CreateOrganisationForm = ({
+export const CreateProjectForm = ({
 	closeFn,
 	refetchFn,
 }: {
 	closeFn?: () => void
 	refetchFn?: () => void
 }) => {
-	const [createOrganisation, { isLoading }] = useCreateOrganisationMutation()
+	// get active organisation from application state
+	const organisation = useAppSelector(selectOrganisation)
+
+	const [createProject, { isLoading }] = useCreateProjectMutation()
 
 	const [error, setError] = useState<string | null>(null)
 
@@ -33,14 +33,18 @@ export const CreateOrganisationForm = ({
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<IOrganisationData>({
+	} = useForm<IProjectCreationData>({
 		resolver: yupResolver(schema),
 	})
 
-	const submitHandler: SubmitHandler<IOrganisationData> = async (data) => {
+	const submitHandler: SubmitHandler<IProjectCreationData> = async ({ name, description }) => {
 		try {
-			const createdOrganisation: IOrganisation = await createOrganisation({ ...data }).unwrap()
-			console.log(createdOrganisation)
+			const createdProject: any = await createProject({
+				name,
+				description: description !== '' ? description : undefined,
+				organisationId: organisation.organisation?.id,
+			}).unwrap()
+			console.log(createdProject)
 			if (closeFn) closeFn()
 			if (refetchFn) refetchFn()
 		} catch (err: any) {
@@ -82,18 +86,18 @@ export const CreateOrganisationForm = ({
 	)
 }
 
-export const CreateOrganisationModal = ({ refetchFn }: { refetchFn?: () => void }) => {
-	const open = useAppSelector(uiSelectCreateOrganisation)
+export const CreateProjectModal = ({ refetchFn }: { refetchFn?: () => void }) => {
+	const open = useAppSelector(uiSelectCreateProject)
 	const dispatch = useAppDispatch()
 
 	return (
 		<ElideModal
 			open={open}
-			closeFn={() => dispatch(closeCreateOrganisationModal())}
-			title="Create Organisation"
+			closeFn={() => dispatch(closeCreateProjectModal())}
+			title="Create Project"
 		>
-			<CreateOrganisationForm
-				closeFn={() => dispatch(closeCreateOrganisationModal())}
+			<CreateProjectForm
+				closeFn={() => dispatch(closeCreateProjectModal())}
 				refetchFn={refetchFn}
 			/>
 		</ElideModal>

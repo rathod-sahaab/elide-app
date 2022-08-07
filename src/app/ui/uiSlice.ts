@@ -7,6 +7,7 @@ const initialState: {
 		deleteLinkModal: boolean
 		createOrganisationModal: boolean
 		inviteMemberModal: boolean
+		createProjectModal: boolean
 	}
 } = {
 	modals: {
@@ -14,6 +15,7 @@ const initialState: {
 		deleteLinkModal: false,
 		createOrganisationModal: false,
 		inviteMemberModal: false,
+		createProjectModal: true,
 	},
 }
 
@@ -32,6 +34,12 @@ const uiSlice = createSlice({
 		},
 		closeCreateOrganisationModal: (state) => {
 			state.modals.createOrganisationModal = false
+		},
+		openCreateProjectModal: (state) => {
+			state.modals.createProjectModal = true
+		},
+		closeCreateProjectModal: (state) => {
+			state.modals.createProjectModal = false
 		},
 		openDeleteLinkModal: (state) => {
 			state.modals.deleteLinkModal = true
@@ -57,9 +65,13 @@ export const {
 	closeInviteMemberModal,
 	openDeleteLinkModal,
 	closeDeleteLinkModal,
+	openCreateProjectModal,
+	closeCreateProjectModal,
 } = uiSlice.actions
 
 export const uiSliceReducer = uiSlice.reducer
+
+export const uiSelectCreateProject = (state: RootState) => state.ui.modals.createProjectModal
 
 export const uiSelectCreateOrganisation = (state: RootState) =>
 	state.ui.modals.createOrganisationModal

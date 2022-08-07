@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { HiOutlineFolder, HiOutlineLink, HiOutlineUsers } from 'react-icons/hi'
 import { IoMdAdd } from 'react-icons/io'
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 import { selectOrganisation } from '../organisations/organisationsSlice'
+import { selectActiveProject } from '../projects/projectsSlice'
 import { AddLinkModal } from './AddLink'
 import { DeleteLinkModal } from './DeleteLink'
 import { LinkCard } from './LinkCard'
@@ -11,14 +12,18 @@ import { ILink } from './linksSlice'
 import { QrCodeModal } from './QrCodeModal'
 
 export const Links = () => {
-	const organisation = useSelector(selectOrganisation)
+	const activeOrganisation = useAppSelector(selectOrganisation)
+	const activeProject = useAppSelector(selectActiveProject)
 
-	console.log(organisation)
 	const {
 		isLoading,
 		data: links,
 		refetch,
-	} = useGetLinksQuery({ offset: 0, limit: 10, organisationId: organisation?.organisation?.id })
+	} = useGetLinksQuery({
+		offset: 0,
+		limit: 10,
+		organisationId: activeOrganisation?.organisation?.id,
+	})
 
 	// modals
 	const [addLinkModalOpen, setAddLinkModalOpen] = useState(false)
@@ -27,8 +32,6 @@ export const Links = () => {
 
 	const [linkToBeDeleted, setLinkToBeDeleted] = useState<ILink | null>(null)
 	const [qrCodeData, setQrCodeData] = useState<string>('')
-
-	const stateOrgRole = useSelector(selectOrganisation)
 
 	const handleDeleteLink = (link: ILink) => {
 		setLinkToBeDeleted(link)
@@ -50,19 +53,19 @@ export const Links = () => {
 				{
 					<div className="breadcrumbs overflow-visible">
 						<ul>
-							{stateOrgRole.organisation && (
+							{activeOrganisation.organisation && (
 								<li>
 									<HiOutlineUsers className="mr-2" size="1.35em" />{' '}
 									<span className="tooltip" data-tip="Selected Organization">
-										{stateOrgRole.organisation.name}
+										{activeOrganisation.organisation.name}
 									</span>
 								</li>
 							)}
-							{false && (
+							{activeProject.project && (
 								<li>
 									<HiOutlineFolder className="mr-2" size="1.35em" />
 									<span className="tooltip" data-tip="Selected Project">
-										Project
+										{activeProject.project.name}
 									</span>
 								</li>
 							)}
@@ -74,7 +77,7 @@ export const Links = () => {
 				}
 				<div className="tooltip tooltip-left" data-tip="Create Link">
 					<button
-						className="btn btn-circle btn-ghost"
+						className="btn btn-ghost btn-circle"
 						onClick={() => setAddLinkModalOpen(true)}
 					>
 						<IoMdAdd size="1.75em" />

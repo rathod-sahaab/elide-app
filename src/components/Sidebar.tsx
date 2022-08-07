@@ -3,6 +3,7 @@ import { IoMdClose } from 'react-icons/io'
 import { IoGrid, IoInformationCircle, IoPerson } from 'react-icons/io5'
 import { OrganisationSidebar } from '../features/organisations/OrganisationSidebar'
 import { InvitationsSidebar } from '../features/user/InvitationsSidebar'
+import { ProjectsSidebar } from '../features/projects/components/ProjectsSidebar'
 
 const SidebarItems = () => {
 	return (
@@ -26,8 +27,9 @@ const SidebarItems = () => {
 							<IoPerson /> Profile
 						</NavLink>
 					</li>
-					<OrganisationSidebar />
 					<InvitationsSidebar />
+					<OrganisationSidebar />
+					<ProjectsSidebar />
 				</ul>
 				<ul className="menu overflow-y-auto p-4">
 					<li>

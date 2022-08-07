@@ -15,20 +15,20 @@ export const Organisations = () => {
 				<h1>Your Organisations</h1>
 			</div>
 			<div className="card bg-base-200 shadow-md">
-				<div className="grid grid-cols-3 p-4 px-6 text-sm font-bold uppercase opacity-70">
+				<div
+					key="header"
+					className="grid grid-cols-3 p-4 px-6 text-sm font-bold uppercase opacity-70"
+				>
 					<span>Name #ID</span>
 					<span className="justify-self-center">Description</span>
 					<span className="justify-self-end">Role</span>
 				</div>
 				{orgRoles &&
 					orgRoles.map((orgRole: IOrganisationRole) => (
-						<>
-							<div
-								className="divider m-0 h-0 p-0"
-								key={`divider-${orgRole.organisation.id}`}
-							></div>
+						<div key={orgRole.organisation.id}>
+							<div className="divider m-0 h-0 p-0"></div>
 							<OrgRoleRow orgRole={orgRole} />
-						</>
+						</div>
 					))}
 			</div>
 		</div>
@@ -37,12 +37,15 @@ export const Organisations = () => {
 
 const OrgRoleRow = ({ orgRole }: { orgRole: IOrganisationRole }) => {
 	return (
-		<div className="grid grid-cols-3 p-4 px-6">
-			<Link to={`/organisations/${orgRole.organisation.id}`} className="font-bold hover:link">
+		<div className="grid grid-cols-3 p-3 px-4">
+			<Link
+				to={`/organisations/${orgRole.organisation.id}`}
+				className="self-center font-bold hover:link"
+			>
 				{orgRole.organisation.name}{' '}
 				<span className="font-normal italic opacity-50">#{orgRole.organisation.id}</span>
 			</Link>
-			<span className="justify-self-center overflow-hidden whitespace-nowrap">
+			<span className="self-center justify-self-center overflow-hidden whitespace-nowrap">
 				{orgRole.organisation.description}
 			</span>
 			<span className="justify-self-end">
