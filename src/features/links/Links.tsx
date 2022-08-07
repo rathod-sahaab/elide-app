@@ -15,6 +15,7 @@ export const Links = () => {
 	const activeOrganisation = useAppSelector(selectOrganisation)
 	const activeProject = useAppSelector(selectActiveProject)
 
+	// FIXME: clear active organisation and project if they cause error
 	const {
 		isLoading,
 		data: links,
