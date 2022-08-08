@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 
 const initialState: {
@@ -9,6 +9,10 @@ const initialState: {
 		inviteMemberModal: boolean
 		createProjectModal: boolean
 	}
+	updateLink: {
+		updateLinkModal: boolean
+		linkId: number | null
+	}
 } = {
 	modals: {
 		createLinkModal: false,
@@ -16,6 +20,10 @@ const initialState: {
 		createOrganisationModal: false,
 		inviteMemberModal: false,
 		createProjectModal: false,
+	},
+	updateLink: {
+		updateLinkModal: false,
+		linkId: null,
 	},
 }
 
@@ -28,6 +36,12 @@ const uiSlice = createSlice({
 		},
 		closeCreateLinkModal: (state) => {
 			state.modals.createLinkModal = false
+		},
+		openUpdateLinkModal: (state) => {
+			state.updateLink.updateLinkModal = true
+		},
+		closeUpdateLinkModal: (state) => {
+			state.updateLink.updateLinkModal = false
 		},
 		openCreateOrganisationModal: (state) => {
 			state.modals.createOrganisationModal = true
@@ -53,12 +67,17 @@ const uiSlice = createSlice({
 		closeInviteMemberModal: (state) => {
 			state.modals.inviteMemberModal = false
 		},
+		setLinkId: (state, action: PayloadAction<{ id: number | null }>) => {
+			state.updateLink.linkId = action.payload.id
+		},
 	},
 })
 
 export const {
 	openCreateLinkModal,
 	closeCreateLinkModal,
+	openUpdateLinkModal,
+	closeUpdateLinkModal,
 	openCreateOrganisationModal,
 	closeCreateOrganisationModal,
 	openInviteMemberModal,
@@ -67,6 +86,7 @@ export const {
 	closeDeleteLinkModal,
 	openCreateProjectModal,
 	closeCreateProjectModal,
+	setLinkId,
 } = uiSlice.actions
 
 export const uiSliceReducer = uiSlice.reducer
@@ -75,3 +95,5 @@ export const uiSelectCreateProject = (state: RootState) => state.ui.modals.creat
 
 export const uiSelectCreateOrganisation = (state: RootState) =>
 	state.ui.modals.createOrganisationModal
+
+export const uiSelectUpdateLink = (state: RootState) => state.ui.updateLink

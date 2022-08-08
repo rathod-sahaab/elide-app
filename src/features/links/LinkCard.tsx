@@ -1,10 +1,12 @@
 import { IoCopyOutline, IoQrCodeOutline, IoSettingsOutline, IoTrashOutline } from 'react-icons/io5'
+import { useAppDispatch } from '../../app/hooks/use-app-dispacth-selector'
+import { openUpdateLinkModal, setLinkId } from '../../app/ui/uiSlice'
 import { ActivityIndicator } from '../../components/atoms/ActivityIndicator'
 import { ILink } from './linksSlice'
 
 const CardButton = ({ children, onClick }: React.PropsWithChildren<{ onClick: () => void }>) => {
 	return (
-		<button className="btn btn-circle btn-ghost" onClick={onClick}>
+		<button className="btn btn-ghost btn-circle" onClick={onClick}>
 			{children}
 		</button>
 	)
@@ -20,8 +22,10 @@ export const LinkCard = ({
 	setActiveQr,
 }: ILink & { deleteLink: (link: ILink) => void; setActiveQr: (value: string) => void }) => {
 	const elideUrl = `https://elide.in/${slug}`
+
+	const dispatch = useAppDispatch()
 	return (
-		<div className="card bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2 [&>.operations]:translate-x-full [&:hover>.operations]:translate-x-0">
+		<div className="card w-full max-w-md bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2 [&>.operations]:translate-x-full [&:hover>.operations]:translate-x-0">
 			<div className="flex items-center justify-between">
 				<h3 className="align-middle font-bold text-accent">{slug}</h3>
 				<ActivityIndicator active={active} />
@@ -50,7 +54,12 @@ export const LinkCard = ({
 				>
 					<IoCopyOutline size="1.35em" />
 				</CardButton>
-				<CardButton onClick={() => console.log('TODO: edit link')}>
+				<CardButton
+					onClick={() => {
+						dispatch(setLinkId({ id }))
+						dispatch(openUpdateLinkModal())
+					}}
+				>
 					<IoSettingsOutline size="1.35em" />
 				</CardButton>
 			</div>

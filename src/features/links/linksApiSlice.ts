@@ -2,6 +2,16 @@ import { apiSlice } from '../../app/api/apiSlice'
 import { PaginationArgs } from '../../commons/types'
 import { ILinkData } from './linksSlice'
 
+export interface ILinkID {
+	id: number
+}
+
+export interface ILinkUpdateData {
+	url?: string
+	description?: string
+	active?: boolean
+}
+
 export const linksApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
 		createLink: builder.mutation({
@@ -36,6 +46,22 @@ export const linksApiSlice = apiSlice.injectEndpoints({
 				}
 				return fetchArgs
 			},
+		}),
+		getLink: builder.query({
+			query: ({ id }: ILinkID) => ({
+				url: `/links/${id}`,
+			}),
+		}),
+		updateLink: builder.mutation({
+			query: ({ id, url, description, active }: ILinkUpdateData & ILinkID) => ({
+				url: `/links/${id}`,
+				method: 'PATCH',
+				body: {
+					url,
+					description,
+					active,
+				},
+			}),
 		}),
 		deleteLink: builder.mutation({
 			query: ({ id }: { id: number }) => ({
@@ -89,7 +115,9 @@ export const linksApiSlice = apiSlice.injectEndpoints({
 export const {
 	useCreateLinkMutation,
 	useDeleteLinkMutation,
+	useLazyGetLinkQuery,
 	useGetLinksQuery,
 	useLazyGetLinksQuery,
 	useLazyGetSlugAvailabilityQuery,
+	useUpdateLinkMutation,
 } = linksApiSlice
