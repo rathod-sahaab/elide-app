@@ -6,7 +6,7 @@ import { ILink } from './linksSlice'
 
 const CardButton = ({ children, onClick }: React.PropsWithChildren<{ onClick: () => void }>) => {
 	return (
-		<button className="btn btn-ghost btn-circle" onClick={onClick}>
+		<button className="btn btn-ghost btn-square" onClick={onClick}>
 			{children}
 		</button>
 	)
@@ -25,8 +25,8 @@ export const LinkCard = ({
 
 	const dispatch = useAppDispatch()
 	return (
-		<div className="card w-full max-w-md bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2 [&>.operations]:translate-x-full [&:hover>.operations]:translate-x-0">
-			<div className="operations duration-350 absolute bottom-0 right-0 mr-2 bg-base-200 transition transition-transform">
+		<div className="card w-full max-w-md bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2 [&>.operations]:translate-y-full [&:hover>.operations]:translate-y-0">
+			<div className="operations duration-350 btn-group rounded-btn absolute bottom-0 right-0 mr-2 bg-base-300 transition transition-transform">
 				<CardButton onClick={() => deleteLink({ id, slug, url, active, description })}>
 					<IoTrashOutline size="1.35em" />
 				</CardButton>

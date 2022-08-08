@@ -26,9 +26,9 @@ export const Public = () => {
 				<div className="card w-full max-w-sm bg-base-200 p-6 shadow-lg">
 					{user ? (
 						<>
-							<div className="flex flex-col items-center justify-center p-6">
-								<FiCheckCircle className="text-4xl text-success" />
-								<div className="pt-6 text-xl">Already logged in!</div>
+							<div className="prose mb-6">
+								<h3>Let's get rolling!</h3>
+								<p>Simplfy, collaborate and analyze.</p>
 							</div>
 							<Link to="/dashboard" className="btn">
 								Go to Dashboard

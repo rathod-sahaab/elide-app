@@ -4,6 +4,7 @@ import { IoGrid, IoInformationCircle, IoPerson } from 'react-icons/io5'
 import { OrganisationSidebar } from '../features/organisations/OrganisationSidebar'
 import { InvitationsSidebar } from '../features/user/InvitationsSidebar'
 import { ProjectsSidebar } from '../features/projects/components/ProjectsSidebar'
+import { Logout } from '../features/auth/Logout'
 
 const SidebarItems = () => {
 	return (
@@ -13,7 +14,7 @@ const SidebarItems = () => {
 				<ul className="menu overflow-y-auto p-4">
 					<label
 						htmlFor="drawer-1"
-						className="drawer-button btn btn-ghost btn-circle text-xl lg:hidden"
+						className="drawer-button btn btn-circle btn-ghost text-xl lg:hidden"
 					>
 						<IoMdClose />
 					</label>
@@ -32,6 +33,9 @@ const SidebarItems = () => {
 					<ProjectsSidebar />
 				</ul>
 				<ul className="menu overflow-y-auto p-4">
+					<li>
+						<Logout />
+					</li>
 					<li>
 						<NavLink to="/about">
 							<IoInformationCircle /> About
