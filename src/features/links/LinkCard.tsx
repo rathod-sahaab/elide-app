@@ -26,21 +26,7 @@ export const LinkCard = ({
 	const dispatch = useAppDispatch()
 	return (
 		<div className="card w-full max-w-md bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2 [&>.operations]:translate-x-full [&:hover>.operations]:translate-x-0">
-			<div className="flex items-center justify-between">
-				<h3 className="align-middle font-bold text-accent">{slug}</h3>
-				<ActivityIndicator active={active} />
-			</div>
-			{description ? (
-				<p className="overflow-hidden text-ellipsis whitespace-nowrap">{description}</p>
-			) : (
-				<p className="text-content overflow-hidden text-ellipsis whitespace-nowrap italic opacity-50">
-					No description
-				</p>
-			)}
-			<a href={url} className="link" target="_blank">
-				{url}
-			</a>
-			<div className="operations duration-350 absolute bottom-0 right-0 bg-base-200 transition transition-transform">
+			<div className="operations duration-350 absolute bottom-0 right-0 mr-2 bg-base-200 transition transition-transform">
 				<CardButton onClick={() => deleteLink({ id, slug, url, active, description })}>
 					<IoTrashOutline size="1.35em" />
 				</CardButton>
@@ -63,6 +49,20 @@ export const LinkCard = ({
 					<IoSettingsOutline size="1.35em" />
 				</CardButton>
 			</div>
+			<div className="flex items-center justify-between">
+				<h3 className="align-middle font-bold text-accent">{slug}</h3>
+				<ActivityIndicator active={active} />
+			</div>
+			{description ? (
+				<p className="overflow-hidden text-ellipsis whitespace-nowrap">{description}</p>
+			) : (
+				<p className="text-content overflow-hidden text-ellipsis whitespace-nowrap italic opacity-50">
+					No description
+				</p>
+			)}
+			<a href={url} className="link" target="_blank">
+				{url}
+			</a>
 		</div>
 	)
 }
