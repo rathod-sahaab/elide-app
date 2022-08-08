@@ -1,4 +1,4 @@
--  [ ] Edit Link
+-  [x] Edit Link
 -  [ ] Projects
    -  [x] Create project
    -  [x] List projects
