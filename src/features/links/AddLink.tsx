@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { createLink as createLinkActionCreator, ILink, ILinkData } from './linksSlice'
 import { useCreateLinkMutation, useLazyGetSlugAvailabilityQuery } from './linksApiSlice'
 import { IoMdClose } from 'react-icons/io'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { useTheme } from '../../app/hooks/use-theme'
 import { selectOrganisation } from '../organisations/organisationsSlice'
@@ -31,11 +31,11 @@ export const AddLinkForm = ({
 
 	const [createLink, { isLoading }] = useCreateLinkMutation()
 	const [slugAvailabilityTrigger] = useLazyGetSlugAvailabilityQuery()
-	const [slug, setSlug] = useState('')
 	const [slugAvailable, setSlugAvailable] = useState(false)
 	const dispatch = useAppDispatch()
 
 	const {
+		watch,
 		register,
 		handleSubmit,
 		formState: { errors },
@@ -45,6 +45,31 @@ export const AddLinkForm = ({
 			active: true,
 		},
 	})
+
+	const slug = watch('slug')
+
+	const handleSlugChange = (slug: string) => {
+		if (slug && slug !== '') {
+			slugAvailabilityTrigger({ slug })
+				.unwrap()
+				.then(({ available }) => {
+					setSlugAvailable(available)
+				})
+				.catch((err) => {
+					console.log(err)
+					setSlugAvailable(false)
+				})
+		}
+	}
+
+	// debounce
+	useEffect(() => {
+		const timeoutId = setTimeout(() => {
+			handleSlugChange(slug)
+		}, 600)
+
+		return () => clearTimeout(timeoutId)
+	}, [slug])
 
 	const submitHandler: SubmitHandler<ILinkData> = async (data) => {
 		try {
@@ -72,9 +97,7 @@ export const AddLinkForm = ({
 							<span className="text-error">Unavailable</span>
 						) : slug !== '' ? (
 							<span className="text-success">Available</span>
-						) : (
-							<></>
-						)
+						) : undefined
 					}
 				>
 					<div className="input-group">
@@ -84,21 +107,6 @@ export const AddLinkForm = ({
 							className="input block w-full bg-base-100"
 							placeholder="slug"
 							{...register('slug')}
-							onChange={async (e) => {
-								const slugInput = e.target.value
-								setSlug(slugInput)
-								try {
-									if (slugInput === '') {
-										// For forwarding this error to yup
-										setSlugAvailable(true)
-										return
-									}
-									const payload = await slugAvailabilityTrigger({
-										slug: slugInput,
-									}).unwrap()
-									setSlugAvailable(payload.available)
-								} catch (_) {}
-							}}
 						/>
 					</div>
 				</ErrorInputWrapper>
