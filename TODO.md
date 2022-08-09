@@ -7,4 +7,4 @@
    -  [x] Add a link in project
    -  [] Edit project
 -  Optimisations
-   -  [] Debounce on slug check
+   -  [x] Debounce on slug check
