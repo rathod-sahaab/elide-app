@@ -10,17 +10,18 @@ import { PersistGate } from 'redux-persist/integration/react'
 import ThemeProvider from './app/hooks/use-theme'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<React.StrictMode>
-		<ThemeProvider>
-			<Provider store={store}>
-				<PersistGate persistor={persistor}>
-					<BrowserRouter>
-						<Routes>
-							<Route path="/*" element={<App />} />
-						</Routes>
-					</BrowserRouter>
-				</PersistGate>
-			</Provider>
-		</ThemeProvider>
-	</React.StrictMode>,
+	// TODO: Fix this in development use strictmode, causes useeffect to run twice
+	// <React.StrictMode>
+	<ThemeProvider>
+		<Provider store={store}>
+			<PersistGate persistor={persistor}>
+				<BrowserRouter>
+					<Routes>
+						<Route path="/*" element={<App />} />
+					</Routes>
+				</BrowserRouter>
+			</PersistGate>
+		</Provider>
+	</ThemeProvider>,
+	// </React.StrictMode>,
 )

@@ -19,13 +19,7 @@ const schema = yup.object({
 	description: yup.string(),
 })
 
-export const AddLinkForm = ({
-	closeFn,
-	refetchFn,
-}: {
-	closeFn?: () => void
-	refetchFn?: () => void
-}) => {
+export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
 	const activeOrganisation = useAppSelector(selectOrganisation)
 	const activeProject = useAppSelector(selectActiveProject)
 
@@ -81,7 +75,6 @@ export const AddLinkForm = ({
 			console.log(createdLinkData)
 			dispatch(createLinkActionCreator(createdLinkData))
 			if (closeFn) closeFn()
-			if (refetchFn) refetchFn()
 		} catch (err) {
 			console.log(err)
 		}
@@ -158,15 +151,7 @@ export const AddLinkCard = () => {
 	)
 }
 
-export const AddLinkModal = ({
-	open,
-	closeFn,
-	refetchFn,
-}: {
-	open: boolean
-	refetchFn: () => void
-	closeFn: () => void
-}) => {
+export const AddLinkModal = ({ open, closeFn }: { open: boolean; closeFn: () => void }) => {
 	const { theme } = useTheme()
 	return createPortal(
 		<div className={'modal ' + (open ? 'modal-open' : '')} data-theme={theme}>
@@ -175,7 +160,7 @@ export const AddLinkModal = ({
 					<IoMdClose size="1.5em" />
 				</button>
 				<h1 className="mb-6 text-2xl font-bold text-primary">Create Link</h1>
-				<AddLinkForm closeFn={closeFn} refetchFn={refetchFn} />
+				<AddLinkForm closeFn={closeFn} />
 			</div>
 		</div>,
 		document.getElementById('modal-root') as HTMLElement,

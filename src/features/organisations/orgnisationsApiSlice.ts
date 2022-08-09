@@ -128,6 +128,7 @@ export const organisationsApiSlice = apiSlice.injectEndpoints({
 
 export const {
 	useGetOrganisationsQuery,
+	useLazyGetOrganisationsQuery,
 	useCreateOrganisationMutation,
 	useGetOrganisationMembersQuery,
 	useGetOrganisationInvitationsQuery,

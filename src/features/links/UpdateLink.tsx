@@ -15,7 +15,7 @@ const schema = yup.object({
 	description: yup.string(),
 })
 
-export const UpdateLinkForm = ({ refetchFn }: { refetchFn: () => void }) => {
+export const UpdateLinkForm = () => {
 	const linkId = useAppSelector(uiSelectUpdateLink).linkId
 	const dispatch = useAppDispatch()
 
@@ -39,7 +39,6 @@ export const UpdateLinkForm = ({ refetchFn }: { refetchFn: () => void }) => {
 			}).unwrap()
 			dispatch(closeUpdateLinkModal())
 			dispatch(setLinkId({ id: null }))
-			if (refetchFn) refetchFn()
 		} catch (err) {
 			console.log(err)
 		}
@@ -100,7 +99,7 @@ export const UpdateLinkForm = ({ refetchFn }: { refetchFn: () => void }) => {
 	)
 }
 
-export const UpdateLinkModal = ({ refetchFn }: { refetchFn: () => void }) => {
+export const UpdateLinkModal = () => {
 	const open = useAppSelector(uiSelectUpdateLink).updateLinkModal
 	const dispatch = useAppDispatch()
 
@@ -113,7 +112,7 @@ export const UpdateLinkModal = ({ refetchFn }: { refetchFn: () => void }) => {
 				dispatch(setLinkId({ id: null }))
 			}}
 		>
-			<UpdateLinkForm refetchFn={refetchFn} />
+			<UpdateLinkForm />
 		</ElideModal>
 	)
 }

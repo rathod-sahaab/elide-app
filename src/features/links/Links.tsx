@@ -1,63 +1,68 @@
-import { useState } from 'react'
-import { HiOutlineFolder, HiOutlineLink, HiOutlineUsers } from 'react-icons/hi'
+import { useEffect, useRef, useState } from 'react'
 import { IoMdAdd } from 'react-icons/io'
-import { useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
+import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 import { selectOrganisation } from '../organisations/organisationsSlice'
 import { selectActiveProject } from '../projects/projectsSlice'
 import { AddLinkModal } from './AddLink'
+import { LinksBreadcrumbs } from './components/LinkBreadcrumbs'
 import { DeleteLinkModal } from './DeleteLink'
-import { LinkCard } from './LinkCard'
-import { useGetLinksQuery } from './linksApiSlice'
-import { ILink } from './linksSlice'
+import { useLazyGetLinksQuery } from './linksApiSlice'
+import { addLinks, clearLinks, ILink, selectLinks, setLinks } from './linksSlice'
 import { QrCodeModal } from './QrCodeModal'
 import { UpdateLinkModal } from './UpdateLink'
+import { LinkCardsHolder } from './components/LinkCardsHolder'
 
-const LinksBreadcrumbs = () => {
-	const activeOrganisation = useAppSelector(selectOrganisation)
-	const activeProject = useAppSelector(selectActiveProject)
-
-	return (
-		<div className="breadcrumbs overflow-visible">
-			<ul>
-				{activeOrganisation.organisation && (
-					<li>
-						<HiOutlineUsers className="mr-2" size="1.35em" />{' '}
-						<span className="tooltip" data-tip="Selected Organization">
-							{activeOrganisation.organisation.name}
-						</span>
-					</li>
-				)}
-				{activeProject.project && (
-					<li>
-						<HiOutlineFolder className="mr-2" size="1.35em" />
-						<span className="tooltip" data-tip="Selected Project">
-							{activeProject.project.name}
-						</span>
-					</li>
-				)}
-				<li>
-					<HiOutlineLink className="mr-2" size="1.35em" /> Links
-				</li>
-			</ul>
-		</div>
-	)
-}
+const LIMIT: number = 12 // good for 3, 2, 1 col grid
 
 export const Links = () => {
 	const activeOrganisation = useAppSelector(selectOrganisation)
 	const activeProject = useAppSelector(selectActiveProject)
 
-	// FIXME: clear active organisation and project if they cause error
-	const {
-		isLoading,
-		data: links,
-		refetch,
-	} = useGetLinksQuery({
-		offset: 0,
-		limit: 10,
-		organisationId: activeOrganisation.organisation?.id,
-		projectId: activeProject.project?.id,
-	})
+	const [offset, setOffset] = useState(0)
+	const [hasMore, setHasMore] = useState(true)
+	const [forceFetch, setForceFetch] = useState(1)
+
+	const [getLinksTrigger, { isLoading }] = useLazyGetLinksQuery()
+
+	const dispatch = useAppDispatch()
+
+	const links = useAppSelector(selectLinks)
+
+	const isMounted = useRef(false)
+
+	useEffect(() => {
+		setOffset(0)
+		setHasMore(true)
+		setForceFetch((oldForceFetch) => oldForceFetch + 1)
+	}, [activeOrganisation, activeProject])
+
+	async function fetchLinks() {
+		try {
+			const linksResponse: ILink[] = await getLinksTrigger({
+				organisationId: activeOrganisation.organisation?.id,
+				projectId: activeProject.project?.id,
+				offset,
+				limit: LIMIT,
+			}).unwrap()
+			if (linksResponse.length !== LIMIT) {
+				setHasMore(false)
+			}
+			dispatch(addLinks(linksResponse))
+		} catch (err) {
+			console.log(err)
+		}
+	}
+
+	useEffect(() => {
+		if (isMounted.current) {
+			if (offset === 0) {
+				dispatch(clearLinks())
+			}
+			fetchLinks()
+		} else {
+			isMounted.current = true
+		}
+	}, [offset, forceFetch])
 
 	// modals
 	const [addLinkModalOpen, setAddLinkModalOpen] = useState(false)
@@ -87,7 +92,7 @@ export const Links = () => {
 				<LinksBreadcrumbs />
 				<div className="tooltip tooltip-left" data-tip="Create Link">
 					<button
-						className="btn btn-ghost btn-circle"
+						className="btn btn-circle btn-ghost"
 						onClick={() => setAddLinkModalOpen(true)}
 					>
 						<IoMdAdd size="1.75em" />
@@ -99,16 +104,14 @@ export const Links = () => {
 				closeFn={() => {
 					setAddLinkModalOpen(false)
 				}}
-				refetchFn={refetch}
 			/>
-			<UpdateLinkModal refetchFn={refetch} />
+			<UpdateLinkModal />
 			<DeleteLinkModal
 				link={linkToBeDeleted}
 				open={deleteLinkModalOpen}
 				closeFn={() => {
 					setDeleteLinkModalOpen(false)
 				}}
-				refetchFn={refetch}
 			/>
 			<QrCodeModal
 				open={qrCodeModalOpen}
@@ -117,22 +120,21 @@ export const Links = () => {
 				}}
 				data={qrCodeData}
 			/>
-			<div className="m-auto grid max-w-screen-sm grid-cols-1 gap-4 md:max-w-screen-md md:grid-cols-2 2xl:max-w-screen-xl 2xl:grid-cols-3 [&>*]:justify-self-center">
-				{links &&
-					(links as ILink[]).map((link) => (
-						<LinkCard
-							key={link.id}
-							{...link}
-							deleteLink={handleDeleteLink}
-							setActiveQr={handleQrCodeClick}
-						/>
-					))}
-			</div>
-			{links.length === 0 && (
-				<div className="my-24 text-center">
-					<p className="text-xl italic opacity-70">
-						You have no links in current context... create one now!
-					</p>
+			<LinkCardsHolder />
+			{links.length > 0 && (
+				<div className="py-12 text-center">
+					{hasMore ? (
+						<button
+							className="btn btn-primary w-full max-w-sm"
+							onClick={() => {
+								setOffset((oldOffset) => oldOffset + LIMIT)
+							}}
+						>
+							Load More
+						</button>
+					) : (
+						<p className="text-xl italic opacity-70">No more links to load... create more!</p>
+					)}
 				</div>
 			)}
 		</div>
