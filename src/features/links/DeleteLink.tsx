@@ -1,23 +1,20 @@
-import { createPortal } from 'react-dom'
-import { IoMdClose } from 'react-icons/io'
-import { useTheme } from '../../app/hooks/use-theme'
+import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
+import { closeDeleteLinkModal, uiSelectDeleteLink } from '../../app/ui/uiSlice'
+import { ElideModal } from '../../components/ElideModal'
 import { useDeleteLinkMutation } from './linksApiSlice'
-import { ILink } from './linksSlice'
+import { linksRemoveLinks } from './linksSlice'
 
-interface IDeleteLinkFormProps {
-	link: ILink | null
-	refetchFn?: () => void
-	closeFn?: () => void
-}
-
-export const DeleteLinkForm = ({ link, closeFn, refetchFn }: IDeleteLinkFormProps) => {
+export const DeleteLinkForm = () => {
+	const link = useAppSelector(uiSelectDeleteLink).link
 	const [deleteLink, { isLoading }] = useDeleteLinkMutation()
+
+	const dispatch = useAppDispatch()
 
 	const handleDelete = async (id: number) => {
 		try {
 			await deleteLink({ id }).unwrap()
-			if (refetchFn) refetchFn()
-			if (closeFn) closeFn()
+			dispatch(linksRemoveLinks({ id }))
+			dispatch(closeDeleteLinkModal())
 		} catch (err) {
 			console.error(err)
 		}
@@ -42,34 +39,25 @@ export const DeleteLinkForm = ({ link, closeFn, refetchFn }: IDeleteLinkFormProp
 					if (link) handleDelete(link.id)
 				}}
 			>
-				Delete Link
+				Delete
 			</button>
 		</div>
 	)
 }
 
-export const DeleteLinkModal = ({
-	open,
-	...rest
-}: {
-	open: boolean
-} & IDeleteLinkFormProps) => {
-	const { theme } = useTheme()
-	return createPortal(
-		<div className={'modal ' + (open ? 'modal-open' : '')} data-theme={theme}>
-			<div className="modal-box relative max-w-md overflow-visible bg-base-200">
-				<button
-					className="btn btn-square absolute -top-6 -right-6"
-					onClick={() => {
-						if (rest.closeFn) rest.closeFn()
-					}}
-				>
-					<IoMdClose size="1.5em" />
-				</button>
-				<h1 className="pb-6 text-2xl font-bold text-primary">Delete Link</h1>
-				<DeleteLinkForm {...rest} />
-			</div>
-		</div>,
-		document.getElementById('modal-root') as HTMLElement,
+export const DeleteLinkModal = () => {
+	const open = useAppSelector(uiSelectDeleteLink).deleteLinkModal
+	const dispatch = useAppDispatch()
+
+	return (
+		<ElideModal
+			open={open}
+			closeFn={() => {
+				dispatch(closeDeleteLinkModal())
+			}}
+			title="Delete Link"
+		>
+			<DeleteLinkForm />
+		</ElideModal>
 	)
 }

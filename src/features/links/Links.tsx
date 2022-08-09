@@ -7,7 +7,7 @@ import { AddLinkModal } from './AddLink'
 import { LinksBreadcrumbs } from './components/LinkBreadcrumbs'
 import { DeleteLinkModal } from './DeleteLink'
 import { useLazyGetLinksQuery } from './linksApiSlice'
-import { addLinks, clearLinks, ILink, selectLinks, setLinks } from './linksSlice'
+import { addLinks, clearLinks, ILink, selectLinks } from './linksSlice'
 import { QrCodeModal } from './QrCodeModal'
 import { UpdateLinkModal } from './UpdateLink'
 import { LinkCardsHolder } from './components/LinkCardsHolder'
@@ -66,25 +66,6 @@ export const Links = () => {
 
 	// modals
 	const [addLinkModalOpen, setAddLinkModalOpen] = useState(false)
-	const [deleteLinkModalOpen, setDeleteLinkModalOpen] = useState(false)
-	const [qrCodeModalOpen, setQrCodeModalOpen] = useState(false)
-
-	const [linkToBeDeleted, setLinkToBeDeleted] = useState<ILink | null>(null)
-	const [qrCodeData, setQrCodeData] = useState<string>('')
-
-	const handleDeleteLink = (link: ILink) => {
-		setLinkToBeDeleted(link)
-		setDeleteLinkModalOpen(true)
-	}
-
-	const handleQrCodeClick = (value: string) => {
-		setQrCodeData(value)
-		setQrCodeModalOpen(true)
-	}
-
-	if (isLoading) {
-		return <div>Loading...</div>
-	}
 
 	return (
 		<div>
@@ -106,22 +87,10 @@ export const Links = () => {
 				}}
 			/>
 			<UpdateLinkModal />
-			<DeleteLinkModal
-				link={linkToBeDeleted}
-				open={deleteLinkModalOpen}
-				closeFn={() => {
-					setDeleteLinkModalOpen(false)
-				}}
-			/>
-			<QrCodeModal
-				open={qrCodeModalOpen}
-				closeFn={() => {
-					setQrCodeModalOpen(false)
-				}}
-				data={qrCodeData}
-			/>
+			<DeleteLinkModal />
+			<QrCodeModal />
 			<LinkCardsHolder />
-			{links.length > 0 && (
+			{!isLoading && links.length > 0 && (
 				<div className="py-12 text-center">
 					{hasMore ? (
 						<button

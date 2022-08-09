@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
-import { closeUpdateLinkModal, setLinkId, uiSelectUpdateLink } from '../../app/ui/uiSlice'
+import { closeUpdateLinkModal, uiSelectUpdateLink } from '../../app/ui/uiSlice'
 import { ElideModal } from '../../components/ElideModal'
 import { ErrorInputWrapper } from '../../components/forms/ErrorInputWrapper'
 import { ILinkUpdateData, useLazyGetLinkQuery, useUpdateLinkMutation } from './linksApiSlice'
-import { ILink } from './linksSlice'
+import { ILink, linksUpdateLink } from './linksSlice'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 
@@ -33,12 +33,12 @@ export const UpdateLinkForm = () => {
 
 	const submitHandler: SubmitHandler<ILinkUpdateData> = async (data) => {
 		try {
-			await updateLink({
+			const updatedLink: ILink = await updateLink({
 				id: linkId!,
 				...data,
 			}).unwrap()
+			dispatch(linksUpdateLink(updatedLink))
 			dispatch(closeUpdateLinkModal())
-			dispatch(setLinkId({ id: null }))
 		} catch (err) {
 			console.log(err)
 		}
@@ -109,7 +109,6 @@ export const UpdateLinkModal = () => {
 			open={open}
 			closeFn={() => {
 				dispatch(closeUpdateLinkModal())
-				dispatch(setLinkId({ id: null }))
 			}}
 		>
 			<UpdateLinkForm />

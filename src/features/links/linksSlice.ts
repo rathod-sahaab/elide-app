@@ -23,7 +23,13 @@ const linksSlice = createSlice({
 			// newly created link will be most recent so we add it to the front
 			state.links = [action.payload, ...state.links]
 		},
-		deleteLink: (state, action: PayloadAction<{ id: number }>) => {
+		linksUpdateLink: (state, action: PayloadAction<ILink>) => {
+			const linkIndex = state.links.findIndex((link) => link.id === action.payload.id)
+			if (linkIndex !== -1) {
+				state.links[linkIndex] = action.payload
+			}
+		},
+		linksRemoveLinks: (state, action: PayloadAction<{ id: number }>) => {
 			const { id } = action.payload
 			state.links = state.links.filter((link) => link.id !== id)
 		},
@@ -39,7 +45,8 @@ const linksSlice = createSlice({
 	},
 })
 
-export const { createLink, deleteLink, addLinks, clearLinks, setLinks } = linksSlice.actions
+export const { createLink, linksUpdateLink, linksRemoveLinks, addLinks, clearLinks, setLinks } =
+	linksSlice.actions
 
 export const linksSliceReducer = linksSlice.reducer
 

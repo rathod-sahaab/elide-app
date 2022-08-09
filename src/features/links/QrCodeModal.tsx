@@ -3,23 +3,20 @@ import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
 import { IoMdClose } from 'react-icons/io'
 import { MdOutlineFileDownload } from 'react-icons/md'
+import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 import { useTheme } from '../../app/hooks/use-theme'
+import { closeQrModal, uiSelectQr } from '../../app/ui/uiSlice'
 
 const LEVELS = ['L', 'M', 'Q', 'H'] as const
 type LevelType = typeof LEVELS[number]
 
-export const QrCodeModal = ({
-	open,
-	closeFn,
-	data,
-}: {
-	open: boolean
-	closeFn: () => void
-	data: string
-}) => {
+export const QrCodeModal = () => {
+	const { qrModal: open, qrText } = useAppSelector(uiSelectQr)
+	const dispatch = useAppDispatch()
+
 	const [level, setLevel] = useState<LevelType>('L')
 
-	const slug = data.split('/').pop()
+	const slug = qrText.split('/').pop()
 	const [base64Svg, setBase64Svg] = useState<string | null>(null)
 
 	const { theme } = useTheme()
@@ -33,18 +30,23 @@ export const QrCodeModal = ({
 		}
 
 		setBase64Svg(btoa(svg))
-	}, [level, data])
+	}, [level, qrText])
 
 	return createPortal(
 		<div className={'modal ' + (open ? 'modal-open' : '')} data-theme={theme}>
 			<div className="modal-box relative w-max overflow-visible bg-base-200">
-				<button className="btn btn-square absolute -top-6 -right-6" onClick={closeFn}>
+				<button
+					className="btn btn-square absolute -top-6 -right-6"
+					onClick={() => {
+						dispatch(closeQrModal())
+					}}
+				>
 					<IoMdClose size="1.5em" />
 				</button>
 				<div className="card border-4 border-base-content p-3">
 					{/* Display SVG QR */}
 					<QRCodeSVG
-						value={data}
+						value={qrText}
 						size={256}
 						level={level}
 						fgColor="currentColor"
@@ -53,7 +55,7 @@ export const QrCodeModal = ({
 					{/* Download SVG QR */}
 					<QRCodeSVG
 						id="link-svg-qr"
-						value={data}
+						value={qrText}
 						size={256}
 						level={level}
 						className="hidden"
@@ -61,7 +63,7 @@ export const QrCodeModal = ({
 					{/* Download PNG QR */}
 					<QRCodeCanvas
 						id="link-canvas-qr"
-						value={data}
+						value={qrText}
 						size={256}
 						level={level}
 						className="hidden"
