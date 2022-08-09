@@ -4,10 +4,12 @@ import { RootState } from '../store'
 
 const initialState: {
 	modals: {
-		createLinkModal: boolean
 		createOrganisationModal: boolean
 		inviteMemberModal: boolean
 		createProjectModal: boolean
+	}
+	createLink: {
+		createLinkModal: boolean
 	}
 	updateLink: {
 		updateLinkModal: boolean
@@ -23,10 +25,12 @@ const initialState: {
 	}
 } = {
 	modals: {
-		createLinkModal: false,
 		createOrganisationModal: false,
 		inviteMemberModal: false,
 		createProjectModal: false,
+	},
+	createLink: {
+		createLinkModal: false,
 	},
 	updateLink: {
 		updateLinkModal: false,
@@ -47,10 +51,10 @@ const uiSlice = createSlice({
 	initialState,
 	reducers: {
 		openCreateLinkModal: (state) => {
-			state.modals.createLinkModal = true
+			state.createLink.createLinkModal = true
 		},
 		closeCreateLinkModal: (state) => {
-			state.modals.createLinkModal = false
+			state.createLink.createLinkModal = false
 		},
 		openUpdateLinkModal: (state, action: PayloadAction<{ id: number | null }>) => {
 			state.updateLink.updateLinkModal = true
@@ -121,6 +125,7 @@ export const uiSelectCreateProject = (state: RootState) => state.ui.modals.creat
 export const uiSelectCreateOrganisation = (state: RootState) =>
 	state.ui.modals.createOrganisationModal
 
+export const uiSelectCreateLink = (state: RootState) => state.ui.createLink
 export const uiSelectUpdateLink = (state: RootState) => state.ui.updateLink
 
 export const uiSelectQr = (state: RootState) => state.ui.qr

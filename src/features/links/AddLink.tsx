@@ -11,6 +11,8 @@ import { useTheme } from '../../app/hooks/use-theme'
 import { selectOrganisation } from '../organisations/organisationsSlice'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 import { selectActiveProject } from '../projects/projectsSlice'
+import { ElideModal } from '../../components/ElideModal'
+import { closeCreateLinkModal, uiSelectCreateLink } from '../../app/ui/uiSlice'
 
 const schema = yup.object({
 	slug: yup.string().required('Slug is required'),
@@ -19,7 +21,7 @@ const schema = yup.object({
 	description: yup.string(),
 })
 
-export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
+export const AddLinkForm = () => {
 	const activeOrganisation = useAppSelector(selectOrganisation)
 	const activeProject = useAppSelector(selectActiveProject)
 
@@ -72,9 +74,8 @@ export const AddLinkForm = ({ closeFn }: { closeFn?: () => void }) => {
 				projectId: activeProject.project?.id,
 				organisationId: activeOrganisation?.organisation?.id,
 			}).unwrap()
-			console.log(createdLinkData)
 			dispatch(createLinkActionCreator(createdLinkData))
-			if (closeFn) closeFn()
+			dispatch(closeCreateLinkModal())
 		} catch (err) {
 			console.log(err)
 		}
@@ -151,18 +152,19 @@ export const AddLinkCard = () => {
 	)
 }
 
-export const AddLinkModal = ({ open, closeFn }: { open: boolean; closeFn: () => void }) => {
-	const { theme } = useTheme()
-	return createPortal(
-		<div className={'modal ' + (open ? 'modal-open' : '')} data-theme={theme}>
-			<div className="modal-box relative max-w-md overflow-visible bg-base-200">
-				<button className="btn btn-square absolute -top-6 -right-6" onClick={closeFn}>
-					<IoMdClose size="1.5em" />
-				</button>
-				<h1 className="mb-6 text-2xl font-bold text-primary">Create Link</h1>
-				<AddLinkForm closeFn={closeFn} />
-			</div>
-		</div>,
-		document.getElementById('modal-root') as HTMLElement,
+export const AddLinkModal = () => {
+	const open = useAppSelector(uiSelectCreateLink).createLinkModal
+	const dispatch = useAppDispatch()
+
+	return (
+		<ElideModal
+			title="Create Link"
+			open={open}
+			closeFn={() => {
+				dispatch(closeCreateLinkModal())
+			}}
+		>
+			<AddLinkForm />
+		</ElideModal>
 	)
 }

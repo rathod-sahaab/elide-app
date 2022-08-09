@@ -11,6 +11,7 @@ import { addLinks, clearLinks, ILink, selectLinks } from './linksSlice'
 import { QrCodeModal } from './QrCodeModal'
 import { UpdateLinkModal } from './UpdateLink'
 import { LinkCardsHolder } from './components/LinkCardsHolder'
+import { openCreateLinkModal } from '../../app/ui/uiSlice'
 
 const LIMIT: number = 12 // good for 3, 2, 1 col grid
 
@@ -64,28 +65,22 @@ export const Links = () => {
 		}
 	}, [offset, forceFetch])
 
-	// modals
-	const [addLinkModalOpen, setAddLinkModalOpen] = useState(false)
-
 	return (
 		<div>
 			<div className="m-auto mb-6 flex max-w-screen-sm items-center justify-between">
 				<LinksBreadcrumbs />
 				<div className="tooltip tooltip-left" data-tip="Create Link">
 					<button
-						className="btn btn-circle btn-ghost"
-						onClick={() => setAddLinkModalOpen(true)}
+						className="btn btn-ghost btn-circle"
+						onClick={() => {
+							dispatch(openCreateLinkModal())
+						}}
 					>
 						<IoMdAdd size="1.75em" />
 					</button>
 				</div>
 			</div>
-			<AddLinkModal
-				open={addLinkModalOpen}
-				closeFn={() => {
-					setAddLinkModalOpen(false)
-				}}
-			/>
+			<AddLinkModal />
 			<UpdateLinkModal />
 			<DeleteLinkModal />
 			<QrCodeModal />
