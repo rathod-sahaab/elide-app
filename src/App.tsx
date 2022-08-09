@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { OutletLayout } from './components/Layout'
-import { Public } from './components/pages/public/Public'
+import { Home } from './components/pages/public/Home'
 import { Dashboard } from './components/pages/auth/Dashboard'
 import { LoginPage } from './features/auth/Login'
 import { RegisterPage } from './features/auth/Register'
@@ -18,7 +18,7 @@ function App() {
 		<Routes>
 			<Route path="/" element={<OutletLayout />}>
 				{/*General routes*/}
-				<Route index element={<Public />} />
+				<Route index element={<Home />} />
 				<Route path="about" element={<About />} />
 
 				{/*Unauthenticated Routes*/}

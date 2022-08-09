@@ -128,6 +128,13 @@ export const Links = () => {
 						/>
 					))}
 			</div>
+			{links.length === 0 && (
+				<div className="my-24 text-center">
+					<p className="text-xl italic opacity-70">
+						You have no links in current context... create one now!
+					</p>
+				</div>
+			)}
 		</div>
 	)
 }

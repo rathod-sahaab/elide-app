@@ -6,7 +6,7 @@ import { ILink } from './linksSlice'
 
 const CardButton = ({ children, onClick }: React.PropsWithChildren<{ onClick: () => void }>) => {
 	return (
-		<button className="btn btn-ghost btn-square" onClick={onClick}>
+		<button className="tootip btn btn-ghost btn-square" onClick={onClick}>
 			{children}
 		</button>
 	)
@@ -27,9 +27,6 @@ export const LinkCard = ({
 	return (
 		<div className="card w-full max-w-md bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2 [&>.operations]:translate-y-full [&:hover>.operations]:translate-y-0">
 			<div className="operations duration-350 btn-group rounded-btn absolute bottom-0 right-0 mr-2 bg-base-300 transition transition-transform">
-				<CardButton onClick={() => deleteLink({ id, slug, url, active, description })}>
-					<IoTrashOutline size="1.35em" />
-				</CardButton>
 				<CardButton onClick={() => setActiveQr(elideUrl)}>
 					<IoQrCodeOutline size="1.35em" />
 				</CardButton>
@@ -47,6 +44,9 @@ export const LinkCard = ({
 					}}
 				>
 					<IoSettingsOutline size="1.35em" />
+				</CardButton>
+				<CardButton onClick={() => deleteLink({ id, slug, url, active, description })}>
+					<IoTrashOutline size="1.35em" />
 				</CardButton>
 			</div>
 			<div className="flex items-center justify-between">

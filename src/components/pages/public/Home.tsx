@@ -4,16 +4,16 @@ import { Link } from 'react-router-dom'
 import { selectCurrentUser } from '../../../features/auth/authSlice'
 import { Login } from '../../../features/auth/Login'
 
-export const Public = () => {
+export const Home = () => {
 	const user = useSelector(selectCurrentUser)
 
 	return (
 		<div className="h-screen w-screen overflow-auto [&>section:not(:first-child)]:py-12 [&>section:not(:first-child)]:px-6">
 			<section className="flex w-screen flex-col items-center justify-around pt-24 lg:h-screen lg:flex-row lg:pt-0">
 				<div className="prose p-6 lg:my-0">
-					<h1>Elide, make your urls simpler</h1>
+					<h1>Elide, make your links simpler</h1>
 					<p>
-						Manage your urls, make them more readable and memorable, collablorate with your
+						Manage your links, make them more readable and memorable, collablorate with your
 						teams, insightful analytics and war-room like realtime updates. All using an app
 						with beautiful UI and a UX that makes sense.
 					</p>
@@ -41,7 +41,7 @@ export const Public = () => {
 			</section>
 			<section>
 				<div className="prose m-auto flex flex-col items-center justify-center">
-					<h1 className="text-center">URLs must be simple</h1>
+					<h1 className="text-center">Links must be simple</h1>
 					<p>
 						Humans are bad at remembering a bunch of meaningless numbers and letters. Domain
 						names like <b>'google.com'</b>, <b>'elide.in'</b> were invented to avoid making
