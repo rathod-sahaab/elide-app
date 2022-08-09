@@ -106,7 +106,7 @@ export const linksApiSlice = apiSlice.injectEndpoints({
 		}),
 		getSlugAvailability: builder.query({
 			query: ({ slug }: { slug: string }) => ({
-				url: `/links/${slug}/availability`,
+				url: `/links/slug/${slug}/availability`,
 			}),
 		}),
 	}),

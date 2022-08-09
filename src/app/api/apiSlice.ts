@@ -3,7 +3,7 @@ import { createApi, FetchArgs, fetchBaseQuery } from '@reduxjs/toolkit/query/rea
 import { logOut, setCredentials } from '../../features/auth/authSlice'
 
 const baseQuery = fetchBaseQuery({
-	baseUrl: 'http://localhost:5000',
+	baseUrl: 'http://localhost:5000/api',
 	credentials: 'include',
 })
 

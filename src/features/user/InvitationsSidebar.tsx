@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useGetInvitationCountQuery } from './userApiSlice'
 
 export const InvitationsSidebar = () => {
-	const { data, isLoading, error } = useGetInvitationCountQuery({}, { pollingInterval: 10000 })
+	const { data, isLoading, error } = useGetInvitationCountQuery({}, { pollingInterval: 30000 })
 
 	if (isLoading) {
 		return (
