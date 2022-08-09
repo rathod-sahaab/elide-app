@@ -5,18 +5,10 @@ import { MdOutlineArrowDropDown, MdOutlineArrowDropUp } from 'react-icons/md'
 import { NavLink } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks/use-app-dispacth-selector'
 import { openCreateProjectModal } from '../../../app/ui/uiSlice'
-// import { openCreateOrganisationModal } from '../../app/ui/uiSlice'
 import { selectOrganisation } from '../../organisations/organisationsSlice'
 import { IProject, useGetProjectsQuery } from '../projectsApiSlice'
 import { clearActiveProject, selectActiveProject, setActiveProject } from '../projectsSlice'
 import { CreateProjectModal } from './forms/CreateProjectForm'
-// import { CreateOrganisationModal } from './CreateOrganisation'
-// import {
-// 	clearActiveOrganisation,
-// 	selectOrganisation,
-// 	setActiveOrganisation,
-// } from './projectsSlice'
-// import { IOrganisationRole, useGetOrganisationsQuery } from './orgnisationsApiSlice'
 
 export const ProjectsSidebar = () => {
 	const organisation = useAppSelector(selectOrganisation)
@@ -80,12 +72,7 @@ export const ProjectsSidebar = () => {
 							key={project.id}
 							className={'pl-10 ' + (projectsExpanded || isActiveProject ? '' : 'hidden')}
 						>
-							<NavLink
-								to={`/projects/${project.id}`}
-								className={
-									'flex items-center justify-between [&:hover>.btn]:opacity-100 [&:hover>.link]:underline'
-								}
-							>
+							<div className="flex items-center justify-between [&:hover>.btn]:opacity-100 [&:hover>.link]:underline">
 								<span>
 									{project.name}
 									<span className="italic opacity-70"> #{project.id}</span>
@@ -113,7 +100,7 @@ export const ProjectsSidebar = () => {
 										<IoMdCheckmark size="1.2em" />
 									</button>
 								)}
-							</NavLink>
+							</div>
 						</li>
 					)
 				})
