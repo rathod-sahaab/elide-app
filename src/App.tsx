@@ -12,6 +12,7 @@ import { Organisation } from './features/organisations/components/Organisation'
 import { OrganisationMembers } from './features/organisations/components/OrganisationMembers'
 import { OrganisationInvitations } from './features/organisations/components/OrganisationInvitations'
 import { UserInvitations } from './features/user/InvitationsPage'
+import { Profile } from './components/pages/auth/Profile'
 
 function App() {
 	return (
@@ -30,6 +31,7 @@ function App() {
 				{/*Authehticated Routes*/}
 				<Route element={<RequireAuth />}>
 					<Route path="dashboard" element={<Dashboard />} />
+					<Route path="profile" element={<Profile />} />
 					<Route path="invitations" element={<UserInvitations />} />
 					<Route path="organisations">
 						<Route index element={<Organisations />} />

@@ -5,6 +5,14 @@ import {
 	RoleType,
 } from '../organisations/orgnisationsApiSlice'
 
+export interface IUserProfile {
+	id: number
+	name: string
+	email: string
+	createdAt: string
+	updatedAt: string
+}
+
 export interface IUserInvitation {
 	id: string
 	role: RoleType
@@ -14,6 +22,11 @@ export interface IUserInvitation {
 
 export const userApiSlice = apiSlice.injectEndpoints({
 	endpoints: (builder) => ({
+		getProfile: builder.query({
+			query: () => ({
+				url: '/users/profile',
+			}),
+		}),
 		getInvitationCount: builder.query({
 			query: () => ({
 				url: '/users/invitations/count',
@@ -48,4 +61,5 @@ export const {
 	useGetInvitationsQuery,
 	useAcceptInvitationMutation,
 	useRejectInvitationMutation,
+	useGetProfileQuery,
 } = userApiSlice
