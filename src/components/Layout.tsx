@@ -12,13 +12,11 @@ export const OutletLayout = () => {
 	)
 }
 
-export const AuthLayout = ({ children }: React.PropsWithChildren) => {
+export const SidebarLayout = ({ children }: React.PropsWithChildren) => {
 	return (
-		<>
-			<Sidebar>
-				<NoSidebarLayout fixedNavbar={false}>{children}</NoSidebarLayout>
-			</Sidebar>
-		</>
+		<Sidebar>
+			<NoSidebarLayout fixedNavbar={false}>{children}</NoSidebarLayout>
+		</Sidebar>
 	)
 }
 

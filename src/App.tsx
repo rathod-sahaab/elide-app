@@ -4,7 +4,7 @@ import { Home } from './components/pages/public/Home'
 import { Dashboard } from './components/pages/auth/Dashboard'
 import { LoginPage } from './features/auth/Login'
 import { RegisterPage } from './features/auth/Register'
-import { RequireAuth, RequireNoAuth } from './features/auth/RequireAuth'
+import { AdaptAuth, RequireAuth, RequireNoAuth } from './features/auth/RequireAuth'
 import { About } from './components/pages/public/About'
 import { NotFound } from './components/pages/public/404'
 import { Organisations } from './features/organisations/components/Organisations'
@@ -20,7 +20,11 @@ function App() {
 			<Route path="/" element={<OutletLayout />}>
 				{/*General routes*/}
 				<Route index element={<Home />} />
-				<Route path="about" element={<About />} />
+
+				{/*Adapt to auth state routes*/}
+				<Route element={<AdaptAuth />}>
+					<Route path="about" element={<About />} />
+				</Route>
 
 				{/*Unauthenticated Routes*/}
 				<Route element={<RequireNoAuth />}>

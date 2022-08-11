@@ -1,8 +1,6 @@
-import { NoSidebarLayout } from '../../Layout'
-
-export const AboutContent = () => {
+export const About = () => {
 	return (
-		<div className="prose m-auto min-h-screen max-w-screen-lg p-12">
+		<div className="prose m-auto mt-12 min-h-screen max-w-screen-lg p-12">
 			<section>
 				<h1 className="text-center">About Elide</h1>
 				<p>
@@ -37,13 +35,5 @@ export const AboutContent = () => {
 				<h3 className="text-center">NodeJS + Typescript + Nest.js</h3>
 			</section>
 		</div>
-	)
-}
-
-export const About = () => {
-	return (
-		<NoSidebarLayout fixedNavbar={false}>
-			<AboutContent />
-		</NoSidebarLayout>
 	)
 }
