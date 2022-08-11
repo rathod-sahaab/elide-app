@@ -95,7 +95,7 @@ export const AddLinkForm = () => {
 					}
 				>
 					<div className="input-group">
-						<span className="font-bold">elide.in/</span>
+						<span className="font-bold">{import.meta.env.VITE_DOMAIN_NAME}/</span>
 						<input
 							disabled={isLoading}
 							className="input block w-full bg-base-100"

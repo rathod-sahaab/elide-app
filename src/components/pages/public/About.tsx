@@ -4,7 +4,7 @@ export const AboutContent = () => {
 	return (
 		<div className="prose m-auto min-h-screen max-w-screen-lg p-12">
 			<section>
-				<h1 className="text-center">About elide.in</h1>
+				<h1 className="text-center">About Elide</h1>
 				<p>
 					Elide started as a hobby project from a need during my time at my college society{' '}
 					<a href="https://istenith.com" target="_blank">

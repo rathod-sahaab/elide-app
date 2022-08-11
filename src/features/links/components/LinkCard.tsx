@@ -13,7 +13,7 @@ const CardButton = ({ children, onClick }: React.PropsWithChildren<{ onClick: ()
 }
 
 export const LinkCard = ({ id, slug, url, active, description }: ILink) => {
-	const elidifiedUrl = `https://elide.in/${slug}`
+	const elidifiedUrl = `https://${import.meta.env.VITE_DOMAIN_NAME}/${slug}`
 
 	const dispatch = useAppDispatch()
 	return (
