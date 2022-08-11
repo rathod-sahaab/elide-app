@@ -16,14 +16,12 @@ export const About = () => {
 					The management of these links was a challenge and the idea of creating a tool to do
 					just that which can be tinkered just to our liking was born.
 				</p>
-				<p>
-					Some of the features I felt we needed were:
-					<ul>
-						<li>Links that can be pointed to any URL whenever we liked.</li>
-						<li>Shared access for us to be able to work collaboratively.</li>
-						<li>A way to group links together on basis of event.</li>
-					</ul>
-				</p>
+				<p>Some of the features we needed were:</p>
+				<ul>
+					<li>Links that can be pointed to any URL whenever we liked.</li>
+					<li>Shared access for us to be able to work collaboratively.</li>
+					<li>A way to group links together on basis of event.</li>
+				</ul>
 			</section>
 			<section>
 				<h2 className="text-center">Tech stack</h2>

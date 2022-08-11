@@ -9,7 +9,7 @@ export default function ThemeChooser() {
 				<HiOutlineColorSwatch size="1.5em" />
 				<span className="mx-2 hidden lg:inline">Change Theme</span>
 			</button>
-			<ul className="dropdown-content menu rounded-box z-50 w-52 bg-base-200 p-2 shadow-lg">
+			<ul className="dropdown-content menu rounded-box z-50 max-h-[50vh] w-52 overflow-auto bg-base-200 p-2 shadow-lg">
 				{THEMES.map((themeOption) => {
 					return (
 						<li key={themeOption.toString()}>
