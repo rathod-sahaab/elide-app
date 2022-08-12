@@ -1,36 +1,6 @@
 import React from 'react'
 
-export const THEMES = [
-	'light',
-	'dark',
-	'cupcake',
-	'bumblebee',
-	'emerald',
-	'corporate',
-	'synthwave',
-	'retro',
-	'cyberpunk',
-	'valentine',
-	'halloween',
-	'garden',
-	'forest',
-	'aqua',
-	'lofi',
-	'pastel',
-	'fantasy',
-	'wireframe',
-	'black',
-	'luxury',
-	'dracula',
-	'cmyk',
-	'autumn',
-	'business',
-	'acid',
-	'lemonade',
-	'night',
-	'coffee',
-	'winter',
-] as const
+export const THEMES = ['dark', 'light', 'black', 'corporate', 'garden', 'night'] as const
 
 export type ThemeType = typeof THEMES[number]
 
@@ -45,7 +15,7 @@ export function useTheme() {
 
 export const ThemeContext = React.createContext<ThemeContextType | null>(null)
 
-const DEFAULT_THEME: ThemeType = 'garden'
+const DEFAULT_THEME: ThemeType = 'dark'
 
 export default function ThemeProvider({ children }: React.PropsWithChildren) {
 	const [theme, setTheme] = React.useState<ThemeType>(

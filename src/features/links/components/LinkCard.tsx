@@ -17,7 +17,7 @@ export const LinkCard = ({ id, slug, url, active, description }: ILink) => {
 
 	const dispatch = useAppDispatch()
 	return (
-		<div className="card w-full max-w-md bg-base-200 p-4 shadow [&>*:not(:last-child)]:mb-2 [&>.operations]:translate-y-full [&:hover>.operations]:translate-y-0">
+		<div className="card w-full max-w-md bg-base-200 p-4 shadow [&>.operations]:translate-y-full [&:hover>.operations]:-translate-y-2 [&>*:not(:last-child):not(:first-child)]:mb-2">
 			<div className="operations duration-350 btn-group rounded-btn absolute bottom-0 right-0 mr-2 bg-base-300 transition transition-transform">
 				<CardButton
 					onClick={() => {
@@ -49,7 +49,7 @@ export const LinkCard = ({ id, slug, url, active, description }: ILink) => {
 				</CardButton>
 			</div>
 			<div className="flex items-center justify-between">
-				<h3 className="align-middle font-bold text-accent">{slug}</h3>
+				<h3 className="align-middle font-bold">{slug}</h3>
 				<ActivityIndicator active={active} />
 			</div>
 			{description ? (

@@ -19,7 +19,7 @@ export const ElideModal = ({
 				<button className="btn btn-square absolute -top-6 -right-6" onClick={closeFn}>
 					<IoMdClose size="1.5em" />
 				</button>
-				<h1 className="mb-6 text-2xl font-bold text-primary">{title}</h1>
+				<h1 className="mb-6 text-2xl font-bold">{title}</h1>
 				{children}
 			</div>
 		</div>,

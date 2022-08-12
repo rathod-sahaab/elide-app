@@ -13,27 +13,23 @@ import { UpdateLinkModal } from './UpdateLink'
 import { LinkCardsHolder } from './components/LinkCardsHolder'
 import { openCreateLinkModal } from '../../app/ui/uiSlice'
 
-const LIMIT: number = 12 // good for 3, 2, 1 col grid
-
 export const Links = () => {
 	const activeOrganisation = useAppSelector(selectOrganisation)
 	const activeProject = useAppSelector(selectActiveProject)
 
+	const { links, limit, hasMore } = useAppSelector(selectLinks)
+
 	const [offset, setOffset] = useState(0)
-	const [hasMore, setHasMore] = useState(true)
 	const [forceFetch, setForceFetch] = useState(1)
 
 	const [getLinksTrigger, { isLoading }] = useLazyGetLinksQuery()
 
 	const dispatch = useAppDispatch()
 
-	const links = useAppSelector(selectLinks)
-
 	const isMounted = useRef(false)
 
 	useEffect(() => {
 		setOffset(0)
-		setHasMore(true)
 		setForceFetch((oldForceFetch) => oldForceFetch + 1)
 	}, [activeOrganisation, activeProject])
 
@@ -43,11 +39,8 @@ export const Links = () => {
 				organisationId: activeOrganisation.organisation?.id,
 				projectId: activeProject.project?.id,
 				offset,
-				limit: LIMIT,
+				limit,
 			}).unwrap()
-			if (linksResponse.length !== LIMIT) {
-				setHasMore(false)
-			}
 			dispatch(addLinks(linksResponse))
 		} catch (err) {
 			console.log(err)
@@ -91,7 +84,7 @@ export const Links = () => {
 						<button
 							className="btn btn-primary w-full max-w-sm"
 							onClick={() => {
-								setOffset((oldOffset) => oldOffset + LIMIT)
+								setOffset((oldOffset) => oldOffset + limit)
 							}}
 						>
 							Load More
