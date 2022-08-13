@@ -32,6 +32,7 @@ export const AddLinkForm = () => {
 	const [error, setError] = useState('')
 
 	const {
+		reset,
 		watch,
 		register,
 		handleSubmit,
@@ -42,6 +43,18 @@ export const AddLinkForm = () => {
 			active: true,
 		},
 	})
+
+	// clear form when closed
+	const open = useAppSelector(uiSelectCreateLink).createLinkModal
+
+	useEffect(() => {
+		reset({
+			slug: '',
+			url: '',
+			description: '',
+		})
+		setError('')
+	}, [open])
 
 	const slug = watch('slug')
 

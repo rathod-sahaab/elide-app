@@ -13,6 +13,7 @@ import { OrganisationMembers } from './features/organisations/components/Organis
 import { OrganisationInvitations } from './features/organisations/components/OrganisationInvitations'
 import { UserInvitations } from './features/user/InvitationsPage'
 import { Profile } from './components/pages/auth/Profile'
+import { VerifyAccount } from './components/pages/public/VerifyAccount'
 
 function App() {
 	return (
@@ -20,6 +21,7 @@ function App() {
 			<Route path="/" element={<OutletLayout />}>
 				{/*General routes*/}
 				<Route index element={<Home />} />
+				<Route path="account/verify" element={<VerifyAccount />} />
 
 				{/*Adapt to auth state routes*/}
 				<Route element={<AdaptAuth />}>

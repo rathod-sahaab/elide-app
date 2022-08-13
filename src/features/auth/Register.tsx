@@ -1,8 +1,6 @@
 import { useState } from 'react'
-import { FieldError, SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch } from 'react-redux'
-import { useLoginMutation, useRegisterMutation } from './authApiSlice'
-import { setCredentials } from './authSlice'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { useRegisterMutation } from './authApiSlice'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { BiErrorCircle } from 'react-icons/bi'
 import { MdOutlineChevronRight } from 'react-icons/md'
@@ -12,6 +10,7 @@ import { FormPage } from './FormPage'
 import { Link, useNavigate } from 'react-router-dom'
 import { ErrorInputWrapper } from '../../components/forms/ErrorInputWrapper'
 import { ElideIcon } from '../../components/ElideIcon'
+import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
 
 type Inputs = {
 	name: string
@@ -45,7 +44,6 @@ const Error = ({ message }: { message: string }) => {
 
 export const Register = () => {
 	const [registerApi, { isLoading }] = useRegisterMutation()
-	const dispatch = useDispatch()
 	const navigate = useNavigate()
 
 	const {
@@ -78,13 +76,13 @@ export const Register = () => {
 	return (
 		<div>
 			<div className="pb-6">
-				<span className="btn btn-ghost btn-circle text-accent">
+				<span className="btn btn-ghost btn-circle text-primary">
 					<ElideIcon />
 				</span>
 			</div>
-			<h1 className="text-2xl font-bold text-secondary-content">Create Account</h1>
-			<h3 className="text-md pt-2 pb-4 font-bold text-base-content">Start your journey</h3>
-			<div className="mt-10 [&>*:not(:last-child)]:mb-6">
+			<h1 className="text-2xl font-bold">Create Account</h1>
+			<h3 className="text-md pt-2 font-bold text-base-content">Start your journey</h3>
+			<div className="mt-6 [&>*:not(:last-child)]:mb-2">
 				{error && <Error message={error} />}
 				<ErrorInputWrapper fieldError={errors.name}>
 					<input
@@ -103,25 +101,43 @@ export const Register = () => {
 					/>
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.password}>
-					<input
-						className="input block w-full bg-base-100"
-						type="password"
-						placeholder="Password"
-						{...register('password', { required: true, disabled: isLoading })}
-						onChange={handleChange}
-					/>
+					<div className="relative">
+						<input
+							className="input block w-full bg-base-100"
+							type={passwordHidden ? 'password' : 'text'}
+							placeholder="Password"
+							{...register('password', { disabled: isLoading })}
+							onChange={handleChange}
+						/>
+
+						<button
+							className="btn btn-ghost btn-circle absolute right-1 top-0"
+							onClick={() => setPasswordHidden(!passwordHidden)}
+						>
+							{passwordHidden ? <RiEyeLine size="1.5em" /> : <RiEyeOffLine size="1.5em" />}
+						</button>
+					</div>
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.passwordConfirmation}>
-					<input
-						className="input block w-full bg-base-100"
-						type="password"
-						placeholder="Confirm Password"
-						{...register('passwordConfirmation', { required: true, disabled: isLoading })}
-						onChange={handleChange}
-					/>
+					<div className="relative">
+						<input
+							className="input block w-full bg-base-100"
+							type={passwordHidden ? 'password' : 'text'}
+							placeholder="Confirm Password"
+							{...register('passwordConfirmation', { required: true, disabled: isLoading })}
+							onChange={handleChange}
+						/>
+
+						<button
+							className="btn btn-ghost btn-circle absolute right-1 top-0"
+							onClick={() => setPasswordHidden(!passwordHidden)}
+						>
+							{passwordHidden ? <RiEyeLine size="1.5em" /> : <RiEyeOffLine size="1.5em" />}
+						</button>
+					</div>
 				</ErrorInputWrapper>
 				<button
-					className="btn btn-block flex flex-nowrap items-center justify-between py-8 px-6"
+					className="btn btn-block mt-6 flex flex-nowrap items-center justify-between py-8 px-6"
 					disabled={isLoading}
 					onClick={handleSubmit(submitHandler)}
 				>

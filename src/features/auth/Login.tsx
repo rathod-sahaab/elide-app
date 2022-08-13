@@ -73,11 +73,11 @@ export const Login = () => {
 	return (
 		<div>
 			<div className="pb-6">
-				<Link to="/" className="btn btn-ghost btn-circle text-accent">
+				<Link to="/" className="btn btn-ghost btn-circle text-primary">
 					<ElideIcon />
 				</Link>
 			</div>
-			<h1 className="text-2xl font-bold text-secondary-content">Welcome Back</h1>
+			<h1 className="text-2xl font-bold">Welcome Back</h1>
 			<h3 className="text-md pt-2 pb-4 font-bold text-base-content">Sign in to continue</h3>
 			<div className="mt-10 [&>*:not(:last-child)]:mb-6">
 				{error && <Error message={error} />}

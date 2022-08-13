@@ -9,6 +9,7 @@ export interface IUserProfile {
 	id: number
 	name: string
 	email: string
+	verified: boolean
 	createdAt: string
 	updatedAt: string
 }
@@ -53,6 +54,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
 				method: 'DELETE',
 			}),
 		}),
+		sendVerificationLink: builder.mutation({
+			query: () => ({
+				url: `/users/verification`,
+				method: 'POST',
+			}),
+		}),
 	}),
 })
 
@@ -62,4 +69,5 @@ export const {
 	useAcceptInvitationMutation,
 	useRejectInvitationMutation,
 	useGetProfileQuery,
+	useSendVerificationLinkMutation,
 } = userApiSlice
