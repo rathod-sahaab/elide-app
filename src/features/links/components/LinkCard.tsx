@@ -1,4 +1,11 @@
-import { IoCopyOutline, IoQrCodeOutline, IoSettingsOutline, IoTrashOutline } from 'react-icons/io5'
+import {
+	IoAnalytics,
+	IoCopyOutline,
+	IoQrCodeOutline,
+	IoSettingsOutline,
+	IoTrashOutline,
+} from 'react-icons/io5'
+import { Link, useNavigate } from 'react-router-dom'
 import { useAppDispatch } from '../../../app/hooks/use-app-dispacth-selector'
 import { openDeleteLinkModal, openQrModal, openUpdateLinkModal } from '../../../app/ui/uiSlice'
 import { ActivityIndicator } from '../../../components/atoms/ActivityIndicator'
@@ -6,7 +13,7 @@ import { ILink } from '../linksSlice'
 
 const CardButton = ({ children, onClick }: React.PropsWithChildren<{ onClick: () => void }>) => {
 	return (
-		<button className="tootip btn btn-ghost btn-square" onClick={onClick}>
+		<button className="tootip tootip-left btn btn-ghost btn-square" onClick={onClick}>
 			{children}
 		</button>
 	)
@@ -14,6 +21,7 @@ const CardButton = ({ children, onClick }: React.PropsWithChildren<{ onClick: ()
 
 export const LinkCard = ({ id, slug, url, active, description }: ILink) => {
 	const elidifiedUrl = `https://${import.meta.env.VITE_DOMAIN_NAME}/${slug}`
+	const navigator = useNavigate()
 
 	const dispatch = useAppDispatch()
 	return (
@@ -39,6 +47,13 @@ export const LinkCard = ({ id, slug, url, active, description }: ILink) => {
 					}}
 				>
 					<IoSettingsOutline size="1.35em" />
+				</CardButton>
+				<CardButton
+					onClick={() => {
+						navigator(`/links/${id}/analytics`)
+					}}
+				>
+					<IoAnalytics size="1.35em" />
 				</CardButton>
 				<CardButton
 					onClick={() => {

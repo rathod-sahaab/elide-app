@@ -14,6 +14,7 @@ import { OrganisationInvitations } from './features/organisations/components/Org
 import { UserInvitations } from './features/user/InvitationsPage'
 import { Profile } from './components/pages/auth/Profile'
 import { VerifyAccount } from './components/pages/public/VerifyAccount'
+import { Analytics } from './features/analytics/components/Analytics'
 
 function App() {
 	return (
@@ -39,6 +40,11 @@ function App() {
 					<Route path="dashboard" element={<Dashboard />} />
 					<Route path="profile" element={<Profile />} />
 					<Route path="invitations" element={<UserInvitations />} />
+					<Route path="links">
+						<Route path=":linkId">
+							<Route path="analytics" element={<Analytics />} />
+						</Route>
+					</Route>
 					<Route path="organisations">
 						<Route index element={<Organisations />} />
 						<Route path=":organisationId" element={<Organisation />}>
