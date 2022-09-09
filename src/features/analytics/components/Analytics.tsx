@@ -25,11 +25,6 @@ export const Analytics: React.FC = () => {
 		isLoading: timeSeriesLoading,
 	} = useGetAnalyticsForLinkTimeSeriesQuery({ linkId: Number(linkId) })
 
-	const options = {
-		vAxis: { minValue: 0 },
-		hAxis: { title: 'Time' },
-	}
-
 	return (
 		<div>
 			<div className="text-center">{linkId}</div>
@@ -41,7 +36,14 @@ export const Analytics: React.FC = () => {
 					width="100%"
 					height="500px"
 					data={timeSeriesDataToTable(timeSeriesData)}
-					options={options}
+					options={{
+						vAxis: { minValue: 0 },
+						hAxis: {
+							title: 'Time',
+							minValue: new Date(new Date().getTime() - 1000 * 60 * 60 * 24),
+							maxValue: new Date(),
+						},
+					}}
 				></Chart>
 			)}
 		</div>
