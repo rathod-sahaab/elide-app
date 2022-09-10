@@ -9,12 +9,14 @@ specifiers:
   '@vitejs/plugin-react': ^2.0.0
   autoprefixer: ^10.4.7
   axios: ^0.27.2
+  chart.js: ^3.6.0
   daisyui: ^2.19.0
   postcss: ^8.4.14
   prettier: ^2.7.1
   prettier-plugin-tailwindcss: ^0.1.13
   qrcode.react: ^3.1.0
   react: ^18.2.0
+  react-chartjs-2: ^4.3.1
   react-dom: ^18.2.0
   react-google-charts: ^4.0.0
   react-hook-form: ^7.33.1
@@ -32,9 +34,11 @@ dependencies:
   '@reduxjs/toolkit': 1.8.3_kkwg4cbsojnjnupd3btipussee
   '@tailwindcss/typography': 0.5.4_tailwindcss@3.1.6
   axios: 0.27.2
+  chart.js: 3.9.1
   daisyui: 2.19.0_ugi4xkrfysqkt4c4y6hkyfj344
   qrcode.react: 3.1.0_react@18.2.0
   react: 18.2.0
+  react-chartjs-2: 4.3.1_2unjvz6v6rskedwoxtmbfw2rje
   react-dom: 18.2.0_react@18.2.0
   react-google-charts: 4.0.0_biqbaboplfbrettd7655fr4n2y
   react-hook-form: 7.33.1_react@18.2.0
@@ -567,6 +571,10 @@ packages:
       escape-string-regexp: 1.0.5
       supports-color: 5.5.0
     dev: true
+
+  /chart.js/3.9.1:
+    resolution: {integrity: sha512-Ro2JbLmvg83gXF5F4sniaQ+lTbSv18E+TIf2cOeiH1Iqd2PGFOtem+DUufMZsCJwFE7ywPOpfXFBwRTGq7dh6w==}
+    dev: false
 
   /chokidar/3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
@@ -1268,6 +1276,16 @@ packages:
   /quick-lru/5.1.1:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
+
+  /react-chartjs-2/4.3.1_2unjvz6v6rskedwoxtmbfw2rje:
+    resolution: {integrity: sha512-5i3mjP6tU7QSn0jvb8I4hudTzHJqS8l00ORJnVwI2sYu0ihpj83Lv2YzfxunfxTZkscKvZu2F2w9LkwNBhj6xA==}
+    peerDependencies:
+      chart.js: ^3.5.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      chart.js: 3.9.1
+      react: 18.2.0
+    dev: false
 
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
