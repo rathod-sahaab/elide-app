@@ -29,7 +29,7 @@ export const VisitsGraph = ({
 	)
 
 	const labels = new Array(dataPoints).fill(0).map((_, i) => {
-		const date = new Date(nowHourDate.getTime() - (dataPoints - i) * 60 * 60 * 1000)
+		const date = new Date(nowHourDate.getTime() - (dataPoints - 1 - i) * 60 * 60 * 1000)
 
 		const timeAmPm = `${date.getHours() % 12 || 12} ${date.getHours() < 12 ? 'am' : 'pm'}`
 
@@ -43,7 +43,7 @@ export const VisitsGraph = ({
 		uniqueVisitorsData[x] = uniqueVisitors
 	})
 	return (
-		<div className="card m-auto max-w-screen-lg rounded-lg bg-base-200 p-4">
+		<div className="card m-auto max-w-screen-lg bg-base-200 p-4">
 			<Line
 				data={{
 					labels,
