@@ -1,10 +1,7 @@
--  [] Pagination
--  [x] Edit Link
--  [ ] Projects
-   -  [x] Create project
-   -  [x] List projects
-   -  [x] Set project active
-   -  [x] Add a link in project
-   -  [] Edit project
--  Optimisations
-   -  [x] Debounce on slug check
+-  [] Home page
+   -  [] Feature illustrations
+-  [] About page
+   -  [] List features
+   -  [] Point to blog for dev
+-  [] Download PNG from canvas qr
+-  [] Offset greater than stored elements bug
