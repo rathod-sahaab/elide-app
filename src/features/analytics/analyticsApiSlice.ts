@@ -19,6 +19,23 @@ export const analyticsApiSlice = apiSlice.injectEndpoints({
 				},
 			}),
 		}),
+		getAnalyticsForLinkUserAgents: builder.query({
+			query: ({
+				linkId,
+				startHrs,
+				endHrs,
+			}: {
+				linkId: number
+				startHrs?: number
+				endHrs?: number
+			}) => ({
+				url: `/analytics/links/${linkId}/user-agents`,
+				params: {
+					startHrs,
+					endHrs,
+				},
+			}),
+		}),
 		getAnalyticsForLinkRegion: builder.query({
 			query: ({
 				linkId,
@@ -39,5 +56,8 @@ export const analyticsApiSlice = apiSlice.injectEndpoints({
 	}),
 })
 
-export const { useGetAnalyticsForLinkTimeSeriesQuery, useGetAnalyticsForLinkRegionQuery } =
-	analyticsApiSlice
+export const {
+	useGetAnalyticsForLinkTimeSeriesQuery,
+	useGetAnalyticsForLinkUserAgentsQuery,
+	useGetAnalyticsForLinkRegionQuery,
+} = analyticsApiSlice

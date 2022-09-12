@@ -1,8 +1,13 @@
 import { useParams } from 'react-router-dom'
-import { useGetAnalyticsForLinkTimeSeriesQuery } from '../analyticsApiSlice'
+import {
+	useGetAnalyticsForLinkTimeSeriesQuery,
+	useGetAnalyticsForLinkUserAgentsQuery,
+} from '../analyticsApiSlice'
 
 import React, { useState } from 'react'
 import { VisitsGraph } from './VisitsGraph'
+import { DoughnutGraph } from './DoughnutGraph'
+import { UserAgentGraphs } from './UserAgentGraphs'
 
 export const Analytics: React.FC = () => {
 	const params = useParams()
@@ -16,6 +21,12 @@ export const Analytics: React.FC = () => {
 		isLoading: timeSeriesLoading,
 	} = useGetAnalyticsForLinkTimeSeriesQuery({ linkId: Number(linkId), startHrs })
 
+	const {
+		data: userAgentsData,
+		error: userAgentsError,
+		isLoading: userAgentsLoading,
+	} = useGetAnalyticsForLinkUserAgentsQuery({ linkId: Number(linkId), startHrs })
+
 	if (timeSeriesError) {
 		return <div>Failed to load analytics</div>
 	}
@@ -27,6 +38,11 @@ export const Analytics: React.FC = () => {
 				<div className="text-center">Loading...</div>
 			) : (
 				<VisitsGraph data={timeSeriesData} dataPoints={startHrs + 1} />
+			)}
+			{userAgentsLoading ? (
+				<div className="text-center">Loading...</div>
+			) : (
+				<UserAgentGraphs userAgentsData={userAgentsData} />
 			)}
 		</div>
 	)
