@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom'
 import {
+	useGetAnalyticsForLinkOverviewQuery,
 	useGetAnalyticsForLinkTimeSeriesQuery,
 	useGetAnalyticsForLinkUserAgentsQuery,
 } from '../analyticsApiSlice'
@@ -8,12 +9,19 @@ import React, { useState } from 'react'
 import { VisitsGraph } from './VisitsGraph'
 import { DoughnutGraph } from './DoughnutGraph'
 import { UserAgentGraphs } from './UserAgentGraphs'
+import { Overview } from './Overview'
 
 export const Analytics: React.FC = () => {
 	const params = useParams()
 	const { linkId } = params as { linkId: string }
 
 	const [startHrs, setStartHrs] = useState(24)
+
+	const {
+		data: overviewData,
+		isLoading: overviewIsLoading,
+		error: overviewError,
+	} = useGetAnalyticsForLinkOverviewQuery({ linkId: Number(linkId) })
 
 	const {
 		data: timeSeriesData,
@@ -33,6 +41,7 @@ export const Analytics: React.FC = () => {
 
 	return (
 		<div className="p-4">
+			{overviewIsLoading ? <div>Loading...</div> : <Overview overviewData={overviewData} />}
 			<TimeSelector startHrs={startHrs} setStartHrs={setStartHrs} />
 			{timeSeriesLoading ? (
 				<div className="text-center">Loading...</div>

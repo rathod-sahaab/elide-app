@@ -19,6 +19,11 @@ export const analyticsApiSlice = apiSlice.injectEndpoints({
 				},
 			}),
 		}),
+		getAnalyticsForLinkOverview: builder.query({
+			query: ({ linkId }: { linkId: number }) => ({
+				url: `/analytics/links/${linkId}/overview`,
+			}),
+		}),
 		getAnalyticsForLinkUserAgents: builder.query({
 			query: ({
 				linkId,
@@ -60,4 +65,5 @@ export const {
 	useGetAnalyticsForLinkTimeSeriesQuery,
 	useGetAnalyticsForLinkUserAgentsQuery,
 	useGetAnalyticsForLinkRegionQuery,
+	useGetAnalyticsForLinkOverviewQuery,
 } = analyticsApiSlice
