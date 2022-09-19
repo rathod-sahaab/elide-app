@@ -2,7 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { ErrorInputWrapper } from '../../../../components/forms/ErrorInputWrapper'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { APIError } from '../../../../commons/types'
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks/use-app-dispacth-selector'
 import { closeCreateProjectModal, uiSelectCreateProject } from '../../../../app/ui/uiSlice'
@@ -30,13 +30,23 @@ export const CreateProjectForm = ({
 	const [error, setError] = useState<string | null>(null)
 
 	const {
+		reset,
 		register,
 		handleSubmit,
 		formState: { errors },
-		reset,
 	} = useForm<IProjectCreationData>({
 		resolver: yupResolver(schema),
 	})
+
+	const open = useAppSelector(uiSelectCreateProject)
+
+	useEffect(() => {
+		reset({
+			name: '',
+			description: '',
+		})
+		setError('')
+	}, [open])
 
 	const submitHandler: SubmitHandler<IProjectCreationData> = async ({ name, description }) => {
 		try {
@@ -45,7 +55,6 @@ export const CreateProjectForm = ({
 				description: description !== '' ? description : undefined,
 				organisationId: organisation.organisation?.id,
 			}).unwrap()
-			reset({ name: '', description: '' })
 			console.log(createdProject)
 			if (closeFn) closeFn()
 			if (refetchFn) refetchFn()
@@ -89,7 +98,7 @@ export const CreateProjectForm = ({
 }
 
 export const CreateProjectModal = ({ refetchFn }: { refetchFn?: () => void }) => {
-	const open = useAppSelector(uiSelectCreateProject)
+	const open = useAppSelector(uiSelectCreateProject).modal
 	const dispatch = useAppDispatch()
 
 	return (

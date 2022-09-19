@@ -7,7 +7,7 @@ import {
 	IOrganisationData,
 	useCreateOrganisationMutation,
 } from './orgnisationsApiSlice'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { APIError } from '../../commons/types'
 import { useAppDispatch, useAppSelector } from '../../app/hooks/use-app-dispacth-selector'
 import { closeCreateOrganisationModal, uiSelectCreateOrganisation } from '../../app/ui/uiSlice'
@@ -29,13 +29,24 @@ export const CreateOrganisationForm = ({
 
 	const [error, setError] = useState<string | null>(null)
 
+	const open = useAppSelector(uiSelectCreateOrganisation).createOrganisationModal
+
 	const {
+		reset,
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<IOrganisationData>({
 		resolver: yupResolver(schema),
 	})
+
+	useEffect(() => {
+		reset({
+			name: '',
+			description: '',
+		})
+		setError('')
+	}, [open])
 
 	const submitHandler: SubmitHandler<IOrganisationData> = async (data) => {
 		try {
@@ -83,7 +94,7 @@ export const CreateOrganisationForm = ({
 }
 
 export const CreateOrganisationModal = ({ refetchFn }: { refetchFn?: () => void }) => {
-	const open = useAppSelector(uiSelectCreateOrganisation)
+	const open = useAppSelector(uiSelectCreateOrganisation).createOrganisationModal
 	const dispatch = useAppDispatch()
 
 	return (

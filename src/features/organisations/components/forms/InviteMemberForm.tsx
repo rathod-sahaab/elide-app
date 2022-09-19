@@ -10,8 +10,10 @@ import {
 } from '../../orgnisationsApiSlice'
 import { ElideModal } from '../../../../components/ElideModal'
 import { APIError } from '../../../../commons/types'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ElideErrorCard } from '../../../../components/ElideAlert'
+import { closeInviteMemberModal, uiSelectInviteMember } from '../../../../app/ui/uiSlice'
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks/use-app-dispacth-selector'
 
 export interface IInvitationFormData {
 	email: string
@@ -36,13 +38,22 @@ export const OrganisationInvitationForm = ({
 
 	const [error, setError] = useState<string | null>(null)
 
+	const open = useAppSelector(uiSelectInviteMember).modal
+
 	const {
+		reset,
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<IInvitationFormData>({
 		resolver: yupResolver(schema),
 	})
+
+	useEffect(() => {
+		reset({
+			email: '',
+		})
+	}, [open])
 
 	const submitHandler: SubmitHandler<IInvitationFormData> = async (data) => {
 		try {
@@ -100,24 +111,18 @@ export const OrganisationInvitationForm = ({
 	)
 }
 
-export const OrganisationInvitationModal = ({
-	open,
-	closeFn,
-	refetchFn,
-	organisationId,
-}: {
-	organisationId: number
-	open: boolean
-	refetchFn?: () => void
-	closeFn: () => void
-}) => {
+export const OrganisationInvitationModal = ({ organisationId }: { organisationId: number }) => {
+	const open = useAppSelector(uiSelectInviteMember).modal
+	const dispatch = useAppDispatch()
 	return (
-		<ElideModal open={open} closeFn={closeFn} title="Invite User">
-			<OrganisationInvitationForm
-				organisationId={organisationId}
-				closeFn={closeFn}
-				refetchFn={refetchFn}
-			/>
+		<ElideModal
+			open={open}
+			closeFn={() => {
+				dispatch(closeInviteMemberModal())
+			}}
+			title="Invite User"
+		>
+			<OrganisationInvitationForm organisationId={organisationId} />
 		</ElideModal>
 	)
 }

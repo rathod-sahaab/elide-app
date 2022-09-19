@@ -13,16 +13,18 @@ import { OrganisationCancelInvitationModal } from './forms/CancelInvitationForm'
 import { OrganisationInvitationModal } from './forms/InviteMemberForm'
 
 import { IoPaperPlaneOutline } from 'react-icons/io5'
+import { openInviteMemberModal } from '../../../app/ui/uiSlice'
+import { useAppDispatch } from '../../../app/hooks/use-app-dispacth-selector'
 
 export const OrganisationInvitations = () => {
 	const [isCancelModalOpen, setIsCancelModalOpen] = useState(false)
 	const [invitationToBeCanceled, setInvitationToBeCaneled] =
 		useState<IOrganisationInvitation | null>(null)
-	const [invitaionModalOpen, setInvitationModalOpen] = useState(false)
 
 	const [selectedStatus, setSelectedStatus] = useState<InvitationStatusType | undefined>('PENDING')
 
 	const params = useParams()
+	const dispatch = useAppDispatch()
 
 	// FIXME: handle this error
 	const organisationId = parseInt(params.organisationId || '0', 10)
@@ -48,11 +50,7 @@ export const OrganisationInvitations = () => {
 
 	return (
 		<>
-			<OrganisationInvitationModal
-				organisationId={organisationId}
-				open={invitaionModalOpen}
-				closeFn={() => setInvitationModalOpen(false)}
-			/>
+			<OrganisationInvitationModal organisationId={organisationId} />
 			<OrganisationCancelInvitationModal
 				open={isCancelModalOpen}
 				organisationId={organisationId}
@@ -66,7 +64,7 @@ export const OrganisationInvitations = () => {
 				<h1>{`${organisation.name}'s invitations`}</h1>
 				<button
 					className="btn btn-ghost bg-base-200"
-					onClick={() => setInvitationModalOpen(true)}
+					onClick={() => dispatch(openInviteMemberModal())}
 				>
 					<IoPaperPlaneOutline size="1.35em" className="mr-2" /> Invite
 				</button>

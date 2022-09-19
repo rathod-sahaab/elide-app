@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import { OutletLayout } from './components/Layout'
-import { Home } from './components/pages/public/Home'
+import { Home } from './components/pages/public/Home/Home'
 import { Dashboard } from './components/pages/auth/Dashboard'
 import { LoginPage } from './features/auth/Login'
 import { RegisterPage } from './features/auth/Register'

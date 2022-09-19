@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ILink } from '../../features/links/linksSlice'
+import { IOrganisationInvitation } from '../../features/organisations/orgnisationsApiSlice'
 import { RootState } from '../store'
 
 const initialState: {
-	modals: {
-		createOrganisationModal: boolean
-		inviteMemberModal: boolean
-		createProjectModal: boolean
-	}
 	createLink: {
 		createLinkModal: boolean
 	}
@@ -23,12 +19,20 @@ const initialState: {
 		deleteLinkModal: boolean
 		link: ILink | null
 	}
+	createOrganisation: {
+		createOrganisationModal: boolean
+	}
+	createProject: {
+		modal: boolean
+	}
+	inviteMember: {
+		modal: boolean
+	}
+	cancelInvite: {
+		modal: boolean
+		invite: IOrganisationInvitation | null
+	}
 } = {
-	modals: {
-		createOrganisationModal: false,
-		inviteMemberModal: false,
-		createProjectModal: false,
-	},
 	createLink: {
 		createLinkModal: false,
 	},
@@ -43,6 +47,19 @@ const initialState: {
 	deleteLink: {
 		deleteLinkModal: false,
 		link: null,
+	},
+	createOrganisation: {
+		createOrganisationModal: false,
+	},
+	createProject: {
+		modal: false,
+	},
+	inviteMember: {
+		modal: false,
+	},
+	cancelInvite: {
+		modal: false,
+		invite: null,
 	},
 }
 
@@ -65,16 +82,16 @@ const uiSlice = createSlice({
 			state.updateLink.linkId = null
 		},
 		openCreateOrganisationModal: (state) => {
-			state.modals.createOrganisationModal = true
+			state.createOrganisation.createOrganisationModal = true
 		},
 		closeCreateOrganisationModal: (state) => {
-			state.modals.createOrganisationModal = false
+			state.createOrganisation.createOrganisationModal = false
 		},
 		openCreateProjectModal: (state) => {
-			state.modals.createProjectModal = true
+			state.createProject.modal = true
 		},
 		closeCreateProjectModal: (state) => {
-			state.modals.createProjectModal = false
+			state.createProject.modal = false
 		},
 		openDeleteLinkModal: (state, action: PayloadAction<ILink>) => {
 			state.deleteLink.deleteLinkModal = true
@@ -85,10 +102,10 @@ const uiSlice = createSlice({
 			state.deleteLink.link = null
 		},
 		openInviteMemberModal: (state) => {
-			state.modals.inviteMemberModal = true
+			state.inviteMember.modal = true
 		},
 		closeInviteMemberModal: (state) => {
-			state.modals.inviteMemberModal = false
+			state.inviteMember.modal = false
 		},
 		openQrModal: (state, action: PayloadAction<string>) => {
 			state.qr.qrModal = true
@@ -120,10 +137,9 @@ export const {
 
 export const uiSliceReducer = uiSlice.reducer
 
-export const uiSelectCreateProject = (state: RootState) => state.ui.modals.createProjectModal
+export const uiSelectCreateProject = (state: RootState) => state.ui.createProject
 
-export const uiSelectCreateOrganisation = (state: RootState) =>
-	state.ui.modals.createOrganisationModal
+export const uiSelectCreateOrganisation = (state: RootState) => state.ui.createOrganisation
 
 export const uiSelectCreateLink = (state: RootState) => state.ui.createLink
 export const uiSelectUpdateLink = (state: RootState) => state.ui.updateLink
@@ -131,3 +147,4 @@ export const uiSelectUpdateLink = (state: RootState) => state.ui.updateLink
 export const uiSelectQr = (state: RootState) => state.ui.qr
 
 export const uiSelectDeleteLink = (state: RootState) => state.ui.deleteLink
+export const uiSelectInviteMember = (state: RootState) => state.ui.inviteMember
