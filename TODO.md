@@ -1,7 +1,7 @@
--  [] Home page
-   -  [] Feature illustrations
+-  [x] Home page
+   -  [x] Feature illustrations
 -  [] About page
-   -  [] List features
+   -  [] List features in detail
    -  [] Point to blog for dev
 -  [] Download PNG from canvas qr
 -  [] Offset greater than stored elements bug
