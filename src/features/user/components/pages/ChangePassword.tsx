@@ -1,17 +1,16 @@
 import * as yup from 'yup'
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useResetPasswordFromMailTokenMutation } from '../../../features/auth/authApiSlice'
-import { ElideErrorCard } from '../../ElideAlert'
+import { useNavigate } from 'react-router-dom'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { MdOutlineChevronRight } from 'react-icons/md'
 import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
-import { ErrorInputWrapper } from '../../forms/ErrorInputWrapper'
+import { ErrorInputWrapper } from '../../../../components/forms/ErrorInputWrapper'
 import { BiErrorCircle } from 'react-icons/bi'
-import { ElideIcon } from '../../ElideIcon'
-import { FormPage } from '../../../features/auth/FormPage'
 import { FiCheckCircle } from 'react-icons/fi'
+import { useChangePasswordMutation } from '../../userApiSlice'
+import { FormPage } from '../../../auth/FormPage'
+import { ElideIcon } from '../../../../components/ElideIcon'
 
 const Error = ({ message }: { message: string }) => {
 	return (
@@ -25,24 +24,24 @@ const Error = ({ message }: { message: string }) => {
 }
 
 type Inputs = {
-	password: string
-	passwordConfirmation: string
+	oldPassword: string
+	newPassword: string
+	newPasswordConfirmation: string
 }
 
 const schema = yup.object({
-	password: yup.string().required(),
-	passwordConfirmation: yup
+	oldPassword: yup.string().required('Old password is required'),
+	newPassword: yup.string().required(),
+	newPasswordConfirmation: yup
 		.string()
-		.oneOf([yup.ref('password'), null], 'Passwords must match')
+		.oneOf([yup.ref('newPassword'), null], 'Passwords must match')
 		.required(),
 })
 
-export const ResetPassword = () => {
-	const location = useLocation()
+export const ChangePasswordForm = () => {
 	const navigate = useNavigate()
-	const token = new URLSearchParams(location.search).get('token')
 
-	const [resetPassword, { isLoading, isSuccess }] = useResetPasswordFromMailTokenMutation()
+	const [changePassword, { isLoading, isSuccess }] = useChangePasswordMutation()
 	const [error, setError] = useState<string>('')
 
 	const {
@@ -53,15 +52,11 @@ export const ResetPassword = () => {
 
 	const [passwordHidden, setPasswordHidden] = useState(true)
 
-	if (!token) {
-		return <ElideErrorCard>Invalid Validation Link</ElideErrorCard>
-	}
-
-	const submitHandler: SubmitHandler<Inputs> = async ({ password }) => {
+	const submitHandler: SubmitHandler<Inputs> = async ({ oldPassword, newPassword }) => {
 		try {
-			await resetPassword({ password, token }).unwrap()
+			await changePassword({ oldPassword, newPassword }).unwrap()
 			setTimeout(() => {
-				navigate('/login')
+				navigate('/dashboard')
 			}, 3000)
 		} catch (err) {
 			console.log(err)
@@ -72,7 +67,7 @@ export const ResetPassword = () => {
 	return isSuccess ? (
 		<div className="flex flex-col items-center">
 			<FiCheckCircle size="5em" className="mb-4 text-success" />
-			<h1 className="text-2xl font-bold">Done! Redirecting you to the Login page.</h1>
+			<h1 className="text-2xl font-bold">Done! Redirecting you to the Dashboard.</h1>
 		</div>
 	) : (
 		<div>
@@ -85,13 +80,13 @@ export const ResetPassword = () => {
 			<h3 className="text-md pt-2 font-bold text-base-content">Its only human to forget.</h3>
 			<div className="mt-6 [&>*:not(:last-child)]:mb-2">
 				{error && <Error message={error} />}
-				<ErrorInputWrapper fieldError={errors.password}>
+				<ErrorInputWrapper fieldError={errors.oldPassword}>
 					<div className="relative">
 						<input
 							className="input block w-full bg-base-100"
 							type={passwordHidden ? 'password' : 'text'}
-							placeholder="Password"
-							{...register('password', { disabled: isLoading })}
+							placeholder="Old Password"
+							{...register('oldPassword', { disabled: isLoading })}
 						/>
 
 						<button
@@ -102,13 +97,33 @@ export const ResetPassword = () => {
 						</button>
 					</div>
 				</ErrorInputWrapper>
-				<ErrorInputWrapper fieldError={errors.passwordConfirmation}>
+				<ErrorInputWrapper fieldError={errors.newPassword}>
 					<div className="relative">
 						<input
 							className="input block w-full bg-base-100"
 							type={passwordHidden ? 'password' : 'text'}
-							placeholder="Confirm Password"
-							{...register('passwordConfirmation', { required: true, disabled: isLoading })}
+							placeholder="New Password"
+							{...register('newPassword', { disabled: isLoading })}
+						/>
+
+						<button
+							className="btn btn-ghost btn-circle absolute right-1 top-0"
+							onClick={() => setPasswordHidden(!passwordHidden)}
+						>
+							{passwordHidden ? <RiEyeLine size="1.5em" /> : <RiEyeOffLine size="1.5em" />}
+						</button>
+					</div>
+				</ErrorInputWrapper>
+				<ErrorInputWrapper fieldError={errors.newPasswordConfirmation}>
+					<div className="relative">
+						<input
+							className="input block w-full bg-base-100"
+							type={passwordHidden ? 'password' : 'text'}
+							placeholder="Confirm New Password"
+							{...register('newPasswordConfirmation', {
+								required: true,
+								disabled: isLoading,
+							})}
 						/>
 
 						<button
@@ -132,10 +147,10 @@ export const ResetPassword = () => {
 	)
 }
 
-export const ResetPasswordPage = () => {
+export const ChangePasswordPage = () => {
 	return (
 		<FormPage>
-			<ResetPassword />
+			<ChangePasswordForm />
 		</FormPage>
 	)
 }
