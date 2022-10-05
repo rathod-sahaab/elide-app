@@ -32,6 +32,9 @@ const initialState: {
 		modal: boolean
 		invite: IOrganisationInvitation | null
 	}
+	logoutOfAllDevices: {
+		modal: boolean
+	}
 } = {
 	createLink: {
 		createLinkModal: false,
@@ -60,6 +63,9 @@ const initialState: {
 	cancelInvite: {
 		modal: false,
 		invite: null,
+	},
+	logoutOfAllDevices: {
+		modal: false,
 	},
 }
 
@@ -115,6 +121,12 @@ const uiSlice = createSlice({
 			state.qr.qrModal = false
 			state.qr.qrText = ''
 		},
+		openLogoutOfAllDevicesModal: (state) => {
+			state.logoutOfAllDevices.modal = true
+		},
+		closeLogoutOfAllDevicesModal: (state) => {
+			state.logoutOfAllDevices.modal = false
+		},
 	},
 })
 
@@ -133,6 +145,8 @@ export const {
 	closeCreateProjectModal,
 	openQrModal,
 	closeQrModal,
+	openLogoutOfAllDevicesModal,
+	closeLogoutOfAllDevicesModal,
 } = uiSlice.actions
 
 export const uiSliceReducer = uiSlice.reducer
@@ -148,3 +162,4 @@ export const uiSelectQr = (state: RootState) => state.ui.qr
 
 export const uiSelectDeleteLink = (state: RootState) => state.ui.deleteLink
 export const uiSelectInviteMember = (state: RootState) => state.ui.inviteMember
+export const uiSelectLogoutOfAllDevices = (state: RootState) => state.ui.logoutOfAllDevices

@@ -44,7 +44,7 @@ const Error = ({ message }: { message: string }) => {
 }
 
 export const Register = () => {
-	const [registerApi, { isLoading }] = useRegisterMutation()
+	const [registerApi, { isLoading, isSuccess }] = useRegisterMutation()
 	const navigate = useNavigate()
 
 	const {
@@ -56,7 +56,6 @@ export const Register = () => {
 
 	const [error, setError] = useState<string | null>(null)
 	const [passwordHidden, setPasswordHidden] = useState(true)
-	const [success, setSuccess] = useState(false)
 
 	useEffect(() => {
 		setError(null)
@@ -67,7 +66,6 @@ export const Register = () => {
 		try {
 			const userdata = await registerApi({ email, password, name }).unwrap()
 			console.log(userdata)
-			setSuccess(true)
 			setTimeout(() => {
 				navigate('/login')
 			}, 3000)
@@ -77,7 +75,7 @@ export const Register = () => {
 		}
 	}
 
-	return success ? (
+	return isSuccess ? (
 		<div className="flex flex-col items-center">
 			<FiCheckCircle size="5em" className="mb-4 text-success" />
 			<h1 className="text-2xl font-bold">Registered! Redirecting you to the Login page.</h1>

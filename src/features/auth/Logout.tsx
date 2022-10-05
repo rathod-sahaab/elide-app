@@ -20,7 +20,7 @@ export const Logout = () => {
 		}
 	}
 	return (
-		<button onClick={handleClick} className={isLoading ? 'btn-loading' : ''}>
+		<button onClick={handleClick} className={isLoading ? 'loading' : ''}>
 			<FiLogOut /> Logout
 		</button>
 	)

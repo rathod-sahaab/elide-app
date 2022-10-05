@@ -15,7 +15,7 @@ import { UserInvitations } from './features/user/InvitationsPage'
 import { Profile } from './components/pages/auth/Profile'
 import { VerifyAccount } from './components/pages/public/VerifyAccount'
 import { Analytics } from './features/analytics/components/Analytics'
-import { ResetPasswordPage } from './components/pages/public/ForgotPasswordChange'
+import { ResetPasswordPage } from './components/pages/public/ResetPassword'
 import { ForgotPasswordPage } from './features/auth/components/pages/ForgotPassword'
 
 function App() {

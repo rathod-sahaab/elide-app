@@ -60,6 +60,13 @@ export const userApiSlice = apiSlice.injectEndpoints({
 				method: 'POST',
 			}),
 		}),
+		logoutOfAllDevices: builder.mutation({
+			query: ({ password }) => ({
+				url: '/auth/sessions',
+				method: 'DELETE',
+				body: { password },
+			}),
+		}),
 	}),
 })
 
@@ -70,4 +77,5 @@ export const {
 	useRejectInvitationMutation,
 	useGetProfileQuery,
 	useSendVerificationLinkMutation,
+	useLogoutOfAllDevicesMutation,
 } = userApiSlice

@@ -29,6 +29,11 @@ export const authApiSlice = apiSlice.injectEndpoints({
 				method: 'DELETE',
 			}),
 		}),
+		refreshAccessToken: builder.query({
+			query: () => ({
+				url: '/auth/refresh',
+			}),
+		}),
 		resetPasswordFromMailToken: builder.mutation({
 			query: ({ token, password }: { token: string; password: string }) => ({
 				url: `/auth/reset-password`,
@@ -53,4 +58,5 @@ export const {
 	useForgotPasswordEmailMutation,
 	useVerifyAccountMutation,
 	useResetPasswordFromMailTokenMutation,
+	useRefreshAccessTokenQuery,
 } = authApiSlice

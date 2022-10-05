@@ -43,7 +43,7 @@ export const ResetPassword = () => {
 	const navigate = useNavigate()
 	const token = new URLSearchParams(location.search).get('token')
 
-	const [resetPassword, { isLoading }] = useResetPasswordFromMailTokenMutation()
+	const [resetPassword, { isLoading, isSuccess }] = useResetPasswordFromMailTokenMutation()
 	const [error, setError] = useState<string>('')
 
 	const {
@@ -53,7 +53,6 @@ export const ResetPassword = () => {
 	} = useForm<Inputs>({ resolver: yupResolver(schema) })
 
 	const [passwordHidden, setPasswordHidden] = useState(true)
-	const [success, setSuccess] = useState(false)
 
 	if (!token) {
 		return <ElideErrorCard>Invalid Validation Link</ElideErrorCard>
@@ -62,7 +61,6 @@ export const ResetPassword = () => {
 	const submitHandler: SubmitHandler<Inputs> = async ({ password }) => {
 		try {
 			await resetPassword({ password, token }).unwrap()
-			setSuccess(true)
 			setTimeout(() => {
 				navigate('/login')
 			}, 3000)
@@ -72,7 +70,7 @@ export const ResetPassword = () => {
 		}
 	}
 
-	return success ? (
+	return isSuccess ? (
 		<div className="flex flex-col items-center">
 			<FiCheckCircle size="5em" className="mb-4 text-success" />
 			<h1 className="text-2xl font-bold">Done! Redirecting you to the Login page.</h1>
