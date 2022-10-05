@@ -1,36 +1,18 @@
-import { useEffect, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { useRegisterMutation } from './authApiSlice'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { BiErrorCircle } from 'react-icons/bi'
-import { MdOutlineChevronRight } from 'react-icons/md'
-
 import * as yup from 'yup'
-import { FormPage } from './FormPage'
-import { Link, useNavigate } from 'react-router-dom'
-import { ErrorInputWrapper } from '../../components/forms/ErrorInputWrapper'
-import { ElideIcon } from '../../components/ElideIcon'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { APIError } from '../../../commons/types'
+import { useResetPasswordFromMailTokenMutation } from '../../../features/auth/authApiSlice'
+import { ElideErrorCard } from '../../ElideAlert'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { MdOutlineChevronRight } from 'react-icons/md'
 import { RiEyeLine, RiEyeOffLine } from 'react-icons/ri'
+import { ErrorInputWrapper } from '../../forms/ErrorInputWrapper'
+import { BiErrorCircle } from 'react-icons/bi'
+import { ElideIcon } from '../../ElideIcon'
+import { FormPage } from '../../../features/auth/FormPage'
 import { FiCheckCircle } from 'react-icons/fi'
-
-type Inputs = {
-	name: string
-	email: string
-	password: string
-	passwordConfirmation: string
-}
-
-const schema = yup
-	.object({
-		name: yup.string().required(),
-		email: yup.string().email().required(),
-		password: yup.string().required(),
-		passwordConfirmation: yup
-			.string()
-			.oneOf([yup.ref('password'), null], 'Passwords must match')
-			.required(),
-	})
-	.required()
 
 const Error = ({ message }: { message: string }) => {
 	return (
@@ -43,44 +25,57 @@ const Error = ({ message }: { message: string }) => {
 	)
 }
 
-export const Register = () => {
-	const [registerApi, { isLoading }] = useRegisterMutation()
+type Inputs = {
+	password: string
+	passwordConfirmation: string
+}
+
+const schema = yup.object({
+	password: yup.string().required(),
+	passwordConfirmation: yup
+		.string()
+		.oneOf([yup.ref('password'), null], 'Passwords must match')
+		.required(),
+})
+
+export const ResetPassword = () => {
+	const location = useLocation()
 	const navigate = useNavigate()
+	const token = new URLSearchParams(location.search).get('token')
+
+	const [resetPassword, { isLoading }] = useResetPasswordFromMailTokenMutation()
+	const [error, setError] = useState<string>('')
 
 	const {
-		watch,
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<Inputs>({ resolver: yupResolver(schema) })
 
-	const [error, setError] = useState<string | null>(null)
 	const [passwordHidden, setPasswordHidden] = useState(true)
 	const [success, setSuccess] = useState(false)
 
-	useEffect(() => {
-		setError(null)
-	}, [watch])
+	if (!token) {
+		return <ElideErrorCard>Invalid Validation Link</ElideErrorCard>
+	}
 
-	const submitHandler: SubmitHandler<Inputs> = async ({ name, email, password }) => {
-		console.log({ email, password, name })
+	const submitHandler: SubmitHandler<Inputs> = async ({ password }) => {
 		try {
-			const userdata = await registerApi({ email, password, name }).unwrap()
-			console.log(userdata)
+			await resetPassword({ password, token }).unwrap()
 			setSuccess(true)
 			setTimeout(() => {
 				navigate('/login')
 			}, 3000)
 		} catch (err) {
 			console.log(err)
-			setError('Error registering')
+			setError('Error Reseting password')
 		}
 	}
 
 	return success ? (
 		<div className="flex flex-col items-center">
 			<FiCheckCircle size="5em" className="mb-4 text-success" />
-			<h1 className="text-2xl font-bold">Registered! Redirecting you to the Login page.</h1>
+			<h1 className="text-2xl font-bold">Done! Redirecting you to the Login page.</h1>
 		</div>
 	) : (
 		<div>
@@ -89,24 +84,10 @@ export const Register = () => {
 					<ElideIcon />
 				</span>
 			</div>
-			<h1 className="text-2xl font-bold">Create Account</h1>
-			<h3 className="text-md pt-2 font-bold text-base-content">Start your journey</h3>
+			<h1 className="text-2xl font-bold">Reset Password</h1>
+			<h3 className="text-md pt-2 font-bold text-base-content">Its only human to forget.</h3>
 			<div className="mt-6 [&>*:not(:last-child)]:mb-2">
 				{error && <Error message={error} />}
-				<ErrorInputWrapper fieldError={errors.name}>
-					<input
-						className="input block w-full bg-base-100"
-						placeholder="Your name"
-						{...register('name', { required: true, disabled: isLoading })}
-					/>
-				</ErrorInputWrapper>
-				<ErrorInputWrapper fieldError={errors.email}>
-					<input
-						className="input block w-full bg-base-100"
-						placeholder="Your email"
-						{...register('email', { required: true, disabled: isLoading })}
-					/>
-				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.password}>
 					<div className="relative">
 						<input
@@ -146,19 +127,18 @@ export const Register = () => {
 					disabled={isLoading}
 					onClick={handleSubmit(submitHandler)}
 				>
-					<span>Register</span>
+					<span>Reset password</span>
 					<MdOutlineChevronRight size="1.8em" />
 				</button>
-			</div>
-			<div className="mt-16 text-right text-sm font-bold">
-				<Link to="/login">Already a user? Sign in</Link>
 			</div>
 		</div>
 	)
 }
 
-export const RegisterPage = () => (
-	<FormPage>
-		<Register />
-	</FormPage>
-)
+export const ResetPasswordPage = () => {
+	return (
+		<FormPage>
+			<ResetPassword />
+		</FormPage>
+	)
+}

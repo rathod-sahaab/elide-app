@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import { useLoginMutation } from './authApiSlice'
@@ -44,7 +44,7 @@ export const Login = () => {
 	const navigate = useNavigate()
 
 	const {
-		trigger,
+		watch,
 		register,
 		handleSubmit,
 		formState: { errors },
@@ -53,9 +53,9 @@ export const Login = () => {
 	const [error, setError] = useState<string | null>(null)
 	const [passwordHidden, setPasswordHidden] = useState(true)
 
-	const handleChange = () => {
+	useEffect(() => {
 		setError(null)
-	}
+	}, [watch])
 
 	const submitHandler: SubmitHandler<Inputs> = async ({ email, password }) => {
 		console.log({ email, password })
@@ -86,13 +86,6 @@ export const Login = () => {
 						className="input block w-full bg-base-100"
 						placeholder="Email"
 						{...register('email', { disabled: isLoading })}
-						onChange={() => {
-							console.log('triggered')
-							if (errors.email) {
-								console.log('here')
-								trigger('email')
-							}
-						}}
 					/>
 				</ErrorInputWrapper>
 				<ErrorInputWrapper fieldError={errors.password}>
@@ -102,7 +95,6 @@ export const Login = () => {
 							type={passwordHidden ? 'password' : 'text'}
 							placeholder="Password"
 							{...register('password', { disabled: isLoading })}
-							onChange={handleChange}
 						/>
 
 						<button

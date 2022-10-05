@@ -15,6 +15,8 @@ import { UserInvitations } from './features/user/InvitationsPage'
 import { Profile } from './components/pages/auth/Profile'
 import { VerifyAccount } from './components/pages/public/VerifyAccount'
 import { Analytics } from './features/analytics/components/Analytics'
+import { ResetPasswordPage } from './components/pages/public/ForgotPasswordChange'
+import { ForgotPasswordPage } from './features/auth/components/pages/ForgotPassword'
 
 function App() {
 	return (
@@ -22,7 +24,6 @@ function App() {
 			<Route path="/" element={<OutletLayout />}>
 				{/*General routes*/}
 				<Route index element={<Home />} />
-				<Route path="account/verify" element={<VerifyAccount />} />
 
 				{/*Adapt to auth state routes*/}
 				<Route element={<AdaptAuth />}>
@@ -33,6 +34,9 @@ function App() {
 				<Route element={<RequireNoAuth />}>
 					<Route path="login" element={<LoginPage />} />
 					<Route path="register" element={<RegisterPage />} />
+					<Route path="forgot-password" element={<ForgotPasswordPage />} />
+					<Route path="account/verify" element={<VerifyAccount />} />
+					<Route path="account/reset-password" element={<ResetPasswordPage />} />
 				</Route>
 
 				{/*Authehticated Routes*/}
