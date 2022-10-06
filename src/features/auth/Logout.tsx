@@ -12,8 +12,8 @@ export const Logout = () => {
 
 	const handleClick = async () => {
 		try {
-			navigate('/', { replace: true })
 			await logout({}).unwrap()
+			navigate('/', { replace: true })
 			dispatch(logOut())
 		} catch (err) {
 			console.log(err)
