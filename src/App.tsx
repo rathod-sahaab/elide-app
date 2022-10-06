@@ -4,7 +4,12 @@ import { Home } from './components/pages/public/Home/Home'
 import { Dashboard } from './components/pages/auth/Dashboard'
 import { LoginPage } from './features/auth/Login'
 import { RegisterPage } from './features/auth/Register'
-import { AdaptAuth, RequireAuth, RequireNoAuth } from './features/auth/RequireAuth'
+import {
+	AdaptAuth,
+	RequireAuth,
+	RequireAuthNoSidebar,
+	RequireNoAuth,
+} from './features/auth/RequireAuth'
 import { About } from './components/pages/public/About'
 import { NotFound } from './components/pages/public/404'
 import { Organisations } from './features/organisations/components/Organisations'
@@ -15,6 +20,9 @@ import { UserInvitations } from './features/user/InvitationsPage'
 import { Profile } from './components/pages/auth/Profile'
 import { VerifyAccount } from './components/pages/public/VerifyAccount'
 import { Analytics } from './features/analytics/components/Analytics'
+import { ResetPasswordPage } from './components/pages/public/ResetPassword'
+import { ForgotPasswordPage } from './features/auth/components/pages/ForgotPassword'
+import { ChangePasswordPage } from './features/user/components/pages/ChangePassword'
 
 function App() {
 	return (
@@ -22,17 +30,19 @@ function App() {
 			<Route path="/" element={<OutletLayout />}>
 				{/*General routes*/}
 				<Route index element={<Home />} />
-				<Route path="account/verify" element={<VerifyAccount />} />
 
 				{/*Adapt to auth state routes*/}
 				<Route element={<AdaptAuth />}>
 					<Route path="about" element={<About />} />
+					<Route path="account/verify" element={<VerifyAccount />} />
+					<Route path="account/reset-password" element={<ResetPasswordPage />} />
 				</Route>
 
 				{/*Unauthenticated Routes*/}
 				<Route element={<RequireNoAuth />}>
 					<Route path="login" element={<LoginPage />} />
 					<Route path="register" element={<RegisterPage />} />
+					<Route path="forgot-password" element={<ForgotPasswordPage />} />
 				</Route>
 
 				{/*Authehticated Routes*/}
@@ -54,6 +64,9 @@ function App() {
 							<Route index element={<Navigate to="members" replace />} />
 						</Route>
 					</Route>
+				</Route>
+				<Route element={<RequireAuthNoSidebar />}>
+					<Route path="change-password" element={<ChangePasswordPage />} />
 				</Route>
 
 				<Route path="*" element={<NotFound />} />

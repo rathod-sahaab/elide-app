@@ -17,6 +17,19 @@ export const RequireAuth = () => {
 	)
 }
 
+export const RequireAuthNoSidebar = () => {
+	const token = useSelector(selectCurrentToken)
+	const location = useLocation()
+
+	return token ? (
+		<NoSidebarLayout>
+			<Outlet />
+		</NoSidebarLayout>
+	) : (
+		<Navigate to="/login" state={{ from: location }} replace />
+	)
+}
+
 export const RequireNoAuth = () => {
 	const token = useSelector(selectCurrentToken)
 	const location = useLocation()
