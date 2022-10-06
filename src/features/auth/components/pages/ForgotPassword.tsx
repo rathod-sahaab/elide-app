@@ -10,6 +10,7 @@ import { FormPage } from '../../FormPage'
 import { Link } from 'react-router-dom'
 import { ErrorInputWrapper } from '../../../../components/forms/ErrorInputWrapper'
 import { ElideIcon } from '../../../../components/ElideIcon'
+import { FiCheckCircle } from 'react-icons/fi'
 
 type Inputs = {
 	email: string
@@ -33,7 +34,7 @@ const Error = ({ message }: { message: string }) => {
 }
 
 export const ForgotPassword = () => {
-	const [sendResetPasswordLink, { isLoading }] = useForgotPasswordEmailMutation()
+	const [sendResetPasswordLink, { isLoading, isSuccess }] = useForgotPasswordEmailMutation()
 
 	const {
 		watch,
@@ -57,7 +58,12 @@ export const ForgotPassword = () => {
 		}
 	}
 
-	return (
+	return isSuccess ? (
+		<div className="flex flex-col items-center">
+			<FiCheckCircle size="3em" className="mb-4 text-success" />
+			<h1 className="text-2xl font-bold">Reset link sent! You can close this page now.</h1>
+		</div>
+	) : (
 		<div>
 			<div className="pb-6">
 				<Link to="/" className="btn btn-ghost btn-circle text-primary">
