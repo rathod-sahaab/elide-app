@@ -1,4 +1,4 @@
-# elide-app
+# Elide.in
 Collaborative, URL simplification tool with war-room like analytics.
 
 ![image](https://user-images.githubusercontent.com/31929374/194424631-91435909-3254-407b-99e3-4bef4fd867e3.png)
